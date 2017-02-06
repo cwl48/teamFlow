@@ -1,1 +1,100 @@
+<style>
+    .viewport{
 
+    }
+  .bg{
+    width:100%;
+    height:700px;
+    position: relative;
+  }
+  .bg_img{
+    position:absolute;
+    width: 100%;
+    height: inherit;
+    opacity: 0;
+    z-index: -99999;
+    top: 0;
+  }
+    .bg_img.active{
+      opacity: 1;
+    }
+    .bg .bg_img img{
+      width:100%;
+      height: 100%;
+    }
+    .index-circle{
+      position: absolute;
+      bottom: 50px;
+      left: 50%;
+      margin-left: -31px;
+    }
+    .circle{
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 10px;
+    border: 1px #fff solid;
+    cursor: pointer;
+    margin: 0 4px;
+    opacity: .3
+    }
+   .circle.active{
+    background: #fff;
+    border: 3px #fff solid;
+    opacity: .9;
+  }
+  .top-nav{
+    z-index: 2;
+    height:60px;
+    width: 100%;
+  }
+  .top-nav .title{
+      width:40%;
+      height: 60px;
+      line-height: 60px;
+      margin-left:80px ;
+    display: inline-block;
+  }
+    .top-nav .title i{
+       font-size: 30px;
+    }
+  .top-nav .title img{
+    width:70%;
+    padding-bottom: 10px;
+    height: 58px;
+  }
+  .top-nav .nav-bar{
+    float: right;
+    margin-right: 200px;
+  }
+</style>
+<div class="viewport">
+  <div class="bg">
+    <div class="top-nav">
+      <div class="title">
+        <i class="icon iconfont icon-yanyu1"></i>
+        <img src="../../assets/images/teamFlow.png" alt="logo">
+      </div>
+      <div class="nav-bar">
+        <ul>
+          <li><a href="#">登录</a></li>
+          <li><a href="#">注册</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="bg_1" class="bg_img active">
+      <img src="../../assets/images/home_1.jpg" alt="home_1">
+    </div>
+    <div id="bg_2" class="bg_img">
+      <img src="../../assets/images/home_2.jpg" alt="home_2">
+    </div>
+    <div id="bg_3" class="bg_img">
+      <img src="../../assets/images/home_3.jpg" alt="home_3">
+    </div>
+    <div class="index-circle">
+      <span class="circle active" (mouseenter)="switch($event,'bg_1')"></span>
+      <span class="circle" (mouseenter)="switch($event,'bg_2')"></span>
+      <span class="circle" (mouseenter)="switch($event,'bg_3')"></span>
+    </div>
+  </div>
+</div>
