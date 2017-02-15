@@ -1,0 +1,101 @@
+<style>
+  .createSchedule-panel{
+    position: absolute;
+    z-index: 1229;
+    width: 100%;
+    padding: 1px;
+    text-align: left;
+    background-color: #fff;
+    border: 1px solid #eeece8;
+    font-size: 14px;
+    -webkit-box-shadow: 0 2px 8px rgba(0,0,0,.2);
+    box-shadow: 0 2px 8px rgba(0,0,0,.2);
+    outline: 0;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    height: 250px;
+    margin-left: -10px;
+    min-width: 200px;
+  }
+  .title{
+    margin-top:10px;
+    font-size: 16px;
+    line-height: 18px;
+    position: absolute;
+    left: 34px;
+    right: 34px;
+    text-align: center;
+    color: #d9d7d3;
+  }
+  .close{
+    color: #9d9d9d;
+    font-size: 17px;
+    margin-right:5px;
+  }
+  .close:hover{
+    color: #ff5459;
+  }
+  textarea{
+    margin-top: 20px;
+    width: 100%;
+  }
+  textarea:focus,
+  select:focus{
+    border-color: #fcd340;
+    outline: 0;
+    color: #000;
+    -webkit-box-shadow: 0 0 1px #fcd340;
+    box-shadow: 0 0 1px #fcd340;
+  }
+  .content{
+    border-top:1px solid #cacfd3;
+    width: 90%;
+    margin:45px auto;
+  }
+  .footer{
+    bottom: 20px;
+    position: absolute;
+    width: 100%;
+  }
+  .select-project{
+    margin-top: 10px;
+  }
+  .center-btn{
+    width: 180px;
+    margin:0 auto;
+    display: flex;
+    justify-content: space-around;
+  }
+  .btn-width{
+    width: 60px;
+  }
+</style>
+<div class="createSchedule-panel">
+    <div class="top">
+      <div class="title">新建日程</div>
+      <div class="close">x</div>
+    </div>
+    <div class="content">
+      <textarea placeholder="请输入日程内容"></textarea>
+      <div class="select-project">
+        <div class="form-group">
+          <label>所属项目</label>
+          <select class="form-control">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="center-btn">
+        <button class="btn btn-success btn-width">保存</button>
+        <button class="btn btn-default btn-width">取消</button>
+      </div>
+    </div>
+</div>

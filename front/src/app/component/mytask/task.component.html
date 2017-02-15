@@ -1,0 +1,254 @@
+<style>
+  .magic-checkbox {
+    position: absolute;
+    display: none;
+  }
+
+  .magic-checkbox[disabled] {
+    cursor: not-allowed;
+  }
+
+  .magic-checkbox + label {
+    position: relative;
+    display: block;
+    padding-left: 22px;
+    cursor: pointer;
+    vertical-align: middle;
+  }
+
+  .magic-checkbox + label:hover:before {
+    animation-duration: 0.4s;
+    animation-fill-mode: both;
+    animation-name: hover-color;
+  }
+
+  .magic-checkbox + label:before {
+    position: absolute;
+    top: 2px;
+    left: 0;
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    content: '';
+    border: 1px solid #c0c0c0;
+  }
+
+  .magic-checkbox + label:after {
+    position: absolute;
+    display: none;
+    content: '';
+  }
+
+  .magic-checkbox[disabled] + label {
+    cursor: not-allowed;
+    color: #e4e4e4;
+  }
+
+  .magic-checkbox[disabled] + label:hover,
+  .magic-checkbox[disabled] + label:before,
+  .magic-checkbox[disabled] + label:after {
+    cursor: not-allowed;
+  }
+
+  .magic-checkbox[disabled] + label:hover:before {
+    border: 1px solid #e4e4e4;
+    animation-name: none;
+  }
+
+  .magic-checkbox[disabled] + label:before {
+    border-color: #e4e4e4;
+  }
+
+  .magic-checkbox:checked + label:before {
+    animation-name: none;
+  }
+
+  .magic-checkbox:checked + label:after {
+    display: block;
+  }
+
+  .magic-checkbox + label:before {
+    border-radius: 3px;
+  }
+
+  .magic-checkbox + label:after {
+    top: 3px;
+    left: 4px;
+    box-sizing: border-box;
+    width: 6px;
+    height: 10px;
+    transform: rotate(45deg);
+    border: 2px solid black;
+    border-top: 0;
+    border-left: 0;
+  }
+
+  .magic-checkbox:checked + label:before {
+    /*border: #c0c0c0;*/
+    background: #ffffff;
+  }
+
+  .magic-checkbox:checked[disabled] + label:before {
+    border: #c0c0c0;
+    background: #c9e2f9;
+  }
+  .task-panel {
+    position: relative;
+    min-height: 60px;
+    width: 300px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    vertical-align: top;
+    display: inline-block;
+    zoom: 1;
+    min-width: 180px;
+    margin: 7px 0 0 10px;
+    padding-bottom: 6px;
+    border-radius: 5px;
+    background-color: #eeece8;
+  }
+
+  .panel_header {
+    padding-top: 10px;
+  }
+
+  .panel_header .title {
+    font-size: 16px;
+    margin: 0;
+    color: #6f6e6b;
+    line-height: 30px;
+    padding: 7px 9px;
+    display: inline;
+  }
+
+  .panel_header .total_num {
+    color: #bcb7af;
+    font-size: 12px;
+    width: 47px;
+    text-align: center;
+    font-weight: 400;
+    float: right;
+    height: 30px;
+    line-height: 30px;
+  }
+
+  .task {
+    width: 280px;
+    min-height: 20px;
+    margin: 0 auto;
+  }
+
+  .task-wrap {
+    margin-bottom: 10px;
+    border-bottom: solid 1px #e1e1e5;
+    background: #fff;
+  }
+
+  .content-top {
+    position: relative;
+    min-height: 46px;
+    padding-top: 5px;
+    padding-bottom: 2px;
+    line-height: 20px;
+    cursor: pointer;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+    margin: 0 auto;
+    width: inherit;
+  }
+
+  .checkbox {
+    left: 10px;
+    position: absolute;
+  }
+
+  .task-main {
+    display: inline-block;
+    word-wrap: break-word;
+    white-space: normal;
+    line-height: 21px;
+    font-size: 14px;
+    color: #484744;
+    margin: 0 24px 0 32px;
+    padding-top: 7px;
+  }
+
+  .content-footer .project-name {
+    display: inline-block;
+  }
+
+  .content-footer .project-name i,
+  .content-footer .project-name span {
+    font-size: 12px;
+    color: #bcb7af;
+    margin-left: 32px;
+  }
+  .content-footer .project-name span {
+    margin-left: 2px;
+  }
+
+  .project-member {
+    display: inline;
+  }
+
+  .project-member .member-img {
+    width: 30px;
+    display: inline;
+    margin-left: 100px;
+  }
+
+  .member-img img {
+    width: inherit;
+  }
+
+  .empty-text {
+    text-align: center;
+    color: #b9b9b7;
+    line-height: 61px;
+    border: 0;
+    background: 0 0;
+  }
+</style>
+<div class="task-panel" *ngFor="let item of taskpanels">
+      <div class="panel_header">
+        <div class="title">收件箱</div>
+        <div class="total_num">{{item.tasks.length}}</div>
+      </div>
+      <div class="panel_content">
+        <div class="task" [dragula]='"first"' [dragulaModel]='item.tasks'>
+          <div class="empty" *ngIf="item.tasks.length===0">
+            <div class="empty-text">
+              <span>分配给你的任务会显示在这</span>
+            </div>
+          </div>
+            <div class="task-wrap" *ngFor="let task of item.tasks">
+              <div *ngIf="item.tasks.length>0">
+              <div class="content-top">
+                <div class="checkbox">
+                  <input class="magic-checkbox" type="checkbox" id='checkbox_1' name="layout">
+                  <label for="checkbox_1"></label>
+                </div>
+                <div class="task-main">
+                  <span>{{task.content}}</span>
+                </div>
+              </div>
+              <div class="content-footer">
+                <div class="project-name">
+                  <i class="icon iconfont icon-xiangmu"></i>
+                  <span>{{task.projectName}}</span>
+                </div>
+                <div class="project-member">
+                  <div class="member-img">
+                    <img src="../../../assets/images/header.jpg" class="img-circle" alt="header">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>

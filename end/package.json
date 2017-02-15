@@ -1,0 +1,33 @@
+{
+  "name": "end",
+  "version": "1.0.0",
+  "description": "teamFlow end-api",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "koa2",
+    "ts"
+  ],
+  "author": "clw",
+  "license": "ISC",
+  "dependencies": {
+    "koa": "^2.0.0-alpha.8",
+    "koa-bodyparser": "^3.2.0",
+    "koa-convert": "^1.2.0",
+    "koa-cors": "0.0.16",
+    "koa-logger": "^2.0.1",
+    "koa-router": "^7.1.0",
+    "mysql": "^2.13.0",
+    "sequelize": "^3.30.2"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.0.37",
+    "@types/koa-bodyparser": "^3.0.23",
+    "@types/koa-logger": "^2.0.2",
+    "@types/koa-router": "^7.0.21",
+    "@types/mysql": "0.0.31",
+    "@types/sequelize": "^4.0.41"
+  }
+}

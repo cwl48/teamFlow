@@ -10,7 +10,6 @@ import { Component, OnInit } from '@angular/core';
 export class HomeComponent implements OnInit {
     constructor() { }
     ngOnInit() { }
-
     switch=(e,position:string)=>{
        let c_classList = e.target.classList;             //当前选中circle的样式组
        let img_classList = document.getElementById(position).classList;
