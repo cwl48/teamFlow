@@ -1,0 +1,111 @@
+<style>
+  .viewport{
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 99999;
+  }
+  .sign-up-panel{
+    position: absolute;
+    left: 50%;
+    top:15%;
+    width:800px;
+    margin-left: -400px;
+  }
+  .title{
+    text-align: center;
+    height: 80px;
+    line-height:80px ;
+  }
+  .title i{
+    font-size: 35px;
+  }
+  .title img{
+    height: inherit;
+    padding-bottom: 20px;
+  }
+  .form{
+    margin:20px auto;
+    width: 350px;
+  }
+  .form input:focus{
+    border-color: #fcd340;
+    outline: 0;
+    color: #000;
+    -webkit-box-shadow: 0 0 1px #fcd340;
+    box-shadow: 0 0 1px #fcd340;
+  }
+  .form .error{
+    border-color: #da4f4a;
+    -webkit-box-shadow: 0 0 6px #f8b9b7;
+    box-shadow: 0 0 6px #f8b9b7;
+  }
+  .form .step{
+    margin-bottom:20px;
+
+  }
+  .my-form-control{
+    display: inline;
+    height: 38px;
+  }
+  .my-form-control-sm{
+    display: inline;
+    height: 38px;
+    width: 60%;
+  }
+  .back-signin{
+    text-align: center;
+    margin-top: 50px;
+
+  }
+  .back-signin a{
+    color:#fb9fad;
+    text-decoration: none;
+
+  }
+  .back-signin a:hover{
+    color:#da4f4a;
+  }
+  .error-text{
+    margin-left:10px;
+  }
+  .form-control{
+    display: inline;
+  }
+
+</style>
+<div class="viewport">
+  <div class="sign-up-panel">
+    <div class="title">
+        <i class="icon iconfont icon-yanyu1 red"></i>
+        <img src="../../../assets/images/teamFlow.png" alt="logo">
+    </div>
+    <div class="form">
+      <div class="form-group step">
+          <input type="text" class="form-control my-form-control" id='email' placeholder="邮箱地址" [(ngModel)]="email" (focus)="cancelError($event)">
+      </div>
+      <div class="form-group step">
+        <input type="text" class="form-control my-form-control-sm" id="code" placeholder="验证码" [(ngModel)]="code" (focus)="cancelError($event)">
+        <button id="getSms" class="btn btn-success getsms bg-fb9fad" (click)="getEmailCode()">{{button_msg}}</button>
+      </div>
+      <div class="form-group step">
+        <input type="text" class="form-control my-form-control" id="username" placeholder="姓名" [(ngModel)]="userName" (focus)="cancelError($event)">
+      </div>
+      <div class="form-group step">
+        <input type="password" class="form-control my-form-control" id="password" placeholder="密码" [(ngModel)]="password" (focus)="cancelError($event)">
+      </div>
+      <div class="alert alert-danger" role="alert" *ngIf="error>0">
+        <span class="glyphicon glyphicon-remove-sign"></span>
+        <span class="error-text">{{tip}}</span>
+      </div>
+      <div class="alert alert-success" role="alert" *ngIf="isRegister">
+        <span class="error-text">注册成功,3秒后跳转到登录界面...</span>
+      </div>
+      <button class="btn btn-success btn-block bg-fb9fad" (click)="register()">注册</button>
+      <div class="back-signin">
+        <a routerLink="/login">返回登录</a>
+      </div>
+    </div>
+  </div>
+</div>
+<flower-bg></flower-bg>

@@ -10,7 +10,7 @@
             "name": "启动程序",
             "program": "${workspaceRoot}\\src\\app.ts",
             "cwd": "${workspaceRoot}",
-            "outFiles": ["${workspaceRoot}/dist/*"],
+            "outFiles": ["${workspaceRoot}\\dist\\*","${workspaceRoot}\\dist\\*\\*"],
             "sourceMaps": true
         },
         {

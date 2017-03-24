@@ -1,0 +1,276 @@
+<style>
+  .nav-top {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    position: relative;
+    background-color: #fff;
+    border-bottom: solid 1px #eeece8;
+    height: 65px;
+    z-index: 3;
+    display: flex;
+    justify-content: space-between;
+    display: -webkit-flex;
+  }
+
+  .nav-top .title {
+    position: absolute;
+    width: 300px;
+    display: inline-flex;
+  }
+
+  .nav-top .title h3 {
+    min-width: 100px;
+    margin: 0 7px 0 0;
+    vertical-align: middle;
+    line-height: 54px;
+    font-size: 21px;
+    display: inline-block;
+    color: #333;
+    font-weight: 500;
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .nav-top .title h3 i {
+    font-size: 25px;
+    color: #dbdad6;
+    padding-right: 25px;
+    padding-left: 15px;
+    padding-top: 15px;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  .my-content {
+    margin: 14px;
+    padding: 21px;
+    border: solid 1px #f8f6f2;
+    background: #fff;
+    height: 610px;
+    overflow-y: auto;
+    position: relative;
+  }
+
+  .left-layout ul li {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-bottom: solid 1px #f8f6f2;
+    position: relative;
+    display: flex;
+    display: -webkit-flex;
+    align-content: center;
+  }
+
+  .left-layout ul li:first-child {
+    border-top: solid 1px #f8f6f2;
+  }
+
+  .item-name {
+    color: #333;
+    width: 200px;
+    padding: 5px;
+    margin: 10px 0;
+    display: inline-block;
+  }
+
+  .item-name .name {
+    font-size: 20px;
+    margin-left: 10px;
+  }
+
+  .item-name .tips {
+    margin-left: 15px;
+    color: #d9d7d3;
+    min-height: 60px;
+  }
+
+  .right-layout {
+    display: inline-block;
+    margin-top: 20px;
+    margin-left: 200px;
+  }
+
+  .my-btn {
+    color: #777;
+    border: solid 1px #d6d4d0;
+    background-color: #f8f6f2;
+    text-shadow: 0 0 0 transparent;
+    -webkit-box-shadow: 0 0 0 transparent;
+    box-shadow: 0 0 0 transparent;
+    padding: 6px 28px;
+    border-radius: 4px;
+    margin: 0 auto;
+    height: 32px;
+    border: none;
+    outline: 0;
+    font-weight: 400;
+  }
+
+  .my-btn:hover {
+    background-color: #dddfdd;
+  }
+
+  ul {
+    padding: 0;
+    list-style: none;
+  }
+
+  .headImg {
+    display: inline-block;
+  }
+
+  .headImg img {
+    width: 80px;
+    height: 80px;
+  }
+
+  .imgOption {
+    display: inline-block;
+    margin-left: 20px;
+  }
+
+  .modifyUserName {
+    display: block;
+    margin-top: 30px;
+    margin-left: 100px;
+  }
+
+  .info_row {
+    margin-top: 10px;
+    width: 200px;
+  }
+
+  .info_row span:last-child {
+    margin-left: 10px;
+  }
+</style>
+<div class="my-task">
+  <div class="nav-top">
+    <div class="title">
+      <h3>
+        <i class="glyphicon glyphicon-user"></i>
+        帐户设置
+      </h3>
+    </div>
+  </div>
+  <div class="my-content">
+    <div class="left-layout">
+      <ul>
+        <li>
+          <div class="item-name">
+            <div class="name">头像</div>
+            <div class="tips">选择一张个人正面照片作为头像，
+              让其他成员更容易认识你。
+            </div>
+          </div>
+          <div class="right-layout">
+            <div class="headImg">
+              <img class="img-circle" [src]="headImg" alt="header">
+            </div>
+            <div class="imgOption">
+              <input #upload id="upload" type="file" accept="image/jpeg,imgage/gif,image/png" name="file"
+                     style="display: none"/>
+              <button class="my-btn" (click)="upload.click()">设置头像</button>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="item-name">
+            <div class="name">用户名</div>
+            <div class="tips">请填写一个富有个性的名字</div>
+          </div>
+          <div class="right-layout">
+            <div class="headImg">
+              <span *ngIf="!modifyName_flag">当前用户名</span>
+              <span class="font-fb9fad" style="margin-left: 27px" *ngIf="!modifyName_flag">{{username}}</span>
+              <span *ngIf="modifyName_flag">
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="请填写用户名" [(ngModel)]="modifyUserName"
+                         (click)="stopBuble($event)"
+                         (focus)="stopBuble($event)">
+                </div>
+              </span>
+            </div>
+            <div class="imgOption modifyUserName">
+              <button class="my-btn" (click)="modifyName($event)">{{modifyUser_btn_text}}</button>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="item-name">
+            <div class="name">个人资料</div>
+            <div class="tips">请填写您的具体资料</div>
+          </div>
+          <div class="right-layout">
+            <div class="info" *ngIf="!modify_info_flag">
+              <div class="info_row">
+                <span>职位:</span><span>{{job}}</span>
+              </div>
+              <div class="info_row">
+                <span>部门:</span><span>{{section}}</span>
+              </div>
+              <div class="info_row">
+                <span>手机号:</span><span>{{phone}}</span>
+              </div>
+            </div>
+            <div class="modify-info" *ngIf="modify_info_flag">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="职位" name="job" [(ngModel)]="job">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="部门" name="section" [(ngModel)]="section">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="手机号" name="phone" [(ngModel)]="phone">
+              </div>
+              <button type="submit" class="btn btn-success" (click)="modifyInfo()">保存</button>
+              <button type="submit" class="btn btn-default" style="margin-left: 35px" (click)="cancelModify()">取消
+              </button>
+            </div>
+            <div class="imgOption" style="margin-left: 100px;margin-top:5px">
+              <button class="my-btn" *ngIf="!modify_info_flag" (click)="modifyInfo()">修改资料</button>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="item-name">
+            <div class="name">登录密码</div>
+            <div class="tips">修改密码时需要输入当前密码；新密码长度要大于 6位，建议您定期更换密码，确保帐号安全。</div>
+          </div>
+          <div class="right-layout">
+            <div class="modify-info" *ngIf="modify_pass_flag">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="原密码" name="old_pass" [(ngModel)]="old_pass">
+              </div>
+              <div class="form-group">
+                <input type="password" class="form-control" placeholder="新密码" name="new_pass" [(ngModel)]="new_pass">
+              </div>
+              <div class="form-group">
+                <input type="password" class="form-control" placeholder="再来一次" name="new_pass1" [(ngModel)]="new_pass1">
+              </div>
+              <button type="submit" class="btn btn-success" (click)="modifyPass()">保存</button>
+              <button type="submit" class="btn btn-default" style="margin-left: 35px" (click)="cancelModifyPass()">取消
+              </button>
+            </div>
+            <div class="imgOption" style="margin-left: 100px;margin-top:5px">
+              <button class="my-btn" (click)="modifyPass()" *ngIf="!modify_pass_flag">修改登录密码</button>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="exit">
+            <button class="btn btn-danger" (click)="exitSystem()">退出系统</button>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<top-tip [show]="show_tip" [msg]="tip" [success]="success"></top-tip>
+

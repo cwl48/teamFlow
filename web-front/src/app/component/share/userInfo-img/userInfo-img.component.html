@@ -1,0 +1,117 @@
+<style>
+  .wrap {
+    display: inline-block;
+    position: relative;
+  }
+
+  .wrap .user_info_modal {
+    position: absolute;
+    z-index: 999999;
+    width: 370px;
+    padding: 1px;
+    text-align: left;
+    background-color: #fff;
+    border: 1px solid #eeece8;
+    font-size: 14px;
+    -webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, .2);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .2);
+    outline: 0;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    height: 140px;
+    top: -140px;
+    left: -160px;
+  }
+
+  .user_info_modal .info_right {
+    width: 140px;
+    height: 100%;
+    position: relative;
+    display: inline-block;
+  }
+
+  .user_info_modal .info_left{
+    width: 210px;
+    height: 100%;
+    position: relative;
+    display: inline-block;
+  }
+  .info_right .content .username {
+    font-size: 17px;
+    display: block;
+    padding-top:8px;
+    overflow: hidden;
+  }
+  .info_right .content{
+    position: absolute;
+    top:50%;
+    left: 50%;
+    margin-left: -50px;
+    margin-top: -50px;
+    width: 100px;
+    height: 100px;
+    border-right: 1px solid #ccc;
+  }
+  .info_left .content{
+    position: absolute;
+    top:50%;
+    left: 50%;
+    margin-left: -90px;
+    margin-top: -50px;
+    width: 180px;
+    height: 100px;
+  }
+  .info_right .content img {
+    width: 70px;
+  }
+
+  .wrap .pic {
+    cursor: pointer;
+  }
+
+  .wrap .pic img {
+    width: 45px;
+  }
+  .info_left .content .info_row{
+    margin-top: 4px;
+    color:#92a0ac;
+  }
+  .info_left .content .info_row span{
+    font-weight: 600;
+    margin-right: 5px;
+  }
+</style>
+<div class="wrap">
+  <div class="user_info_modal" *ngIf="show">
+    <!--写反了-- -->
+    <div class="info_right">
+      <div class="content">
+        <img [src]="imgurl" class="img-circle" alt="头像">
+        <span class="username">{{username}}</span>
+      </div>
+    </div>
+    <div class="info_left">
+       <div class="content">
+         <div class="info_row">
+           <span>部门:</span>{{section}}
+         </div>
+         <div class="info_row">
+           <span>职位:</span>{{job}}
+         </div>
+         <div class="info_row">
+           <span>手机:</span>{{phone}}
+         </div>
+         <div class="info_row">
+           <span>邮箱:</span>{{email}}
+         </div>
+       </div>
+    </div>
+  </div>
+  <div class="pic">
+    <img class="img-circle" [src]="imgurl" alt="头像">
+  </div>
+</div>
+<top-tip [msg]="tip" [show]="show_tip" [success]="success"></top-tip>
+

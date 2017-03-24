@@ -1,0 +1,300 @@
+<style>
+  .wrap {
+    background-color: rgba(0, 0, 0, .5);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 99;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  .my-modal {
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, .99);
+    -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, .3);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, .3);
+  }
+
+  .center {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    margin: auto;
+  }
+
+  .modal-container {
+    padding: 10px 25px;
+  }
+
+  .modal_title {
+    padding-bottom: 10px;
+    font-size: 20px;
+  }
+
+  .modal_title span i {
+    cursor: pointer;
+  }
+
+  .modal_title span i:hover {
+    color: #da4f4a;
+  }
+
+  .modal_footer {
+    position: absolute;
+    bottom: 10px;
+  }
+
+  /*创建团队样式*/
+  .create-team .step-row ul li {
+    display: inline-block;
+    border-top: 5px solid #cccccc;
+    width: 33.3333%;
+    text-align: center;
+    color: #cccccc;
+    padding-top: 8px;
+  }
+
+  .create-team .step-row ul .current-step {
+    border-top: 5px solid #54d09f;
+    color: #0f0f0f;
+  }
+
+  .create-team .step-row ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    display: -webkit-flex;
+    justify-content: space-between;
+  }
+
+  .create-team .fill-form {
+    width: 97%;
+    margin: 30px auto 0;
+  }
+
+  .create-team .fill-form .sign {
+    text-align: center;
+    font-size: 20px;
+    margin: 20px 0 30px 0;
+  }
+
+  .linkman .xy {
+    margin-bottom: 15px;
+  }
+
+  .link-man-list {
+    max-height: 133px;
+    margin-bottom: 10px;
+    position: relative;
+  }
+
+  .link-man-list .link-man-item {
+    display: inline-block;
+    margin: 0 5px 5px 0;
+    padding: 3px 10px 0 5px;
+    width: 186px;
+    height: 48px;
+
+    cursor: pointer;
+    background: #f8f6f2;
+    position: relative;
+  }
+
+  .border-e8edf3 {
+    border: solid 1px #e8edf3;
+  }
+
+  .link-man-item div {
+    display: inline-block;
+  }
+
+  .link-man-item img {
+    width: 45px;
+  }
+
+  .link-man-item .duigou {
+    position: absolute;
+    right: 5px;
+  }
+
+  .add-email {
+    padding: 2px;
+    border-bottom: 1px dashed #4795d3;
+    width: 65px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    color: #4795d3;
+  }
+
+  .add-email:hover {
+    color: #365c89;
+  }
+
+  .person-img {
+    margin-top: 20px;
+  }
+
+  .sure {
+    width: 90%;
+    margin: 60px auto 0;
+    height: 180px;
+    text-align: center;
+  }
+
+  .sure .sure-info {
+    border: 1px solid #54d09f;
+    padding: 50px 0;
+    position: relative;
+  }
+
+  .sure .sure-tip {
+    position: absolute;
+    top: -10px;
+    background-color: rgba(255, 255, 255, .99);
+    left: 50%;
+    margin-left: -49px;
+  }
+
+  .create {
+    margin-top: 15px;
+    text-align: left;
+  }
+
+  .create button {
+    margin-right: 10px;
+  }
+
+  /*创建团队样式end*/
+
+  /*创建项目样式*/
+  .create-project{
+    border-top:3px solid #54d09f;
+  }
+  .create-project .content{
+    width: 95%;
+    margin: 20px auto;
+  }
+  /*创建项目样式end*/
+</style>
+<div [class.wrap]="show">
+  <div class="my-modal" [@flyInOut]="state" *ngIf="show"
+       (click)="stopBuble($event)" [class.center]="position=='center'"
+       [style.width.px]="width" [style.height.px]="height"
+  >
+    <div class="modal-container">
+      <div class="modal_title">
+        {{title}}
+        <span class="right" (click)="_notifyShow()"><i class="iconfont icon-x"></i></span>
+      </div>
+      <div class="modal_content">
+        <!--创建团队弹窗-->
+        <div id="createTeam" class="create-team" *ngIf="type==='team'">
+          <div class="step-row">
+            <ul>
+              <li [class.current-step]="teamStep===1">1.基本信息</li>
+              <li [class.current-step]="teamStep===2">2.邀请成员</li>
+              <li [class.current-step]="teamStep===3">3.完成</li>
+            </ul>
+          </div>
+          <div class="fill-form" *ngIf="teamStep===1">
+            <div class="sign">
+              创建团队，邀请伙伴，通过项目高效协作
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="团队名字" name="teamName" [(ngModel)]="teamName">
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="负责人电话" name="belongs_phone"
+                     [(ngModel)]="belongs_phone">
+            </div>
+            <div class="form-group">
+              <my-select [_open]="select_focus" (change)="changeSelectFocus($event)" [datalist]="businessList"
+                         (_selName)="selBusiness($event)" [place]="businessPlace"
+              ></my-select>
+            </div>
+            <div class="next">
+              <button class="btn btn-success" (click)="switchStep(2)">下一步</button>
+            </div>
+          </div>
+          <div class="fill-form" *ngIf="teamStep===2" >
+            <div class="select-person">
+              <div class="linkman">
+                <div class="xy">从已有团队人员中邀请:</div>
+                <div class="link-man-list">
+                  <div class="link-man-item" *ngFor="let item of memberList" [class.border-e8edf3]="!item.sel"
+                       [class.border-54d09f]="item.sel">
+                    <span (click)="changeUserInfoModal(item,memberList,$event)"><userInfo-img [user_id]="item.user_id"
+                                                                                              [show]="item.show"></userInfo-img></span>
+                    <span (click)="selUser(item)">
+                      <div class="name">{{item.username.substr(0,6)+'...'}}</div>
+                      <div class="duigou">
+                        <i class="iconfont icon-duigou" [class.font-54d09f]="item.sel"></i>
+                      </div>
+                    </span>
+                  </div>
+                  <div class="font-fb9fad" *ngIf="memberList.length===0">无</div>
+                </div>
+                <div class="xy">邮箱邀请:</div>
+                <div class="form-group" *ngFor="let item of yaoqingEmailList">
+                  <input type="text" class="form-control" placeholder="输入邮箱(可选)" name="teamName"
+                         [(ngModel)]="item.email">
+                </div>
+                <div class="add-email" (click)="addEmail()">继续添加</div>
+              </div>
+            </div>
+            <div class="next">
+              <button class="btn btn-success" (click)="switchStep(3)">下一步</button>
+            </div>
+          </div>
+          <div class="fill-form" *ngIf="teamStep===3">
+            <div class="sure">
+              <div class="sure-info">
+                <div class="sure-tip">请校对以下信息</div>
+                <div class="info">
+                  <div class="font-fb9fad">{{business}}</div>
+                  <div class="person-img">
+                      <span *ngFor="let item of sel_members" (click)="changeUserInfoModal(item,sel_members,$event)">
+                        <userInfo-img [show]="item.show" [user_id]="item.user_id"></userInfo-img>
+                      </span>
+                  </div>
+                </div>
+              </div>
+              <div class="create">
+                <button class="btn btn-success" (click)="createTeam()">创建</button>
+                <button class="btn btn-default" (click)="_notifyShow()">取消</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--创建项目弹窗-->
+        <div id="createProject" class="create-project" *ngIf="type==='project'">
+          <div class="content">
+            <div class="project-row">
+              <div style="font-size: 16px;padding-bottom:10px ">项目所属团队:</div>
+              <my-select></my-select>
+            </div>
+            <div class="project-row">
+              <div style="font-size: 16px;padding-bottom:10px;padding-top: 10px">项目信息:</div>
+              <input type="text" class="form-control" placeholder="项目名字">
+              <input type="text" class="form-control" placeholder="项目信息(可选)" style="margin-top:15px">
+            </div>
+            <div class="create">
+              <button class="btn btn-success">创建</button>
+              <button class="btn btn-default" (click)="_notifyShow()">取消</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal_footer">
+
+      </div>
+    </div>
+  </div>
+</div>
+<top-tip [msg]="tip" [show]="show_tip" [success]="success"></top-tip>
+

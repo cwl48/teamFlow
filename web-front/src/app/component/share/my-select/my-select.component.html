@@ -1,0 +1,87 @@
+<style>
+  .select-frame {
+    display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    position: relative
+  }
+
+  .select-foucs {
+    border-color: #66afe9;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+  }
+
+  .xiala {
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    top: 50%;
+    right: 7px;
+    margin-top: -9px;
+  }
+
+  .sel-content {
+    width: 80%;
+  }
+  .my-select{
+    position:relative ;
+  }
+  .item-list {
+    border-left: 1px solid rgba(102, 175, 233, .6);
+    border-right: 1px solid rgba(102, 175, 233, .6);
+    border-bottom: 1px solid rgba(102, 175, 233, .6);
+    width: 100%;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+    background-color: #ffffff;
+    position: absolute;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  ul li {
+    padding: 3px 10px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  ul li:first-child {
+    color: #8a8a8a;
+    cursor: auto;
+  }
+
+  ul li:not(:first-child):hover {
+    background-color: rgba(102, 175, 233,.5)
+  }
+</style>
+<div class="my-select">
+  <div id="select" class="select-frame" (click)="toggleSelect($event)" [class.select-foucs]="open">
+    <div class="sel-content place" *ngIf="selName===''">{{place}}</div>
+    <div class="sel-content selName" *ngIf="selName!==''">{{selName}}</div>
+    <div class="xiala right"><i class="iconfont icon-fanhui" style="font-size: 12px"></i></div>
+  </div>
+  <div class="item-list" *ngIf="open">
+    <ul>
+      <li>请选择所在行业</li>
+      <li *ngFor="let item of datalist" (click)="selectOne(item)">{{item}}</li>
+    </ul>
+  </div>
+</div>
