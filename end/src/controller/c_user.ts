@@ -127,9 +127,7 @@ export default class User {
         let imgData = ctx.request.body.imgData;
 
         //先判断文件夹是否存在
-        console.log(path.join(__dirname, "..", "public/head_pic"))
         let exe = await fsp.exists(path.join(__dirname, "..", "..", "public/head_pic"))
-        console.log(exe)
         if (exe) {
             await makeFile()
         }
@@ -180,13 +178,16 @@ export default class User {
         let job = ctx.request.body.job || ""
         let section = ctx.request.body.section || ""
         let phone = ctx.request.body.phone || ""
-        console.log(phone)
         let updateObj = {}
         if (username !== "") {
             Object.assign(updateObj, { username: username })
         }
 
         if (job !== "" || section !== "" || phone !== "") {
+            Object.assign(updateObj, { job: job, section: section, phone: phone })
+        }
+
+        if(username === ""&&job == "" &&section ==="" && phone ===""){
             Object.assign(updateObj, { job: job, section: section, phone: phone })
         }
 

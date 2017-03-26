@@ -21,15 +21,22 @@
     -ms-user-select: none;
     user-select: none;
     height: 140px;
+
+  }
+  .right-center{
+    left:45px;
+    top:-45px;
+  }
+  .top-center{
     top: -140px;
     left: -160px;
   }
-
   .user_info_modal .info_right {
     width: 140px;
     height: 100%;
     position: relative;
     display: inline-block;
+
   }
 
   .user_info_modal .info_left{
@@ -38,20 +45,18 @@
     position: relative;
     display: inline-block;
   }
-  .info_right .content .username {
-    font-size: 17px;
-    display: block;
-    padding-top:8px;
+  .info_right .username {
+    font-size: 15px;
+    display:block;
     overflow: hidden;
+    margin-top: 8px;
   }
   .info_right .content{
     position: absolute;
-    top:50%;
-    left: 50%;
-    margin-left: -50px;
-    margin-top: -50px;
-    width: 100px;
+    margin-top:16px;
     height: 100px;
+    width: 140px;
+    text-align: center;
     border-right: 1px solid #ccc;
   }
   .info_left .content{
@@ -75,7 +80,7 @@
     width: 45px;
   }
   .info_left .content .info_row{
-    margin-top: 4px;
+    line-height: 25px !important;
     color:#92a0ac;
   }
   .info_left .content .info_row span{
@@ -84,12 +89,15 @@
   }
 </style>
 <div class="wrap">
-  <div class="user_info_modal" *ngIf="show">
+  <div class="user_info_modal" *ngIf="show"
+       [class.top-center]="direct==='top-center'"
+       [class.right-center]="direct==='right-center'"
+  >
     <!--写反了-- -->
     <div class="info_right">
       <div class="content">
         <img [src]="imgurl" class="img-circle" alt="头像">
-        <span class="username">{{username}}</span>
+        <span class="username">{{username.substr(0,6)}}<span *ngIf="username.length>6">...</span></span>
       </div>
     </div>
     <div class="info_left">

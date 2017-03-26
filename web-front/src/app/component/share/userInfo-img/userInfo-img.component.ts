@@ -12,6 +12,7 @@ export class UserInfoImgComponent implements OnInit{
 
   @Input() user_id:string  //该组件所展示的用户id
   @Input() show:boolean   //父组件控制显示
+  @Input() direct:string = 'top-center'
   imgurl: string
   username:string
   section:string

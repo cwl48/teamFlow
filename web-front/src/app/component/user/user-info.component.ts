@@ -14,10 +14,9 @@ import {socket} from "../../tool/socket/socket";
 })
 export class UserInfoComponent implements OnInit {
 
-  user_id:string
+  user_id: string
   headImg: string = ''
   msg: string = ''
-  imgData: string
   username: string
   modifyUserName: string = ''
   modifyName_flag: boolean = false
@@ -28,7 +27,7 @@ export class UserInfoComponent implements OnInit {
   //修改信息
   job: string = ""
   section: string = ""
-  phone:string = ""
+  phone: string = ""
   modify_info_flag: boolean = false
 
   //修改密码
@@ -37,11 +36,10 @@ export class UserInfoComponent implements OnInit {
   new_pass: string = ''
   new_pass1: string = ''
 
-  success:boolean = false
+  success: boolean = false
 
   constructor(private userService: UserService,
-              private router:Router
-  ) {
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -56,19 +54,19 @@ export class UserInfoComponent implements OnInit {
 
   //初始化数据
   getInitData = (user_id) => {
-      this.userService.getUserInfo(user_id)
-        .subscribe(data=>{
-          if(data.success){
-            let res = data.datas
-            this.headImg = res.imgurl
-            this.username = res.username
-            this.job = res.job||"未填写"
-            this.section = res.section||"未填写"
-            this.phone = res.phone ||"未填写"
-          }else{
+    this.userService.getUserInfo(user_id)
+      .subscribe(data => {
+        if (data.success) {
+          let res = data.datas
+          this.headImg = res.imgurl
+          this.username = res.username
+          this.job = res.job || "未填写"
+          this.section = res.section || "未填写"
+          this.phone = res.phone || "未填写"
+        } else {
 
-          }
-        })
+        }
+      })
   }
 
   //阻止冒泡
@@ -119,7 +117,7 @@ export class UserInfoComponent implements OnInit {
         user_id: this.user_id,
         job: this.job,
         section: this.section,
-        phone:this.phone
+        phone: this.phone
       }
       this.userService.updateUserInfo(obj)
         .subscribe(data => {
@@ -147,15 +145,7 @@ export class UserInfoComponent implements OnInit {
   }
   //取消修改信息
   cancelModify = () => {
-    if (this.job === "") {
-      this.job = "未填写"
-    }
-    if (this.section === "") {
-      this.section = "未填写"
-    }
-    if (this.phone === "") {
-      this.phone = "未填写"
-    }
+    this.getInitData(this.user_id)
     this.modify_info_flag = false
   }
 
@@ -163,12 +153,12 @@ export class UserInfoComponent implements OnInit {
   modifyPass = () => {
 
     if (this.modify_pass_flag) {
-      if(this.old_pass === ""){
+      if (this.old_pass === "") {
         this.showTip("原密码不能为空")
         return
       }
       //判断两次密码是否相同
-      if ( this.new_pass.length<6 || this.new_pass1.length<6) {
+      if (this.new_pass.length < 6 || this.new_pass1.length < 6) {
         this.showTip("新密码至少6位")
         return
       }
@@ -185,11 +175,11 @@ export class UserInfoComponent implements OnInit {
         .subscribe(data => {
           if (data.success) {
             this.cancelModifyPass()
-            this.showTip("修改成功,3秒后重新登录",true)
+            this.showTip("修改成功,3秒后重新登录", true)
             sessionStorage.removeItem("token")
-            setTimeout(()=>{
+            setTimeout(() => {
               this.router.navigate(["/login"])
-            },3000)
+            }, 3000)
           }
           else {
             this.showTip(data.msg)
@@ -212,10 +202,10 @@ export class UserInfoComponent implements OnInit {
     if (nodify) {
       this.success = true
     }
-    setTimeout(()=>{
+    setTimeout(() => {
       this.show_tip = false
-      this.success =false
-    },1200)
+      this.success = false
+    }, 1200)
   }
 
   //给上传图片相关事件绑定
@@ -225,32 +215,31 @@ export class UserInfoComponent implements OnInit {
     let img_input = document.querySelector("#upload");
 
     //选定图片事件
-      img_input.addEventListener('change', (ev: any) => {
-        // 获取第一张图片
-        let img = ev.target.files[0];
-        // 当文件不是图片时 return false;
-        if (!img.type.match('image.*')) {
-          return;
-        }
-        let size = img.size / 1000;
-        if (size > 300) {
-          _this_.showTip("图片大小请控制在300k以内")
-          return
-        }
-        // 之后读取文件  并  预览
-        let reader = new FileReader();
-        reader.readAsDataURL(img);
-        reader.addEventListener('load', (e: any) => {
-          _this_.uploadImg(e.target.result)
-        });
+    img_input.addEventListener('change', (ev: any) => {
+      // 获取第一张图片
+      let img = ev.target.files[0];
+      // 当文件不是图片时 return false;
+      if (!img.type.match('image.*')) {
+        return;
+      }
+      let size = img.size / 1000;
+      if (size > 300) {
+        _this_.showTip("图片大小请控制在300k以内")
+        return
+      }
+      // 之后读取文件  并  预览
+      let reader = new FileReader();
+      reader.readAsDataURL(img);
+      reader.addEventListener('load', (e: any) => {
+        _this_.uploadImg(e.target.result)
+      });
 
-      })
+    })
 
   }
 
   //上传头像
   uploadImg = (imgData) => {
-    this.show_tip = false
     let obj = {
       user_id: this.user_id,
       imgData: imgData
@@ -260,10 +249,10 @@ export class UserInfoComponent implements OnInit {
         if (data.success) {
 
           //通知服务器修改了头像
-          let obj ={
-            msg:"modify_user_imgurl"
+          let obj = {
+            msg: "modify_user_imgurl"
           }
-          socket.emit("notify_msg",obj)
+          socket.emit("notify_msg", obj)
           this.headImg = data.datas.imgurl
           sessionStorage.setItem("headImg", this.headImg)
         }
@@ -274,7 +263,7 @@ export class UserInfoComponent implements OnInit {
   }
 
   //退出系统
-  exitSystem=()=>{
+  exitSystem = () => {
     sessionStorage.removeItem("token")
     this.router.navigate(["/login"])
   }

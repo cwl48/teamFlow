@@ -2,7 +2,7 @@ import * as Sequelize from "sequelize";
 
 const dburl = "127.0.0.1"
     //mysql连接设置
-const sequelize = new Sequelize("teamflow","root","199548lwc",{
+const sequelize = new Sequelize("teamFlow","root","199548lwc",{
         host:dburl,
         dialect:"mysql",
         pool:{

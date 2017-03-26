@@ -5,7 +5,7 @@
 import * as Router from "koa-router";
 import User from "../controller/c_user";
 import Email from "../controller/c_email"
-import Team from "../controller/c_team"
+import Team from '../controller/c_team';
 import Project from '../controller/c_project';
 const router = new Router();
 router.get("/api/email",Email.getEamilCode)     //发送验证码
@@ -28,7 +28,18 @@ router.get("/api/team/member",Team.getAllTeamMember)          //获取团队的�
 
 router.post("/api/team",Team.createTeam)                      //创建团队
 
+router.get("/api/team/:teamId",Team.getTeamInfoByTeamIdApi)   //获取团队信息                              //获取单个团队的信息
+
+router.put("/api/team/:teamId",Team.modifyTeamInfo)           //更新团队信息
+
+router.put("/api/ateam/userAuth",Team.modifyUserAuth)           //修改团队中人员的权限
+
+router.delete("/api/team",Team.destroyTeam)          //解散团队
+
 router.get("/api/team",Team.getTeamByUser)                    //获取用户所在团队
 
 router.post("/api/project",Project.createProject)             //创建项目
+
+
+
 export default router;

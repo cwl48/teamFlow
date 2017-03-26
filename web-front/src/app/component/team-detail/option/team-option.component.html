@@ -1,0 +1,53 @@
+<style>
+  a{
+    text-decoration: none;
+  }
+  .team-wrap {
+    background-color: #ffffff;
+    margin: 14px;
+    border: 1px solid #f8f6f2;
+    padding: 21px 21px 0 21px;
+  }
+  .top-tag{
+    border-bottom: solid 1px #f8f6f2;
+  }
+  .top-tag .tag{
+    display: inline-block;
+  }
+  .top-tag .tag a{
+    display: inline-block;
+    margin: 0 10px;
+    padding: 5px 15px;
+    color: #acaba7;
+    font-size: 16px;
+  }
+  .top-tag .tag a:hover{
+    color: #da4f4a;
+    border-bottom: solid 2px rgba(216,76,49,.4);
+  }
+  .top-tag .tag a.active{
+    color: #da4f4a;
+    border-bottom: 3px solid #da4f4a;
+  }
+</style>
+<div class="team-wrap">
+  <div class="inner">
+    <div class="top-tag">
+      <div class="tag" >
+        <a href="javascript:;" routerLinkActive="active" routerLink="basic">基本设置</a>
+      </div>
+      <div class="tag">
+        <a href="javascript:;" routerLinkActive="active" routerLink="member-option">成员管理</a>
+      </div>
+      <div class="tag">
+        <a href="javascript:;" routerLinkActive="active" routerLink="project-option">项目管理</a>
+      </div>
+      <div class="tag">
+        <a href="javascript:;" routerLinkActive="active" routerLink="security">安全日志</a>
+      </div>
+    </div>
+    <div class="option-content">
+        <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

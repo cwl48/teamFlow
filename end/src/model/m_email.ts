@@ -27,4 +27,4 @@ const EmailModel = sequelize.define('email', {
 });
 
 //EmailModel.sync()           //写入
-export default EmailModel;
+export default  EmailModel;

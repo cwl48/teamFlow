@@ -1,13 +1,16 @@
+import { config } from './../config/common';
 import * as Koa from 'koa'
-import TeamModel from "../model/m_team"
-import TeamUserModel from "../model/m_team_user"
 import MessageModel from "../model/m_message"
-import UserModel from "../model/m_user"
 import Email from "../controller/c_email"
 import VisitedModel from "../model/m_visited"
-import EmailModel from "../model/m_email"
-import { config } from "../config/common"
+import EmailModel from '../model/m_email';
 import * as _ from "lodash"
+import UserModel from '../model/m_user';
+import TeamModel from '../model/m_team';
+import TeamUserModel from '../model/m_team_user';
+import * as path from "path"
+const fsp = require('fs-promise');
+const host = config.host
 const uuidV1 = require('uuid/v1')
 export default class Team {
     // 创建团队
@@ -35,7 +38,8 @@ export default class Team {
                 team_id: uuidV1(),
                 teamName: teamName,
                 belongs_phone: phone,
-                bussiness: bussiness
+                bussiness: bussiness,
+                imgurl: `${host}/team_pic/team_default.png`
             })
             //把创建人加入团队
             await TeamUserModel.create({
@@ -125,33 +129,51 @@ export default class Team {
 
         try {
             //先查找自己所在的所有团队
-            let teams: any[] = await TeamUserModel.findAll({
+            let user: any = await UserModel.findOne({
+                include: [
+                    {
+                        model: TeamModel,
+                        where: {
+                            status: 1
+                        }
+                    }
+                ],
                 where: {
                     user_id: user_id
-                }, attributes: ["team_id"]
+                }
             })
             //然后查找团队中所有的成员
+            let arr: any[] = []
             let users: any[] = []
-
-            for (let team of teams) {
-                let user: any = await TeamUserModel.findAll({
+            user = JSON.parse(JSON.stringify(user))
+            for (let team of user.teams) {
+                let _team: any = await TeamModel.findOne({
                     include: [{
                         model: UserModel,
-                        attributes: ["imgurl", "username"]
+                        attributes: ["imgurl", "username", "user_id"]
                     }],
                     where: {
-                        team_id: team.team_id
+                        team_id: team.team_id,
+                        status: 1
                     }
                 })
-
-                user.forEach((u: any) => {
-                    users.push(u)
+                _team = JSON.parse(JSON.stringify(_team))
+                console.log(_team.users)
+                console.log(arr)
+                _team.users.forEach((u: any) => {
+                    if (_.indexOf(arr, u.user_id) === -1) {
+                        arr.push(u.user_id)
+                        users.push(u)
+                    }
                 })
             }
-            //去除创建人id
+            //去除当前人id
+            console.log(users)
+
             _.remove(users, (user) => {
                 return user.user_id === user_id
             })
+            console.log(users)
             ctx.body = {
                 success: true,
                 mag: "查询成功",
@@ -169,23 +191,241 @@ export default class Team {
     static getTeamByUser = async (ctx: Koa.Context, next: Function) => {
         let user_id = ctx.query.user_id
         try {
+            let teamsObject = []
+
             //先查找自己所在的所有团队
-            let teams: any[] = await TeamUserModel.findAll({
+            let user: any = await UserModel.findOne({
+                include: [
+                    {
+                        model: TeamModel,
+                        attributes: ["teamName", "imgurl", "team_id"],
+                        where: {
+                            status: 1
+                        }
+                    }
+                ],
                 where: {
                     user_id: user_id
-                }, attributes: ["team_id", "teamName"]
+                }
             })
+            for (let team of user.teams || []) {
+                //查找团队中的人数
+                let users = await TeamUserModel.findAll({
+                    where: {
+                        team_id: team.team_id
+                    }
+                })
+                user = JSON.parse(JSON.stringify(users))
+                let _team = {
+                    team_id: team.team_id,
+                    teamName: team.teamName,
+                    imgurl: team.imgurl,
+                    memberNum: users.length
+                }
+                teamsObject.push(_team)
+            }
             ctx.body = {
-                success:true,
-                msg:'查询成功',
-                datas:teams
+                success: true,
+                msg: '查询成功',
+                datas: teamsObject
             }
         } catch (e) {
             ctx.body = {
-                success:false,
-                msg:'查询出现异常'
+                success: false,
+                msg: '查询出现异常'
             }
             throw new Error(e)
+        }
+    }
+    //获取一个team的信息
+    //包括所有成员
+    static getTeamInfoByTeamId = async (team_id: string) => {
+        return await TeamModel.findOne({
+            include: [
+                {
+                    model: UserModel,
+                    include: [{
+                        model: EmailModel,
+                        attributes: ["email"]
+                    }]
+                }
+            ],
+            where: {
+                team_id: team_id
+            }
+        })
+    }
+
+    static getTeamInfoByTeamIdApi = async (ctx: Koa.Context, next: Function) => {
+        let team_id = ctx.params.teamId
+        try {
+            let teamInfo = await Team.getTeamInfoByTeamId(team_id)
+            ctx.body = {
+                success: true,
+                msg: '查询成功',
+                datas: teamInfo
+            }
+        } catch (e) {
+            throw new Error(e.stack)
+        }
+    }
+
+    //修改团队信息
+    static modifyTeamInfo = async (ctx: Koa.Context, next: Function) => {
+        let team_id = ctx.params.teamId
+        let teamName = ctx.request.body.teamName
+        let desc = ctx.request.body.desc || ""
+        let belongs_phone = ctx.request.body.phone
+        let bussiness = ctx.request.body.bussiness
+        let imgData = ctx.request.body.imgData || ""
+
+        //单独修改信息
+        if (imgData === "") {
+            try {
+                let updateInfo = await TeamModel.update({
+                    teamName: teamName,
+                    desc: desc,
+                    belongs_phone: belongs_phone,
+                    bussiness: bussiness
+                }, {
+                        where: {
+                            team_id: team_id
+                        }
+                    })
+                ctx.body = {
+                    success: true,
+                    msg: "修改成功"
+                }
+            } catch (e) {
+                ctx.body = {
+                    success: false,
+                    msg: "服务器异常"
+                }
+                throw new Error(e.stack)
+            }
+        } else {
+            try {
+
+
+                //先判断文件夹是否存在
+                let exe = await fsp.exists(path.join(__dirname, "..", "..", "public/team_pic"))
+                if (exe) {
+                    await makeFile()
+                }
+                else {
+                    let err = await fsp.mkdir(path.join(__dirname, "..", "..", "public/team_pic"))
+                    if (!err) {
+                        await makeFile()
+                    }
+                }
+
+                //创建文件
+                async function makeFile() {
+                    let date = new Date().getTime()
+                    let base64Data = imgData.replace(/^data:image\/\w+;base64,/, "");
+                    let dataBuffer = new Buffer(base64Data, 'base64');
+                    let filename = `${path.join(__dirname, "..", "..", "public/team_pic")}/${date}.png`;
+
+                    let err = await fsp.writeFile(filename, dataBuffer)
+                    if (!err) {
+                        //更新用户表的头像url
+                        let url = `${host}/team_pic/${date}.png`
+                        let update = await TeamModel.update({
+                            imgurl: url
+                        }, {
+                                where: {
+                                    team_id: team_id
+                                }
+                            })
+                        if (update.length > 0) {
+                            ctx.body = {
+                                success: true,
+                                msg: '上传Logo成功',
+                                datas: {
+                                    imgurl: url
+                                }
+                            }
+                        }
+                    }
+                }
+            } catch (e) {
+                ctx.body = {
+                    success: false,
+                    msg: "服务器异常"
+                }
+                throw new Error(e.stack)
+            }
+        }
+    }
+
+    //解散团队
+    static destroyTeam = async (ctx: Koa.Context, next: Function) => {
+        let team_id = ctx.query.teamId
+        let user_id = ctx.query.userId
+
+        console.log(ctx.request.body)
+        try {
+
+
+            //判断该用户是否是创建人
+            let isCreateUser = await TeamUserModel.findOne({
+                where: {
+                    user_id: user_id,
+                    team_id: team_id,
+                    auth: 100
+                }
+            })
+            if (isCreateUser === null) {
+                ctx.body = {
+                    success: false,
+                    msg: "您没有该权限"
+                }
+            } else {
+                //把该团队的status 置为0
+                await TeamModel.update({
+                    status: 0
+                }, {
+                        where: {
+                            team_id: team_id
+                        }
+                    })
+                ctx.body = {
+                    success: true,
+                    msg: '解散成功'
+                }
+            }
+        } catch (e) {
+            ctx.body = {
+                success: false,
+                msg: '服务器错误'
+            }
+            throw new Error(e.stack)
+        }
+    }
+
+    //修改成员权限
+    static modifyUserAuth = async (ctx: Koa.Context, next: Function) => {
+        let user_id = ctx.request.body.user_id
+        let auth = ctx.request.body.auth
+        let team_id = ctx.request.body.team_id
+        try {
+            await TeamUserModel.update({
+                auth: auth
+            }, {
+                    where: {
+                        user_id: user_id,
+                        team_id:team_id
+                    }
+                })
+            ctx.body = {
+                success: true,
+                msg: '修改成功'
+            }
+        } catch (e) {
+            ctx.body = {
+                success: false,
+                msg: "服务器异常"
+            }
         }
     }
 

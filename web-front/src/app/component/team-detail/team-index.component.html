@@ -1,0 +1,104 @@
+
+<style>
+  .nav-top {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    position: relative;
+    background-color: #fff;
+    border-bottom: solid 1px #eeece8;
+    height: 65px;
+    z-index: 3;
+    display: flex;
+    justify-content: space-between;
+    display: -webkit-flex;
+  }
+
+  .nav-top .title {
+    position: absolute;
+    width: 300px;
+    display: inline-flex;
+  }
+
+  .nav-top .title h3 {
+    min-width: 100px;
+    margin: 0 7px 0 0;
+    vertical-align: middle;
+    line-height: 54px;
+    font-size: 21px;
+    display: inline-block;
+    color: #333;
+    font-weight: 500;
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .nav-top .title h3 i {
+    font-size: 30px;
+    color: #9d9d9d;
+    padding-right: 25px;
+    padding-left: 15px;
+  }
+
+  .center-menu {
+    line-height: 62px;
+    min-height: 62px;
+    margin: 0 auto;
+    padding-left: 14px;
+    white-space: nowrap;
+  }
+
+  .center-menu ul {
+    padding: 0;
+    margin-left: -60px;
+  }
+
+  .center-menu ul li {
+    position: relative;
+    display: inline-block;
+    margin: 0 15px 0 15px;
+    padding: 0;
+  }
+
+  .center-menu ul li a {
+    display: block;
+    font-size: 16px;
+    color: #777;
+  }
+
+  .center-menu ul li a:hover {
+    color: #484744;
+  }
+
+  .center-menu ul li a.active {
+    color: #da4f4a;
+    border-bottom: 3px solid #da4f4a;
+  }
+  a {
+    text-decoration: none;
+  }
+</style>
+<div class="team-index">
+  <div class="nav-top">
+    <div class="title">
+      <h3>
+        <i class="icon iconfont icon-renwu"></i>
+        我的工作台
+      </h3>
+    </div>
+    <div class="center-menu">
+      <ul>
+        <li><a routerLinkActive="active" routerLink="project">项目</a></li>
+        <li><a routerLinkActive="active" routerLink="member">成员</a></li>
+        <li><a routerLinkActive="active" routerLink="task">任务</a></li>
+        <li><a routerLinkActive="active" routerLink="admin">设置</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="my-content" >
+    <router-outlet></router-outlet>
+  </div>
+</div>

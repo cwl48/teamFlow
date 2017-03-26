@@ -10,12 +10,18 @@ export class Tool {
   }
 
   //判断数组是否有相同的值
-  static arrayHasTheSame=(arr:string[],ele:string)=>{
+  arrayHasTheSame=(arr:string[],ele:string)=>{
      for(let i=0;i<arr.length;i++){
        if(arr[i]===ele){
          return true
        }
      }
      return false
+  }
+
+  //阻止冒泡
+  stopBubble=(e)=>{
+    window.event ? e.cancelBubble = true : e.stopPropagation();
+
   }
 }

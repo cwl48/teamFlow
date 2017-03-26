@@ -1,0 +1,203 @@
+<style>
+  a {
+    text-decoration: none;
+  }
+  .my-content {
+    background: #fff;
+    position: relative;
+    overflow-y:auto;
+    height: 580px;
+  }
+
+  .left-layout ul li {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-bottom: solid 1px #f8f6f2;
+    position: relative;
+    display: flex;
+    display: -webkit-flex;
+    align-content: center;
+  }
+
+
+  .item-name {
+    color: #333;
+    width: 200px;
+    padding: 5px;
+    margin: 10px 0;
+    display: inline-block;
+  }
+
+  .item-name .name {
+    font-size: 18px;
+    margin-left: 10px;
+  }
+
+  .item-name .tips {
+    margin-left: 15px;
+    color: #d9d7d3;
+    min-height: 60px;
+  }
+
+  .right-layout {
+    display: inline-block;
+    margin-top: 20px;
+    margin-left: 200px;
+  }
+
+  ul {
+    padding: 0;
+    list-style: none;
+  }
+
+  .headImg {
+    display: inline-block;
+  }
+
+  .headImg img {
+    width: 80px;
+    height: 80px;
+  }
+
+  .imgOption {
+    display: inline-block;
+    margin-left: 20px;
+  }
+
+  .info_row {
+    margin-top: 10px;
+    width: 300px;
+  }
+  .info_row span:last-child {
+    margin-left: 10px;
+  }
+  .text-right{
+    text-align: right;
+    display: inline-block;
+    width: 102px;
+    margin-right: 14px;
+    color: #777;
+  }
+  .destroy-sure{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-left: -150px;
+    margin-top: -100px;
+    background-color: #ffffff;
+    border: solid 1px #E1E1E1;
+    width: 300px;
+    height: 200px;
+    z-index: 99;
+    border-radius: 5px;
+    text-align: center;
+  }
+  .destroy-sure .wrap{
+    font-size: 20px;
+    margin: 50px auto 0;
+  }
+  .footer{
+    position: absolute;
+    bottom: 20px;
+  }
+  .footer button:first-child{
+    margin-left: 40px;
+    margin-right: 100px;
+  }
+</style>
+<div class="info-manage">
+  <div class="my-content">
+    <div class="left-layout">
+      <ul>
+        <li>
+          <div class="item-name">
+            <div class="name">团队信息</div>
+            <div class="tips">
+              可以修改团队名称、团队描述和所属行业；团队信息会在团队列表和团队主页中显示。
+            </div>
+          </div>
+          <div class="right-layout">
+            <div class="info" *ngIf="!modifyTeamInfo">
+              <div class="info_row">
+                <span class="text-right">团队名字:</span><span>{{teamName}}</span>
+              </div>
+              <div class="info_row">
+                <span class="text-right">行业:</span><span>{{bussiness}}</span>
+              </div>
+              <div class="info_row">
+                <span class="text-right">联系人手机:</span><span>{{phone}}</span>
+              </div>
+              <div class="info_row">
+                <span class="text-right">创建时间:</span><span>{{createTime}}</span>
+              </div>
+              <div class="info_row">
+                <span class="text-right">描述:</span><span>{{desc}}</span>
+              </div>
+            </div>
+            <div class="modify-info" *ngIf="modifyTeamInfo">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="团队名称" name="job" [(ngModel)]="teamName">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="行业" name="section" [(ngModel)]="bussiness">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="联系人手机" name="phone" [(ngModel)]="phone">
+              </div>
+              <div class="form-group">
+                <textarea class="form-control" placeholder="描述" name="phone" [(ngModel)]="desc">
+                </textarea>
+              </div>
+              <button type="submit" class="btn btn-success" (click)="modifyInfo()">保存</button>
+              <button type="submit" class="btn btn-default" style="margin-left: 35px" (click)="cancelModify()">取消
+              </button>
+            </div>
+            <div class="imgOption" style="margin-left: 100px;margin-top:10px">
+              <button class="my-btn" *ngIf="!modifyTeamInfo" (click)="modifyInfo()">修改团队信息</button>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="item-name">
+            <div class="name">团队Logo</div>
+            <div class="tips">
+              请上传团队Logo图片,让成员们凝聚在一起
+            </div>
+          </div>
+          <div class="right-layout">
+            <div class="headImg">
+              <img [src]="imgurl" alt="header">
+            </div>
+            <div class="imgOption">
+              <input #upload id="upload" type="file" accept="image/jpeg,imgage/gif,image/png" name="file"
+                     style="display: none"/>
+              <button class="my-btn" (click)="upload.click()">设置Logo</button>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="item-name">
+            <div class="name">解散团队</div>
+            <div class="tips">解散后所有数据都将被彻底删除,此操作无法撤销,请谨慎操作</div>
+          </div>
+          <div class="right-layout">
+            <div class="imgOption">
+              <button class="btn btn-danger" (click)="showDestroyModal()">解散当前团队</button>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="destroy-sure" *ngIf="destoryTeam">
+  <div class="wrap">
+    <span>您确定要解散该团队么？</span>
+  </div>
+  <div class="footer">
+    <button class="btn btn-success" (click)="destroy()">确定</button>
+    <button class="btn btn-default" (click)="showDestroyModal()">取消</button>
+  </div>
+</div>
+<top-tip [show]="show_tip" [msg]="tip" [success]="success"></top-tip>
+

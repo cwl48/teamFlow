@@ -1,49 +1,135 @@
 /* You can add global styles to this file, and also import other style files */
-html,body{
+html, body {
   width: 100%;
   height: 100%;
 }
-ul{
+
+ul {
   list-style: none;
 }
-a{
+
+a {
   text-decoration: none;
 }
-.hidden{
+
+.hidden {
   display: none;
 }
-.red{
-  color:#ffe4e1
+
+.red {
+  color: #ffe4e1
 }
-.bg-fb9fad{
-  background-color:#fb9fad;
+
+.bg-fb9fad {
+  background-color: #fb9fad;
   outline: none;
   border: 1px solid #fb9fad;
 }
+
 .bg-fb9fad:focus,
 .bg-fb9fad:visited,
 .bg-fb9fad:hover,
 .bg-fb9fad:active:hover,
-.bg-fb9fad:active:focus{
+.bg-fb9fad:active:focus {
   background-color: #fb9ca1;
   outline: none;
   border: 1px solid #fb9ca1;
 }
 
-.font-fb9fad{
-  color:#fb9ca1 ;
+.font-fb9fad {
+  color: #fb9ca1;
 }
 
-.right{
+.right {
   float: right;
 }
-.place{
+
+.place {
   color: #aaaaaa;
 }
 
-.border-54d09f{
-  border:1px solid #54d09f;
+.border-54d09f {
+  border: 1px solid #54d09f;
 }
-.font-54d09f{
-  color:#54d09f
+
+.font-54d09f {
+  color: #54d09f
 }
+
+.small, small {
+  font-size: 85%;
+}
+
+/*自定义滚轮样式*/
+/*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background-color: #F5F5F5;
+}
+
+/*定义滚动条轨道 内阴影+圆角*/
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px #fffdf9;
+  border-radius: 3px;
+  background-color: #f8f6f2;
+}
+
+/*定义滑块 内阴影+圆角*/
+::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  -webkit-box-shadow: inset 0 0 6px #efede9;
+  background-color: #e7e5e1;
+}
+
+.table--fancy {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 20px;
+  border-spacing: 0 3px;
+  border-collapse: separate;
+}
+table.table--fancy tr:nth-child(odd) td {
+  background-color: #f4f1eb!important;
+}
+
+table.table--fancy tr:nth-child(odd) td {
+  background-color: #f4f1eb!important;
+}
+
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+  padding: 8px;
+  line-height: 1.42857143;
+  vertical-align: top;
+  border-top: 1px solid #ddd;
+}
+table.table--fancy td ,
+table.table--fancy th{
+  color: #484744;
+  padding: 15px 8px!important;
+  background-color: #f8f6f2!important;
+  border: none!important;
+  font-weight: 200;
+  vertical-align: middle!important;
+}
+
+.my-btn {
+  color: #777;
+  border: solid 1px #d6d4d0;
+  background-color: #f8f6f2;
+  text-shadow: 0 0 0 transparent;
+  -webkit-box-shadow: 0 0 0 transparent;
+  box-shadow: 0 0 0 transparent;
+  padding: 6px 28px;
+  border-radius: 4px;
+  margin: 0 auto;
+  height: 32px;
+
+  outline: 0;
+  font-weight: 400;
+}
+
+.my-btn:hover {
+  background-color: #dddfdd;
+}
+

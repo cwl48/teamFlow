@@ -26,5 +26,5 @@ const  ProjectModel = sequelize.define('t_project', {
     }
 });
 
-ProjectModel.sync()           //写入
+// ProjectModel.sync()           //写入
 export default ProjectModel;

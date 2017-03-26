@@ -10,6 +10,7 @@ import {Team, TeamService} from "../../../service/team.service";
 import {ValidationService} from "../../../tool/validation/validation";
 import {socket} from "../../../tool/socket/socket";
 import {User} from "../../../service/user.service";
+import {ProjectService} from "../../../service/project.service";
 
 @Component({
   selector: 'my-modal',
@@ -26,7 +27,7 @@ import {User} from "../../../service/user.service";
       ])
     ])
   ],
-  providers:[TeamService]
+  providers:[TeamService,ProjectService]
 })
 export class MyModalComponent implements OnInit{
 
@@ -40,14 +41,16 @@ export class MyModalComponent implements OnInit{
   @Output() notifyShow = new EventEmitter<boolean>()
   state: string
 
+
+
   //创建团队modal
   teamStep: number = 1
   select_focus: boolean
   teamName:string = ''
   belongs_phone:string = ''
-  businessList: string[] = ["互联网", "游戏", "金融"]
+  businessList: any[] = [{name:"互联网"},{name:"游戏"},{name:'金融'}]
   business: string = ''
-  businessPlace: string = '所在行业'
+  businessPlace: string = '行业'
   memberList:any[] = []                   //所有的团队成员（自己所在的团队，有多个）
   sel_members:any[] = []            //选择了的团队成员
   yaoqingEmailList: any[] = [             //邀请邮箱列表
@@ -64,12 +67,14 @@ export class MyModalComponent implements OnInit{
 
   //创建项目相关
   projectName:string
-  teamList:Team[]
-  selTeam:Team
+  @Input() teamList:Team[] = []
+  sel_team_id:string
   projectInfo:string
+  teamPlace:string = "团队"
 
   constructor(private teamService:TeamService,
               private validation:ValidationService,
+              private projectService:ProjectService
   ) {
 
   }
@@ -84,6 +89,7 @@ export class MyModalComponent implements OnInit{
       show:false
     }
     this.sel_members.push(obj)
+
   }
 
 
@@ -116,13 +122,20 @@ export class MyModalComponent implements OnInit{
       show:false
     }
     this.sel_members.push(obj)
+    this.sel_team_id = ''
+    this.projectName = ''
+    this.projectInfo = ''
     this.notifyShow.emit(false)
   }
 
   changeSelectFocus=(e) =>{
-    this.select_focus = e
+    this.select_focus?this.select_focus=false:this.select_focus =true
+    if (e.stopPropagation) { //W3C阻止冒泡方法
+      e.stopPropagation();
+    } else {
+      e.cancelBubble = true; //IE阻止冒泡方法
+    }
   }
-
   changeUserInfoModal=(item,items,e)=>{
     if(!item.show){
       for(let i=0;i<items.length;i++){
@@ -140,8 +153,14 @@ export class MyModalComponent implements OnInit{
   }
   //选择行业
   selBusiness = (e) => {
-    this.business = e
+    this.business = e.name
   }
+
+  //选择团队
+  selectTeam=(e)=>{
+     this.sel_team_id = e.team_id
+  }
+
   //显示提示
   showTip = (tip: string, nodify?: boolean) => {
     this.tip = tip
@@ -194,6 +213,7 @@ export class MyModalComponent implements OnInit{
   getTeamMemberByUser=()=>{
     this.teamService.getTeamMember(sessionStorage.getItem("token"))
       .subscribe(data=>{
+        console.log(data);
         if(data.success){
           let arr:any[] = []
           data.datas.forEach((user:any)=>{
@@ -201,7 +221,7 @@ export class MyModalComponent implements OnInit{
               show:false,
               sel:false,
               user_id:user.user_id,
-              username:user.user.username
+              username:user.username
             }
             arr.push(obj)
           })
@@ -212,17 +232,6 @@ export class MyModalComponent implements OnInit{
       })
   }
 
-  //获取当前用户所在的所有团队
-  getTeamByUser=(user_id:User)=>{
-    this.teamService.getTeamByUser(user_id)
-      .subscribe(data=>{
-        if(data.success){
-
-        }else{
-
-        }
-      })
-  }
 
 
   //选择需要邀请的成员
@@ -263,9 +272,29 @@ export class MyModalComponent implements OnInit{
   }
   //创建项目
   createProject=()=>{
+    //验空
+    if(this.projectName===""){
+      this.showTip("项目名不能为空")
+      return
+    }
+    if(this.sel_team_id===""){
+      this.showTip("请选择团队")
+      return
+    }
      let obj ={
-
+       user_id:this.user_id,
+       projectName:this.projectName,
+       team_id:this.sel_team_id,
+       projectInfo:this.projectInfo
      }
+     this.projectService.createProject(obj)
+       .subscribe(data=>{
+         if(data.success){
+           this._notifyShow()
+         }else{
+           this.showTip(data.msg)
+         }
+       })
   }
 
 }

@@ -1,15 +1,17 @@
 <style>
-  li{
+  li {
     cursor: pointer;
   }
-  .left-bar-panel{
+
+  .left-bar-panel {
     width: 60px;
     height: 100%;
     position: absolute;
     top: 0;
     left: 0;
   }
-  .left-bar{
+
+  .left-bar {
     background-color: #2e2d2b;
     border-right: solid 1px #1a2224;
     position: absolute;
@@ -19,64 +21,78 @@
     width: 60px;
     text-align: center;
   }
-  .left-bar-top i{
+
+  .left-bar-top i {
     color: #ffffff;
     font-size: 30px;
     display: block;
     margin-top: 15px;
     cursor: pointer;
   }
-  .left-bar-tab{
-      padding-top: 35px;
+
+  .left-bar-tab {
+    padding-top: 35px;
   }
-  .left-bar-tab ul{
+
+  .left-bar-tab ul {
     list-style: none;
-    padding-left:0;
+    padding-left: 0;
   }
-  .left-bar-tab .item-tab li:not(:first-child){
-    padding-top: 20px;
+
+  .left-bar-tab .item-tab li:not(:first-child) {
+    margin-top: 20px;
   }
-  .left-bar-tab .item-tab li a{
+
+  .left-bar-tab .item-tab li a {
     text-decoration: none;
-    color:#92908d;
+    color: #92908d;
     display: block;
   }
-  .left-bar-tab .item-tab li i{
+
+  .left-bar-tab .item-tab li i {
     font-size: 25px;
   }
-  .left-bar-tab .item-tab li a:hover{
-    color: #ffffff;
-  }
-  .left-bar-tab .item-tab li.active{
-    border-left: 3px solid #da4f4a;
-  }
-  .left-bar-footer{
-    position: absolute;
-    bottom: 80px;
-    left:50%;
-    margin-left:-20px;
-  }
-  .left-bar-footer .add{
-    margin-bottom: 20px;
-    position: relative;
-  }
-  .left-bar-footer .add .add-wrap a{
-    text-decoration: none;
-    color:#92908d;
-    display: inline-block;
-  }
-  .left-bar-footer .add .add-wrap a:hover{
+
+  .left-bar-tab .item-tab li a:hover {
     color: #ffffff;
   }
 
-  .left-bar-footer .add .add-wrap i{
+  .left-bar-tab .item-tab li.active {
+    border-left: 3px solid #da4f4a;
+  }
+
+  .left-bar-footer {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    margin-left: -20px;
+  }
+
+  .left-bar-footer .add {
+    margin-bottom: 20px;
+    position: relative;
+  }
+
+  .left-bar-footer .add .add-wrap a {
+    text-decoration: none;
+    color: #92908d;
+    display: inline-block;
+  }
+
+  .left-bar-footer .add .add-wrap a:hover {
+    color: #ffffff;
+  }
+
+  .left-bar-footer .add .add-wrap i {
     font-size: 35px;
   }
-  .left-bar-footer .my-info img{
+
+  .left-bar-footer .my-info img {
     width: 45px;
     cursor: pointer;
   }
-  .add-content{
+
+  .add-content {
     position: absolute;
     left: 60px;
     bottom: 0;
@@ -85,21 +101,23 @@
     margin-left: -10px;
     border: 1px solid #eeece8;
     font-size: 14px;
-    -webkit-box-shadow: 0 2px 8px rgba(0,0,0,.2);
-    box-shadow: 0 2px 8px rgba(0,0,0,.2);
+    -webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, .2);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .2);
     outline: 0;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    padding:10px;
+    padding: 10px;
     z-index: 10;
   }
-  .add-content ul{
+
+  .add-content ul {
     list-style: none;
     padding-left: 0;
   }
-  .add-content ul li{
+
+  .add-content ul li {
     font-size: 14px;
     line-height: 200%;
     margin: 5px;
@@ -107,14 +125,104 @@
     position: relative;
     cursor: pointer;
   }
-  .add-content ul li:hover{
+
+  .add-content ul li:hover {
     background-color: #f8f6f2;
   }
-  .add-content ul li a{
-    color:#484744;
+
+  .add-content ul li a {
+    color: #484744;
   }
-  a{
+
+  a {
     text-decoration: none;
+  }
+
+  .my-team {
+    position: absolute;
+    z-index: 99999;
+    top: 190px;
+    left: 60px;
+    text-align: left;
+    background-color: #fff;
+    border: 1px solid #eeece8;
+    font-size: 14px;
+    -webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, .2);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .2);
+    outline: 0;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    padding: 1px;
+    width: 290px;
+  }
+
+  .my-team .top {
+    border-bottom: 1px solid #f8f6f2;
+    position: relative;
+    height: 40px;
+  }
+
+  .my-team .top span {
+    font-size: 16px;
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    margin-top: -8px;
+    display: inline-block;
+  }
+
+  .my-team .team-wrap {
+    padding: 0 5px;
+    border-bottom: 1px solid #f8f6f2;
+  }
+
+  .my-team .team-wrap :hover {
+    color: #333;
+    text-decoration: none;
+    background-color: #f1ede5;
+    border-radius: 3px;
+  }
+
+  .my-team .team {
+    position: relative;
+    padding: 5px 10px;
+  }
+
+  .team-list .team .team-name {
+    font-size: 15px;
+    position: absolute;
+    left: 80px;
+    top: 8px;
+    line-height: 100%;
+    margin: 0;
+    overflow: hidden;
+  }
+
+  .my-team .team img {
+    width: 60px;
+    height:50px;
+  }
+
+  .small > i {
+    font-size: 12px !important;
+  }
+
+  .small {
+    position: absolute;
+    top: 40px;
+    left: 80px;
+  }
+
+  .team-footer {
+    margin: 20px auto 10px;
+    display: flex;
+    display: -webkit-flex;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    height: 30px;
   }
 </style>
 <div class="left-bar-panel">
@@ -124,15 +232,38 @@
     </div>
     <div class="left-bar-tab">
       <ul class="item-tab">
-        <li routerLinkActive="active" routerLink="/task"><a href="javascript:;"><i class="icon iconfont icon-renwu"></i><br>我的</a></li>
+        <li routerLinkActive="active" routerLink="/task"><a href="javascript:;"><i class="icon iconfont icon-renwu"></i><br>我的</a>
+        </li>
         <li><a href="#"><i class="icon iconfont icon-liaotian"></i><span style="display: block">聊天</span></a></li>
         <li><a href="#"><i class="icon iconfont icon-xiangmu"></i><br>项目</a></li>
-        <li><a href="#"><i class="icon iconfont icon-tuandui1"></i><br>团队</a></li>
+        <li [class.active]="router_in_team" (click)="toggleShowMyTeam($event)"><a href="javascipt:;"><i class="iconfont icon-tuandui1"></i><br>团队</a>
+          <div class="my-team" *ngIf="showMyTeam" (click)="stopBubble($event)">
+            <div class="top">
+              <span>我的团队</span>
+            </div>
+            <div class="team-list">
+              <div class="team-wrap" *ngFor="let item of teamList" (click)="selOneTeam(item,$event)">
+                <div class="team">
+                  <img [src]="item.imgurl" alt="头像">
+                  <h5 class="team-name">{{item.name}}</h5>
+                  <span class="small">
+              <i class="iconfont icon-touxiang"></i>
+              {{item.memberNum}}人
+            </span>
+                </div>
+              </div>
+            </div>
+            <div class="team-footer">
+              <button class="btn btn-success btn-block" (click)="createTeam($event)">创建新团队</button>
+            </div>
+          </div>
+
+        </li>
         <li><a href="#"><i class="icon iconfont icon-tongzhi"></i><br>通知</a></li>
       </ul>
     </div>
     <div class="left-bar-footer">
-      <div class="add" (click)="toggle($event)">
+      <div class="add" (click)="toggleFast($event)">
         <div class="add-wrap" tooltip="快速创建" placement="right" container="body" #pop="bs-tooltip">
           <a href="javascript:;" (click)="pop.hide()">
             <i class="icon iconfont icon-jikediancanicon09"></i>
@@ -141,8 +272,9 @@
         <div class="add-content" *ngIf="has_add">
           <div class="add-item">
             <ul>
-              <li (click)="createTeam()"><a href="javascript:;" ><i class="icon iconfont icon-tuandui" ></i> 团队</a></li>
-              <li (click)="createProject()"><a href="javascript:;" ><i class="icon iconfont icon-xiangmu"></i> 项目</a></li>
+              <li (click)="createTeam($event)"><a href="javascript:;"><i class="icon iconfont icon-tuandui"></i> 团队</a></li>
+              <li (click)="createProject()"><a href="javascript:;"><i class="icon iconfont icon-xiangmu"></i> 项目</a>
+              </li>
               <li><a href="javascript:;"><i class="icon iconfont icon-renwu"></i> 任务</a></li>
               <li><a href="javascript:;"><i class="icon iconfont icon-iconrc"></i> 日程</a></li>
             </ul>
@@ -150,11 +282,13 @@
         </div>
       </div>
       <div class="my-info">
-        <a routerLink="/userInfo"><img [src]="imgurl" alt="头像" class="img-circle" tooltip="个人信息" placement="right" container="body"></a>
+        <a routerLink="/userInfo"><img [src]="imgurl" alt="头像" class="img-circle" tooltip="个人信息" placement="right"
+                                       container="body"></a>
       </div>
     </div>
   </div>
 </div>
 <my-modal [show]="show_modal" (notifyShow)="closeShowModal($event)"
           [width]="width" [height]="height" [title]="title" [type]="type"
+          [teamList]="teamList"
 ></my-modal>

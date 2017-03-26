@@ -73,15 +73,15 @@
   }
 </style>
 <div class="my-select">
-  <div id="select" class="select-frame" (click)="toggleSelect($event)" [class.select-foucs]="open">
+  <div id="select" class="select-frame" [class.select-foucs]="open">
     <div class="sel-content place" *ngIf="selName===''">{{place}}</div>
     <div class="sel-content selName" *ngIf="selName!==''">{{selName}}</div>
     <div class="xiala right"><i class="iconfont icon-fanhui" style="font-size: 12px"></i></div>
   </div>
   <div class="item-list" *ngIf="open">
     <ul>
-      <li>请选择所在行业</li>
-      <li *ngFor="let item of datalist" (click)="selectOne(item)">{{item}}</li>
+      <li>请选择{{place}}</li>
+      <li *ngFor="let item of datalist" (click)="selectOne(item)">{{item.name}}</li>
     </ul>
   </div>
 </div>

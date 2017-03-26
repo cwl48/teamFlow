@@ -12,6 +12,7 @@ export class TeamService {
 
   teamUrl:string  =`${host}/api/team`
   getTeamMemberUrl: string = `${host}/api/team/member`
+  modifyUserAuthUrl:string = `${host}/api/ateam/userAuth`
 
   constructor(private http: Http) {
   }
@@ -39,6 +40,7 @@ export class TeamService {
     return this.http.get(url)
       .map(this.send)
   }
+
   send = (res: Response) => {
     return res.json()
   }
@@ -46,6 +48,30 @@ export class TeamService {
   //创建团队
   createTeam=(obj:any)=>{
     return this.http.post(this.teamUrl,obj)
+      .map(this.send)
+  }
+
+  //获取一个团队的信息 包括所有成员
+  getTeamInfo=(team_id:string)=>{
+     return this.http.get(`${this.teamUrl}/${team_id}`)
+       .map(this.send)
+  }
+  //修改团队信息
+  modifyInfo=(team:Team)=>{
+    let url = `${this.teamUrl}/${team.team_id}`
+    return this.http.put(url,team)
+      .map(this.send)
+  }
+
+  //解散团队
+  destroy=(team:Team)=>{
+    let url = `${this.teamUrl}?teamId=${team.team_id}&userId=${team.user_id}`
+    return this.http.delete(url,team)
+      .map(this.send)
+  }
+  //修改团队中权限
+  modifyUserAuth=(auth)=>{
+    return this.http.put(this.modifyUserAuthUrl,auth)
       .map(this.send)
   }
 }
@@ -58,5 +84,6 @@ export class Team {
   user_id?: string
   bussiness?: string
   status?: string
-
+  memberNum?:number
+  imgurl?:string
 }

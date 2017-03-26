@@ -2,7 +2,7 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
 <svg xmlns="http://www.w3.org/2000/svg">
 <metadata>
-Created by FontForge 20120731 at Wed Mar 22 15:57:52 2017
+Created by FontForge 20120731 at Sat Mar 25 10:26:11 2017
  By admin
 </metadata>
 <defs>
@@ -102,5 +102,8 @@ t-27.5 11t-27 -11v0z" />
     <glyph glyph-name="iconrc" unicode="&#xe691;" 
 d="M878 -30h-732q-40 0 -68.5 28.5t-28.5 68.5v585q0 41 28.5 69.5t68.5 28.5h98v48h49v-48h438v48h49v-48h98q40 0 68.5 -28.5t28.5 -69.5v-97v-49v-439q0 -40 -28.5 -68.5t-68.5 -28.5zM926 652q0 20 -14 34.5t-34 14.5h-98v-49h-49v49h-438v-49h-49v49h-98
 q-20 0 -34 -14.5t-14 -34.5v-97h828v97zM926 506h-828v-439q0 -20 14 -34.5t34 -14.5h732q20 0 34 14.5t14 34.5v439z" />
+    <glyph glyph-name="touxiang" unicode="&#xe6e1;" 
+d="M344 424q8 -7 21.5 -16t50.5 -25.5t75 -22.5t90.5 4.5t100.5 43.5q43 34 68 82t25 103q0 98 -74 168t-178.5 70t-178.5 -70t-74 -168q0 -100 74 -169zM709 356q-100 -59 -197 -62q-97 3 -197 62q-27 -19 -58 -44.5t-66 -59t-57.5 -69.5t-23.5 -65q0 -27 1.5 -45t11 -45.5
+t26.5 -45t52 -31t84 -14.5h454q36 1 64 8t46 16.5t31 25.5t19 29.5t9.5 34t4.5 33.5t1 34q0 29 -23 65t-58 69.5t-66 59t-58 44.5z" />
   </font>
 </defs></svg>

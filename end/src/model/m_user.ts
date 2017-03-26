@@ -38,6 +38,5 @@ const UserModel = sequelize.define('user', {
         defaultValue: ""
     }
 });
-UserModel.belongsTo(EmailModel, { foreignKey: 'email_id' })
 //UserModule.sync()           //写入
 export default UserModel;

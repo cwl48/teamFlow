@@ -30,7 +30,8 @@ const routes: Routes = [
 
         ]
       },
-      {path:'userInfo',loadChildren:'app/module/userinfo.module#UserInfoModule'}
+      {path:'userInfo',loadChildren:'app/module/userinfo.module#UserInfoModule'},
+      {path:'team/:id',loadChildren:'app/module/team.module#TeamModule'}
     ]
   }
 ];

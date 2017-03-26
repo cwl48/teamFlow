@@ -91,18 +91,19 @@
     max-height: 133px;
     margin-bottom: 10px;
     position: relative;
+
   }
 
   .link-man-list .link-man-item {
     display: inline-block;
-    margin: 0 5px 5px 0;
+    margin:0 5px 5px 0;
     padding: 3px 10px 0 5px;
     width: 186px;
-    height: 48px;
-
+    height: 55px;
     cursor: pointer;
     background: #f8f6f2;
     position: relative;
+    line-height: 55px;
   }
 
   .border-e8edf3 {
@@ -172,13 +173,15 @@
   /*创建团队样式end*/
 
   /*创建项目样式*/
-  .create-project{
-    border-top:3px solid #54d09f;
+  .create-project {
+    border-top: 3px solid #54d09f;
   }
-  .create-project .content{
+
+  .create-project .content {
     width: 95%;
     margin: 20px auto;
   }
+
   /*创建项目样式end*/
 </style>
 <div [class.wrap]="show">
@@ -213,23 +216,25 @@
                      [(ngModel)]="belongs_phone">
             </div>
             <div class="form-group">
-              <my-select [_open]="select_focus" (change)="changeSelectFocus($event)" [datalist]="businessList"
-                         (_selName)="selBusiness($event)" [place]="businessPlace"
-              ></my-select>
+              <span (click)="changeSelectFocus($event)">
+                <my-select [open]="select_focus" [datalist]="businessList"
+                           (selItem)="selBusiness($event)" [place]="businessPlace"
+                ></my-select>
+              </span>
             </div>
             <div class="next">
               <button class="btn btn-success" (click)="switchStep(2)">下一步</button>
             </div>
           </div>
-          <div class="fill-form" *ngIf="teamStep===2" >
+          <div class="fill-form" *ngIf="teamStep===2">
             <div class="select-person">
               <div class="linkman">
                 <div class="xy">从已有团队人员中邀请:</div>
                 <div class="link-man-list">
                   <div class="link-man-item" *ngFor="let item of memberList" [class.border-e8edf3]="!item.sel"
                        [class.border-54d09f]="item.sel">
-                    <span (click)="changeUserInfoModal(item,memberList,$event)"><userInfo-img [user_id]="item.user_id"
-                                                                                              [show]="item.show"></userInfo-img></span>
+                    <span (click)="changeUserInfoModal(item,memberList,$event)">
+                      <userInfo-img [user_id]="item.user_id" [show]="item.show"></userInfo-img></span>
                     <span (click)="selUser(item)">
                       <div class="name">{{item.username.substr(0,6)+'...'}}</div>
                       <div class="duigou">
@@ -276,15 +281,18 @@
           <div class="content">
             <div class="project-row">
               <div style="font-size: 16px;padding-bottom:10px ">项目所属团队:</div>
-              <my-select></my-select>
+              <span (click)="changeSelectFocus($event)">
+                <my-select [datalist]="teamList" [place]="teamPlace" [open]="select_focus"
+                           (selItem)="selectTeam($event)"></my-select>
+              </span>
             </div>
             <div class="project-row">
               <div style="font-size: 16px;padding-bottom:10px;padding-top: 10px">项目信息:</div>
-              <input type="text" class="form-control" placeholder="项目名字">
-              <input type="text" class="form-control" placeholder="项目信息(可选)" style="margin-top:15px">
+              <input type="text" class="form-control" placeholder="项目名字" [(ngModel)]="projectName">
+              <textarea class="form-control" placeholder="项目信息(可选)" style="margin-top:15px" [(ngModel)]="projectInfo"></textarea>
             </div>
             <div class="create">
-              <button class="btn btn-success">创建</button>
+              <button class="btn btn-success" (click)="createProject()">创建</button>
               <button class="btn btn-default" (click)="_notifyShow()">取消</button>
             </div>
           </div>

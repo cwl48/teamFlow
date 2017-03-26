@@ -1,6 +1,7 @@
 import sequelize from '../config/db';
 import * as Sequelize from 'Sequelize';
 import UserModel from "./m_user";
+import TeamModel from './m_team';
 const TeamUserModel = sequelize.define('team_user', {
     id: {                       //主键
         type: Sequelize.INTEGER,
@@ -19,9 +20,8 @@ const TeamUserModel = sequelize.define('team_user', {
     auth:{
         type: Sequelize.INTEGER,            //用户权限       0.普通员工权限 1.经理权限 100.创建人权限
         defaultValue: 0
-    }
+    }  
 });
 
 // TeamUserModel.sync()           //写入
-TeamUserModel.belongsTo(UserModel,{foreignKey:'user_id'})
 export default TeamUserModel;
