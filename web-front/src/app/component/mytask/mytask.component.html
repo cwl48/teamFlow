@@ -18,6 +18,8 @@
     position: absolute;
     width: 300px;
     display: inline-flex;
+    top:2px;
+    left:10px;
   }
 
   .nav-top .title h3 {
@@ -38,7 +40,6 @@
   .nav-top .title h3 i {
     font-size: 30px;
     color: #9d9d9d;
-    padding-right: 25px;
     padding-left: 15px;
   }
 
@@ -92,12 +93,11 @@
     <div class="center-menu">
       <ul>
         <li><a routerLinkActive="active" routerLink="/task">任务</a></li>
-        <li><a routerLinkActive="active" routerLink="/schedule">日程</a></li>
         <li><a routerLinkActive="active" routerLink="/message">动态</a></li>
       </ul>
     </div>
   </div>
-  <div class="my-content" >
+  <div class="my-content" id="task-wrap">
     <router-outlet></router-outlet>
   </div>
 </div>

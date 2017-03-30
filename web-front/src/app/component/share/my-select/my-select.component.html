@@ -52,7 +52,9 @@
     background-color: #ffffff;
     position: absolute;
   }
-
+  .show_top{
+    top:-65px
+  }
   ul {
     list-style: none;
     padding: 0;
@@ -78,7 +80,7 @@
     <div class="sel-content selName" *ngIf="selName!==''">{{selName}}</div>
     <div class="xiala right"><i class="iconfont icon-fanhui" style="font-size: 12px"></i></div>
   </div>
-  <div class="item-list" *ngIf="open">
+  <div class="item-list" *ngIf="open" [class.show_top]="top">
     <ul>
       <li>请选择{{place}}</li>
       <li *ngFor="let item of datalist" (click)="selectOne(item)">{{item.name}}</li>

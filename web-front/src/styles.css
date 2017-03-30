@@ -37,7 +37,7 @@ a {
 }
 
 .font-fb9fad {
-  color: #fb9ca1;
+  color: #fb9ca1 !important;
 }
 
 .right {
@@ -133,3 +133,19 @@ table.table--fancy th{
   background-color: #dddfdd;
 }
 
+.o{
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  color: #d9d7d3;
+  border: solid 1px #d9d7d3;
+  border-radius: 50%;
+  display: inline-block;
+  font-size: 18px!important;
+  cursor: pointer;
+  text-align: center;
+}
+.o:hover{
+  border:solid 1px #fb9ca1;
+  color:#fb9ca1;
+}

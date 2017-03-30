@@ -12,7 +12,7 @@ import {TeamService} from "../../../service/team.service";
 export class TeamBasicOptionComponent implements OnInit {
 
   team_id: string
-
+  user_id:string
   //团队信息
   teamName: string
   bussiness: string
@@ -39,6 +39,7 @@ export class TeamBasicOptionComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.user_id = sessionStorage.getItem("token")
     this.team_id = sessionStorage.getItem("team_id")
     this.getTeamInfo(this.team_id)
     this.preView()
@@ -71,7 +72,8 @@ export class TeamBasicOptionComponent implements OnInit {
         teamName: this.teamName,
         desc: this.desc,
         phone: this.phone,
-        bussiness: this.bussiness
+        bussiness: this.bussiness,
+        user_id:this.user_id
       }
       this.teamService.modifyInfo(obj)
         .subscribe(data => {
@@ -136,7 +138,8 @@ export class TeamBasicOptionComponent implements OnInit {
   uploadImg = (imgData: string) => {
     let obj = {
       team_id: this.team_id,
-      imgData: imgData
+      imgData: imgData,
+      user_id:this.user_id
     }
     this.teamService.modifyInfo(obj)
       .subscribe(data => {

@@ -1,5 +1,6 @@
 import sequelize from '../config/db';
 import * as Sequelize from 'Sequelize';
+import Team from '../controller/c_team';
 
 const TeamLogModel = sequelize.define("team_log", {
     id: {                       //团队操作id
@@ -39,4 +40,5 @@ const TeamLogModel = sequelize.define("team_log", {
 });
 
 // TeamLogModel.sync()           //写入
+
 export default TeamLogModel;

@@ -3,6 +3,11 @@ import * as Sequelize from 'Sequelize';
 import TeamUserModel from './m_team_user';
 import UserModel from './m_user';
 import EmailModel from './m_email';
+import TeamLogModel from './m_team_log';
+import ProjectModel from './m_project';
+import ProjectUserModel from './m_project_user';
+import TaskModel from './m_task';
+import UserTaskModel from './m_user_task';
 const TeamModel = sequelize.define('team', {
     team_id: {                       //主键团队id
         type: Sequelize.STRING,
@@ -46,5 +51,23 @@ TeamUserModel.belongsTo(UserModel,{foreignKey:'user_id'})
 TeamUserModel.belongsTo(TeamModel,{foreignKey:'team_id'})
 TeamModel.belongsToMany(UserModel,{through:TeamUserModel,foreignKey:"team_id",otherKey:"user_id"})
 UserModel.belongsToMany(TeamModel,{through:TeamUserModel,foreignKey:"user_id",otherKey:"team_id"})
+
+TeamLogModel.belongsTo(UserModel,{foreignKey:'user_id'})
+
+//项目跟团队关联
+ProjectModel.belongsTo(TeamModel,{foreignKey:"team_id"})
+
+//项目跟用户关联
+ProjectModel.belongsToMany(UserModel,{through:ProjectUserModel,foreignKey:'project_id',otherKey:'user_id'})
+UserModel.belongsToMany(ProjectModel,{through:ProjectUserModel,foreignKey:'user_id',otherKey:'project_id'})
+
+//项目跟任务关联
+TaskModel.belongsTo(ProjectModel,{foreignKey:"project_id"})
+
+//任务跟用户关联
+UserModel.belongsToMany(TaskModel,{through:UserTaskModel,foreignKey:"user_id",otherKey:"task_id"})
+TaskModel.belongsToMany(UserModel,{through:UserTaskModel,foreignKey:"task_id",otherKey:"user_id"})
+
+
 // TeamModel.sync()           //写入
 export default TeamModel;

@@ -14,6 +14,11 @@ export class TeamMemberOptionComponent implements OnInit {
   team_id:string
   direct:string = 'right-center'
   userList:any[] = []
+
+  //显示提示
+  tip:string
+  show_tip:boolean
+  success:boolean
   constructor(private teamService:TeamService) {
   }
 
@@ -70,6 +75,7 @@ export class TeamMemberOptionComponent implements OnInit {
   }
   showUserInfoMoal=(item,e)=>{
     window.event?e.cancelBubble = true:e.stopBubble = true
+    this.clearAll()
     item.show = !item.show
   }
   //去除所有的userModal
@@ -91,6 +97,7 @@ export class TeamMemberOptionComponent implements OnInit {
   //修改权限
   modifyAuth=(item,auth)=>{
     let obj = {
+      handle_user_id:sessionStorage.getItem("token"),
       user_id:item.user_id,
       auth:auth,
       team_id:this.team_id
@@ -105,6 +112,21 @@ export class TeamMemberOptionComponent implements OnInit {
           }
           item.show_auth = false
         }
+        else{
+          this.showTip(data.msg)
+        }
       })
+  }
+  //显示提示
+  showTip = (tip: string, nodify?: boolean) => {
+    this.tip = tip
+    this.show_tip = true
+    if (nodify) {
+      this.success = true
+    }
+    setTimeout(() => {
+      this.show_tip = false
+      this.success = false
+    }, 1200)
   }
 }

@@ -21,22 +21,16 @@ export class TeamService {
    *  获取团队成员  有两种情况
    *  1.获取自己所在的团队(可能有多个团队)的人员（user_id） 2.获取某一团队所有的成员(team_id)
    */
-  getTeamMember = (user_id?: User, team_id?: Team) => {
-    let url = ''
-    if (user_id) {
-      url = `${this.getTeamMemberUrl}?user_id=${user_id}`
-    } else {
-      url = `${this.getTeamMemberUrl}?team_id=${team_id}`
-    }
+  getTeamMember = (user_id: User) => {
+    let url = `${this.getTeamMemberUrl}?user_id=${user_id}`
     return this.http.get(url)
       .map(this.send)
   }
-
   /*
    *  获取用户所在团队
    */
   getTeamByUser =(user_id:User)=>{
-    let url = `${this.teamUrl}?user_id=${user_id}`
+    let url = `${this.teamUrl}/byuser?user_id=${user_id}`
     return this.http.get(url)
       .map(this.send)
   }
@@ -53,7 +47,7 @@ export class TeamService {
 
   //获取一个团队的信息 包括所有成员
   getTeamInfo=(team_id:string)=>{
-     return this.http.get(`${this.teamUrl}/${team_id}`)
+     return this.http.get(`${this.teamUrl}?team_id=${team_id}`)
        .map(this.send)
   }
   //修改团队信息
@@ -74,10 +68,17 @@ export class TeamService {
     return this.http.put(this.modifyUserAuthUrl,auth)
       .map(this.send)
   }
+
+  //获取team_log
+  getTeamLogs=(team_id:string)=>{
+    let url = `${this.teamUrl}/log?team_id=${team_id}`
+     return this.http.get(url)
+       .map(this.send)
+  }
+
 }
 
 export class Team {
-
   team_id?: string
   teamName?: string
   belongs_phone?: string
@@ -87,3 +88,15 @@ export class Team {
   memberNum?:number
   imgurl?:string
 }
+
+export class TeamLog {
+  handle_user_id?: string
+  user_id?: string
+  ip?: string
+  type?: string
+  message?: string
+  team_id?: string
+  project_id?: string
+  show?:boolean
+}
+

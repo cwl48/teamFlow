@@ -11,6 +11,7 @@ import {MyModalComponent} from "../component/share/my-modal/my-modal.component";
 import {MySelectComponent} from "../component/share/my-select/my-select.component";
 import {ValidationService} from "../tool/validation/validation";
 import {UserInfoImgComponent} from "../component/share/userInfo-img/userInfo-img.component";
+import {TaskDetailComponent} from "../component/share/task-detail/task-detail.component";
 
 @NgModule({
     imports: [FormsModule,CommonModule],
@@ -22,14 +23,16 @@ import {UserInfoImgComponent} from "../component/share/userInfo-img/userInfo-img
       TopTipComponent,
       MyModalComponent,
       MySelectComponent,
-      UserInfoImgComponent
+      UserInfoImgComponent,
+      TaskDetailComponent
     ],
     declarations: [
       FlowerBgComponent,
       TopTipComponent,
       MyModalComponent,
       MySelectComponent,
-      UserInfoImgComponent
+      UserInfoImgComponent,
+      TaskDetailComponent
     ],
     providers: [ValidationService],
 })

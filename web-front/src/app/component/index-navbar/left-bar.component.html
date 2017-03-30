@@ -1,4 +1,16 @@
 <style>
+
+  .modal-wrap{
+    position: fixed;
+    z-index: 8;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: #eeece8;
+    opacity: .8;
+  }
+
   li {
     cursor: pointer;
   }
@@ -9,6 +21,7 @@
     position: absolute;
     top: 0;
     left: 0;
+    z-index: 33333;
   }
 
   .left-bar {
@@ -138,11 +151,12 @@
     text-decoration: none;
   }
 
-  .my-team {
+  .my-team
+  {
     position: absolute;
-    z-index: 99999;
     top: 190px;
     left: 60px;
+    z-index: 999;
     text-align: left;
     background-color: #fff;
     border: 1px solid #eeece8;
@@ -156,6 +170,19 @@
     user-select: none;
     padding: 1px;
     width: 290px;
+  }
+
+  .my-project {
+    opacity: 1;
+    background-color: #fff;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left:-350px;
+    width: 290px;
+    z-index: 9;
+    -webkit-box-shadow: 1px 0 5px rgba(0,0,0,.14);
+    box-shadow: 1px 0 5px rgba(0,0,0,.14);
   }
 
   .my-team .top {
@@ -173,24 +200,45 @@
     display: inline-block;
   }
 
-  .my-team .team-wrap {
-    padding: 0 5px;
+  .my-team .team-wrap
+
+  {
+    width: 97%;
+    padding: 0 10px;
     border-bottom: 1px solid #f8f6f2;
   }
-
-  .my-team .team-wrap :hover {
+  .my-project .project-wrap{
+    width: 97%;
+    padding: 0 10px;
+    margin-top:5px;
+    cursor: pointer;
+  }
+  .my-team .team-wrap :hover
+  {
     color: #333;
     text-decoration: none;
     background-color: #f1ede5;
     border-radius: 3px;
   }
 
-  .my-team .team {
+  .my-team .team,
+  .my-project .project {
     position: relative;
     padding: 5px 10px;
-  }
+    border-bottom: 1px solid #f8f6f2;
 
-  .team-list .team .team-name {
+  }
+  .my-project .project:hover{
+    color: #333;
+    background-color: #f1ede5;
+    border-radius: 3px;
+  }
+  .my-project .project{
+    height: 50px;
+  }
+  .team-list .team .team-name,
+  .project-list .project .project-name
+  {
     font-size: 15px;
     position: absolute;
     left: 80px;
@@ -199,10 +247,13 @@
     margin: 0;
     overflow: hidden;
   }
-
+  .project-list .project .project-name{
+    left: 30px;
+    width: 85%;
+  }
   .my-team .team img {
     width: 60px;
-    height:50px;
+    height: 50px;
   }
 
   .small > i {
@@ -224,6 +275,63 @@
     width: 80%;
     height: 30px;
   }
+
+  .my-project .top {
+    color: #333;
+    background-color: #fff;
+    font-size: 18px;
+    padding: 15px 21px;
+    font-weight: 300;
+    letter-spacing: 1px;
+  }
+
+  .search-project {
+    width: 280px;
+    height: 30px;
+    border-bottom: 1px solid #f8f6f2;
+  }
+
+  .my-project .search-project .left,
+  .my-project .search-project .right {
+    display: inline-block;
+    position: relative;
+  }
+
+  .my-project .search-project .left {
+    width: 80%;
+    height: 100%;
+  }
+
+  .search-project .icon-search {
+    position: absolute;
+    font-size: 16px !important;
+    color: #777;
+    z-index: 2;
+    left: 15px;
+  }
+
+  .search-project input {
+    position: absolute;
+    font-size: 14px;
+    color: #777;
+    left: 40px;
+    outline: none;
+    border: none !important;
+    padding-left: 10px
+  }
+  .all-project{
+    color:#b9b9b7;
+    cursor: pointer;
+  }
+  .all-project:hover{
+    color: #da4f4a;
+  }
+  .no-complete-task{
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    color:#b9b9b7 !important;
+  }
 </style>
 <div class="left-bar-panel">
   <div id="left-bar" class="left-bar">
@@ -235,9 +343,12 @@
         <li routerLinkActive="active" routerLink="/task"><a href="javascript:;"><i class="icon iconfont icon-renwu"></i><br>我的</a>
         </li>
         <li><a href="#"><i class="icon iconfont icon-liaotian"></i><span style="display: block">聊天</span></a></li>
-        <li><a href="#"><i class="icon iconfont icon-xiangmu"></i><br>项目</a></li>
-        <li [class.active]="router_in_team" (click)="toggleShowMyTeam($event)"><a href="javascipt:;"><i class="iconfont icon-tuandui1"></i><br>团队</a>
-          <div class="my-team" *ngIf="showMyTeam" (click)="stopBubble($event)">
+        <li (click)="toggleShowMyProject($event)" [class.active]="router_in==='project'"><a href="javascript:;"><i class="icon iconfont icon-xiangmu" ></i><br>项目</a>
+
+        </li>
+        <li [class.active]="router_in==='team'" (click)="toggleShowMyTeam($event)"><a href="javascipt:;"><i
+          class="iconfont icon-tuandui1"></i><br>团队</a>
+          <div  class="my-team" *ngIf="showMyTeam" (click)="stopBubble($event)">
             <div class="top">
               <span>我的团队</span>
             </div>
@@ -272,11 +383,11 @@
         <div class="add-content" *ngIf="has_add">
           <div class="add-item">
             <ul>
-              <li (click)="createTeam($event)"><a href="javascript:;"><i class="icon iconfont icon-tuandui"></i> 团队</a></li>
+              <li (click)="createTeam($event)"><a href="javascript:;"><i class="icon iconfont icon-tuandui"></i> 团队</a>
+              </li>
               <li (click)="createProject()"><a href="javascript:;"><i class="icon iconfont icon-xiangmu"></i> 项目</a>
               </li>
               <li><a href="javascript:;"><i class="icon iconfont icon-renwu"></i> 任务</a></li>
-              <li><a href="javascript:;"><i class="icon iconfont icon-iconrc"></i> 日程</a></li>
             </ul>
           </div>
         </div>
@@ -288,6 +399,31 @@
     </div>
   </div>
 </div>
+<div class="modal-wrap" *ngIf="state==='in'"></div>
+  <div [@flyInOut]="state" class="my-project" (click)="stopBubble($event)" >
+    <div class="top">
+      <span>项目</span>
+    </div>
+    <div class="search-project">
+      <div class="left">
+        <i class="iconfont icon-search"></i>
+        <input id="search" type="text" placeholder="快速查找项目" [(ngModel)]="searchName">
+      </div>
+      <div class="right">
+        <span class="all-project" (click)="getUserAllProjectInfo()">全部项目</span>
+      </div>
+    </div>
+    <div class="project-list">
+      <div class="project-wrap" *ngFor="let item of projectList" (click)="selOneProject(item,$event)">
+        <div class="project">
+          <div class="project-name">{{item.projectName}}<span class="right font-fb9fad" style="font-size: 11px">{{item.team.teamName}}</span></div>
+          <div class="no-complete-task" style="font-size: 13px">
+            团队正在进行任务数 <span>1</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 <my-modal [show]="show_modal" (notifyShow)="closeShowModal($event)"
           [width]="width" [height]="height" [title]="title" [type]="type"
           [teamList]="teamList"

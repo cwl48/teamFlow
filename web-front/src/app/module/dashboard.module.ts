@@ -11,6 +11,7 @@ import {MyTaskComponent} from "../component/mytask/mytask.component";
 import {TaskComponent} from "../component/mytask/task.component";
 import {SignUpComponent} from "../component/home/signup.component";
 import {SignInComponent} from "../component/home/signin.component";
+import {OneTaskComponent} from "../component/mytask/one-task.component";
 
 @NgModule({
     imports: [AppShareModule,DashBoardRoutingModule,TooltipModule.forRoot()],
@@ -18,7 +19,8 @@ import {SignInComponent} from "../component/home/signin.component";
       DashBoardComponent,
       LeftBarComponent,
       MyTaskComponent,
-      TaskComponent
+      TaskComponent,
+      OneTaskComponent
     ],
     providers: [],
 })

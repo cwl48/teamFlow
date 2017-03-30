@@ -1,14 +1,14 @@
 /**
  * Created by 李 on 2017/3/22.
  */
-import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter, OnChanges} from '@angular/core';
 import {UserService} from "../../../service/user.service";
 
 @Component({
   selector: 'userInfo-img',
   templateUrl: 'userInfo-img.component.html'
 })
-export class UserInfoImgComponent implements OnInit{
+export class UserInfoImgComponent implements OnInit,OnChanges{
 
   @Input() user_id:string  //该组件所展示的用户id
   @Input() show:boolean   //父组件控制显示
@@ -30,6 +30,9 @@ export class UserInfoImgComponent implements OnInit{
   }
 
   ngOnInit() {
+    this.getOneUserInfo(this.user_id)
+  }
+  ngOnChanges(){
     this.getOneUserInfo(this.user_id)
   }
   getOneUserInfo=(user_id)=>{

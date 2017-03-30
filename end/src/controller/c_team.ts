@@ -9,6 +9,8 @@ import UserModel from '../model/m_user';
 import TeamModel from '../model/m_team';
 import TeamUserModel from '../model/m_team_user';
 import * as path from "path"
+import TeamLogModel from '../model/m_team_log';
+import * as moment from "moment"
 const fsp = require('fs-promise');
 const host = config.host
 const uuidV1 = require('uuid/v1')
@@ -115,10 +117,6 @@ export default class Team {
             }
 
         } catch (e) {
-            ctx.body = {
-                success: false,
-                msg: '服务器异常'
-            }
             throw new Error(e)
         }
     }
@@ -180,10 +178,6 @@ export default class Team {
                 datas: users
             }
         } catch (e) {
-            ctx.body = {
-                success: false,
-                msg: "服务器异常"
-            }
             throw new Error(e)
         }
     }
@@ -230,10 +224,6 @@ export default class Team {
                 datas: teamsObject
             }
         } catch (e) {
-            ctx.body = {
-                success: false,
-                msg: '查询出现异常'
-            }
             throw new Error(e)
         }
     }
@@ -257,7 +247,7 @@ export default class Team {
     }
 
     static getTeamInfoByTeamIdApi = async (ctx: Koa.Context, next: Function) => {
-        let team_id = ctx.params.teamId
+        let team_id = ctx.query.team_id
         try {
             let teamInfo = await Team.getTeamInfoByTeamId(team_id)
             ctx.body = {
@@ -278,82 +268,92 @@ export default class Team {
         let belongs_phone = ctx.request.body.phone
         let bussiness = ctx.request.body.bussiness
         let imgData = ctx.request.body.imgData || ""
+        let user_id = ctx.request.body.user_id
 
-        //单独修改信息
-        if (imgData === "") {
-            try {
-                let updateInfo = await TeamModel.update({
-                    teamName: teamName,
-                    desc: desc,
-                    belongs_phone: belongs_phone,
-                    bussiness: bussiness
-                }, {
-                        where: {
-                            team_id: team_id
-                        }
-                    })
-                ctx.body = {
-                    success: true,
-                    msg: "修改成功"
+        //判断权限
+        let auth = await TeamUserModel.findOne({
+            where: {
+                user_id: user_id,
+                team_id: team_id,
+                auth: {
+                    $gte: 1
                 }
-            } catch (e) {
-                ctx.body = {
-                    success: false,
-                    msg: "服务器异常"
-                }
-                throw new Error(e.stack)
             }
-        } else {
-            try {
-
-
-                //先判断文件夹是否存在
-                let exe = await fsp.exists(path.join(__dirname, "..", "..", "public/team_pic"))
-                if (exe) {
-                    await makeFile()
+        })
+        if (auth === null) {
+            ctx.body = {
+                success: false,
+                msg: '您没有权限'
+            }
+        }
+        else {
+            //单独修改信息
+            if (imgData === "") {
+                try {
+                    let updateInfo = await TeamModel.update({
+                        teamName: teamName,
+                        desc: desc,
+                        belongs_phone: belongs_phone,
+                        bussiness: bussiness
+                    }, {
+                            where: {
+                                team_id: team_id
+                            }
+                        })
+                    ctx.body = {
+                        success: true,
+                        msg: "修改成功"
+                    }
+                } catch (e) {
+                    throw new Error(e.stack)
                 }
-                else {
-                    let err = await fsp.mkdir(path.join(__dirname, "..", "..", "public/team_pic"))
-                    if (!err) {
+            } else {
+                try {
+                    //先判断文件夹是否存在
+                    let exe = await fsp.exists(path.join(__dirname, "..", "..", "public/team_pic"))
+                    if (exe) {
                         await makeFile()
                     }
-                }
+                    else {
+                        let err = await fsp.mkdir(path.join(__dirname, "..", "..", "public/team_pic"))
+                        if (!err) {
+                            await makeFile()
+                        }
+                    }
 
-                //创建文件
-                async function makeFile() {
-                    let date = new Date().getTime()
-                    let base64Data = imgData.replace(/^data:image\/\w+;base64,/, "");
-                    let dataBuffer = new Buffer(base64Data, 'base64');
-                    let filename = `${path.join(__dirname, "..", "..", "public/team_pic")}/${date}.png`;
+                    //创建文件
+                    async function makeFile() {
+                        let date = new Date().getTime()
+                        let base64Data = imgData.replace(/^data:image\/\w+;base64,/, "");
+                        let dataBuffer = new Buffer(base64Data, 'base64');
+                        let filename = `${path.join(__dirname, "..", "..", "public/team_pic")}/${date}.png`;
 
-                    let err = await fsp.writeFile(filename, dataBuffer)
-                    if (!err) {
-                        //更新用户表的头像url
-                        let url = `${host}/team_pic/${date}.png`
-                        let update = await TeamModel.update({
-                            imgurl: url
-                        }, {
-                                where: {
-                                    team_id: team_id
-                                }
-                            })
-                        if (update.length > 0) {
-                            ctx.body = {
-                                success: true,
-                                msg: '上传Logo成功',
-                                datas: {
-                                    imgurl: url
+                        let err = await fsp.writeFile(filename, dataBuffer)
+                        if (!err) {
+                            //更新用户表的头像url
+                            let url = `${host}/team_pic/${date}.png`
+                            let update = await TeamModel.update({
+                                imgurl: url
+                            }, {
+                                    where: {
+                                        team_id: team_id
+                                    }
+                                })
+                            if (update.length > 0) {
+                                ctx.body = {
+                                    success: true,
+                                    msg: '上传Logo成功',
+                                    datas: {
+                                        imgurl: url
+                                    }
                                 }
                             }
                         }
                     }
+                } catch (e) {
+
+                    throw new Error(e.stack)
                 }
-            } catch (e) {
-                ctx.body = {
-                    success: false,
-                    msg: "服务器异常"
-                }
-                throw new Error(e.stack)
             }
         }
     }
@@ -395,10 +395,6 @@ export default class Team {
                 }
             }
         } catch (e) {
-            ctx.body = {
-                success: false,
-                msg: '服务器错误'
-            }
             throw new Error(e.stack)
         }
     }
@@ -408,25 +404,83 @@ export default class Team {
         let user_id = ctx.request.body.user_id
         let auth = ctx.request.body.auth
         let team_id = ctx.request.body.team_id
+        let handle_user_id = ctx.request.body.handle_user_id
+
         try {
-            await TeamUserModel.update({
-                auth: auth
-            }, {
-                    where: {
-                        user_id: user_id,
-                        team_id:team_id
+            //判断用户是否是创建人 只有创建人 才有修改权限
+            let userAuth = await TeamUserModel.findOne({
+                where: {
+                    user_id: handle_user_id,
+                    team_id: team_id,
+                    auth: 100
+                }
+            })
+            console.log(userAuth)
+            if (userAuth === null) {
+                ctx.body = {
+                    success: false,
+                    msg: "您没有权限"
+                }
+            }
+            else {
+                try {
+                    await TeamUserModel.update({
+                        auth: auth
+                    }, {
+                            where: {
+                                user_id: user_id,
+                                team_id: team_id
+                            }
+                        })
+                    ctx.body = {
+                        success: true,
+                        msg: '修改成功'
                     }
-                })
-            ctx.body = {
-                success: true,
-                msg: '修改成功'
+                } catch (e) {
+                    throw new Error(e)
+                }
             }
         } catch (e) {
-            ctx.body = {
-                success: false,
-                msg: "服务器异常"
-            }
+            throw new Error(e)
         }
+
+    }
+    //获取客户端的ip地址
+    static getClientIp = async (req: any) => {
+        return req.headers['x-forwarded-for'] ||
+            req.connection.remoteAddress ||
+            req.socket.remoteAddress ||
+            req.connection.socket.remoteAddress
     }
 
+    //获取team_log
+    static getTeamLog = async (ctx: Koa.Context, next: Function) => {
+        let team_id = ctx.query.team_id
+
+        try {
+            let team_logs: any[] = await TeamLogModel.findAll({
+                include: [
+                    {
+                        model: UserModel,
+                        attributes: ['username']
+                    }
+                ],
+                where: {
+                    team_id: team_id
+                }
+            })
+
+            for (let i = 0; i < team_logs.length; i++) {
+                team_logs[i] = JSON.parse(JSON.stringify(team_logs[i]))
+                Object.assign(team_logs[i], { created_at: moment(team_logs[i].createdAt).format("YYYY-MM-DD HH:mm:ss") })
+            }
+            ctx.body = {
+                success: true,
+                msg: '查询成功',
+                datas: team_logs
+            }
+        } catch (e) {
+            throw new Error(e)
+        }
+    }
 }

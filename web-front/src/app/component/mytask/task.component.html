@@ -1,97 +1,4 @@
 <style>
-  .magic-checkbox {
-    position: absolute;
-    display: none;
-  }
-
-  .magic-checkbox[disabled] {
-    cursor: not-allowed;
-  }
-
-  .magic-checkbox + label {
-    position: relative;
-    display: block;
-    padding-left: 22px;
-    cursor: pointer;
-    vertical-align: middle;
-  }
-
-  .magic-checkbox + label:hover:before {
-    animation-duration: 0.4s;
-    animation-fill-mode: both;
-    animation-name: hover-color;
-  }
-
-  .magic-checkbox + label:before {
-    position: absolute;
-    top: 2px;
-    left: 0;
-    display: inline-block;
-    width: 14px;
-    height: 14px;
-    content: '';
-    border: 1px solid #c0c0c0;
-  }
-
-  .magic-checkbox + label:after {
-    position: absolute;
-    display: none;
-    content: '';
-  }
-
-  .magic-checkbox[disabled] + label {
-    cursor: not-allowed;
-    color: #e4e4e4;
-  }
-
-  .magic-checkbox[disabled] + label:hover,
-  .magic-checkbox[disabled] + label:before,
-  .magic-checkbox[disabled] + label:after {
-    cursor: not-allowed;
-  }
-
-  .magic-checkbox[disabled] + label:hover:before {
-    border: 1px solid #e4e4e4;
-    animation-name: none;
-  }
-
-  .magic-checkbox[disabled] + label:before {
-    border-color: #e4e4e4;
-  }
-
-  .magic-checkbox:checked + label:before {
-    animation-name: none;
-  }
-
-  .magic-checkbox:checked + label:after {
-    display: block;
-  }
-
-  .magic-checkbox + label:before {
-    border-radius: 3px;
-  }
-
-  .magic-checkbox + label:after {
-    top: 3px;
-    left: 4px;
-    box-sizing: border-box;
-    width: 6px;
-    height: 10px;
-    transform: rotate(45deg);
-    border: 2px solid black;
-    border-top: 0;
-    border-left: 0;
-  }
-
-  .magic-checkbox:checked + label:before {
-    /*border: #c0c0c0;*/
-    background: #ffffff;
-  }
-
-  .magic-checkbox:checked[disabled] + label:before {
-    border: #c0c0c0;
-    background: #c9e2f9;
-  }
   .task-panel {
     position: relative;
     min-height: 60px;
@@ -104,7 +11,7 @@
     display: inline-block;
     zoom: 1;
     min-width: 180px;
-    margin: 7px 0 0 10px;
+    margin: 7px 0 0 20px;
     padding-bottom: 6px;
     border-radius: 5px;
     background-color: #eeece8;
@@ -112,6 +19,7 @@
 
   .panel_header {
     padding-top: 10px;
+    padding-bottom: 5px;
   }
 
   .panel_header .title {
@@ -134,51 +42,15 @@
     line-height: 30px;
   }
 
+  .panel_content {
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
   .task {
     width: 280px;
-    min-height: 20px;
+    min-height: 70px;
     margin: 0 auto;
-  }
-
-  .task-wrap {
-    margin-bottom: 10px;
-    border-bottom: solid 1px #e1e1e5;
-    background: #fff;
-  }
-
-  .content-top {
-    position: relative;
-    min-height: 46px;
-    padding-top: 5px;
-    padding-bottom: 2px;
-    line-height: 20px;
-    cursor: pointer;
-    -webkit-user-select: text;
-    -moz-user-select: text;
-    -ms-user-select: text;
-    user-select: text;
-    margin: 0 auto;
-    width: inherit;
-  }
-
-  .checkbox {
-    left: 10px;
-    position: absolute;
-  }
-
-  .task-main {
-    display: inline-block;
-    word-wrap: break-word;
-    white-space: normal;
-    line-height: 21px;
-    font-size: 14px;
-    color: #484744;
-    margin: 0 24px 0 32px;
-    padding-top: 7px;
-  }
-
-  .content-footer .project-name {
-    display: inline-block;
   }
 
   .content-footer .project-name i,
@@ -187,68 +59,233 @@
     color: #bcb7af;
     margin-left: 32px;
   }
+
   .content-footer .project-name span {
     margin-left: 2px;
-  }
-
-  .project-member {
-    display: inline;
-  }
-
-  .project-member .member-img {
-    width: 30px;
-    display: inline;
-    margin-left: 100px;
   }
 
   .member-img img {
     width: inherit;
   }
 
+  .panel_content {
+    position: relative;
+  }
+
+  .empty {
+    position: absolute;
+    left: 50%;
+    margin-left: -84px;
+  }
+
   .empty-text {
-    text-align: center;
     color: #b9b9b7;
     line-height: 61px;
     border: 0;
     background: 0 0;
+    margin: 0 auto;
+  }
+
+  .create-task {
+    position: relative;
+    z-index: 2;
+    line-height: 28px;
+    padding-top: 8px
+  }
+
+  .create-task a {
+    display: block;
+    color: #bcb7af;
+    text-align: left;
+    text-decoration: none;
+    padding: 8px 10px;
+  }
+
+  .my-task {
+    overflow-x: auto;
+    overflow-y: hidden;
+    width: 100%;
+    white-space: nowrap;
+    height: 100%;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  .task-write {
+    width: 280px;
+    margin: 10px auto 0;
+  }
+
+  textarea {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding:10px;
+  }
+
+  textarea:focus {
+    border-color: #fcd340;
+    outline: 0;
+    color: #000;
+    -webkit-box-shadow: 0 0 1px #fcd340;
+    box-shadow: 0 0 1px #fcd340;
+  }
+  .saveOrCancel{
+    padding: 5px 0;
+  }
+  .btn{
+    padding: 6px 43px;
+
+  }
+  .btn.btn-success{
+    color: #fff;
+    background-color: #54d09f;
+    border-color: #54d09f;
+    margin-right: 30px;
+    outline: none;
+  }
+  .btn.btn-default{
+    border-color: transparent;
+    background-color: transparent;
+    color: #acaba7;
+    outline: 0;
   }
 </style>
-<div class="task-panel" *ngFor="let item of taskpanels">
-      <div class="panel_header">
-        <div class="title">收件箱</div>
-        <div class="total_num">{{item.tasks.length}}</div>
+<div class="my-task" (wheel)="listenWeel($event)" id="allTask">
+  <div class="task-panel" >
+    <div class="panel_header">
+      <div class="title">收件箱</div>
+      <div class="total_num">{{taskpanels1.tasks.length}}</div>
+    </div>
+    <div class="panel_content" id="panel_content1" (wheel)="prevent($event)">
+      <div class="empty" *ngIf="taskpanels1.tasks.length===0">
+        <div class="empty-text">
+          <span>分配给你的任务会显示在这</span>
+        </div>
       </div>
-      <div class="panel_content">
-        <div class="task" [dragula]='"first"' [dragulaModel]='item.tasks'>
-          <div class="empty" *ngIf="item.tasks.length===0">
-            <div class="empty-text">
-              <span>分配给你的任务会显示在这</span>
-            </div>
-          </div>
-            <div class="task-wrap" *ngFor="let task of item.tasks">
-              <div *ngIf="item.tasks.length>0">
-              <div class="content-top">
-                <div class="checkbox">
-                  <input class="magic-checkbox" type="checkbox" id='checkbox_1' name="layout">
-                  <label for="checkbox_1"></label>
-                </div>
-                <div class="task-main">
-                  <span>{{task.content}}</span>
-                </div>
-              </div>
-              <div class="content-footer">
-                <div class="project-name">
-                  <i class="icon iconfont icon-xiangmu"></i>
-                  <span>{{task.projectName}}</span>
-                </div>
-                <div class="project-member">
-                  <div class="member-img">
-                    <!--<userInfo-img [user_id]="" [imgurl]=""></userInfo-img>-->
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+      <div class="task" [dragula]='"first"' [dragulaModel]='taskpanels1.tasks' id="mail">
+        <one-task *ngFor="let item of taskpanels1.tasks" [task]="item" id="{{item.task_id}}" [type]="taskpanels1.type" (updateListByType)="updateList($event)" (_notify_task)="getOneTaskFromChild($event)"></one-task>
+      </div>
+      <div class="task-write" *ngIf="taskpanels1.addShow">
+        <textarea placeholder="任务详情" (click)="stopBubble($event)" [(ngModel)]="taskpanels1.addContent"></textarea>
+        <div class="sel-project" (click)="changeSelectFocus($event,taskpanels1,'panel_content1')">
+          <my-select [top]="top" [datalist]="projectList" [open]="taskpanels1.addShowSelect" (selItem)="selOneItem($event,taskpanels1)"
+                     [place]="place"></my-select>
+        </div>
+        <div class="saveOrCancel">
+          <button class="btn btn-success" (click)="createTask(taskpanels1,$event)">保存</button>
+          <button class="btn btn-default" (click)="cancelAdd(taskpanels1)">取消</button>
         </div>
       </div>
     </div>
+    <div class="create-task" *ngIf="!taskpanels1.addShow">
+      <a href="javascript:;" (click)="addTaskShow($event,taskpanels1,'panel_content1')">
+        <i class="iconfont icon-tianjia"></i>
+        新建任务
+      </a>
+    </div>
+  </div><div class="task-panel">
+    <div class="panel_header">
+      <div class="title">今天要做</div>
+      <div class="total_num">{{taskpanels2.tasks.length}}</div>
+    </div>
+    <div class="panel_content" id="panel_content2" (wheel)="prevent($event)">
+      <div class="empty" *ngIf="taskpanels2.tasks.length===0">
+        <div class="empty-text">
+          <span>今天要做的任务放到这里</span>
+        </div>
+      </div>
+      <div class="task" [dragula]='"first"' [dragulaModel]='taskpanels2.tasks' id="today">
+        <one-task *ngFor="let item of taskpanels2.tasks" [task]="item" id="{{item.task_id}}" [type]="taskpanels2.type" (updateListByType)="updateList($event)" (_notify_task)="getOneTaskFromChild($event)"></one-task>
+      </div>
+      <div class="task-write" *ngIf="taskpanels2.addShow">
+        <textarea placeholder="任务详情" (click)="stopBubble($event)" [(ngModel)]="taskpanels2.addContent"></textarea>
+        <div class="sel-project" (click)="changeSelectFocus($event,taskpanels2,'panel_content2')">
+          <my-select [top]="top" [datalist]="projectList" [open]="taskpanels2.addShowSelect" (selItem)="selOneItem($event,taskpanels2)"
+                     [place]="place"></my-select>
+        </div>
+        <div class="saveOrCancel">
+          <button class="btn btn-success" (click)="createTask(taskpanels2,$event)">保存</button>
+          <button class="btn btn-default" (click)="cancelAdd(taskpanels2)">取消</button>
+        </div>
+      </div>
+    </div>
+    <div class="create-task" *ngIf="!taskpanels2.addShow">
+      <a href="javascript:;" (click)="addTaskShow($event,taskpanels2,'panel_content2')">
+        <i class="iconfont icon-tianjia"></i>
+        新建任务
+      </a>
+    </div>
+  </div>
+  <div class="task-panel">
+    <div class="panel_header">
+      <div class="title">下一步要做</div>
+      <div class="total_num">{{taskpanels3.tasks.length}}</div>
+    </div>
+    <div class="panel_content" id="panel_content3" (wheel)="prevent($event)">
+      <div class="empty" *ngIf="taskpanels3.tasks.length===0">
+        <div class="empty-text">
+          <span>接下来会做的任务放到这里</span>
+        </div>
+      </div>
+      <div class="task" [dragula]='"first"' [dragulaModel]='taskpanels3.tasks' id="next">
+        <one-task *ngFor="let item of taskpanels3.tasks" [task]="item" id="{{item.task_id}}" [type]="taskpanels3.type" (updateListByType)="updateList($event)" (_notify_task)="getOneTaskFromChild($event)"></one-task>
+      </div>
+      <div class="task-write" *ngIf="taskpanels3.addShow">
+        <textarea placeholder="任务详情" (click)="stopBubble($event)" [(ngModel)]="taskpanels3.addContent"></textarea>
+        <div class="sel-project" (click)="changeSelectFocus($event,taskpanels3,'panel_content3')">
+          <my-select [top]="top" [datalist]="projectList" [open]="taskpanels3.addShowSelect" (selItem)="selOneItem($event,taskpanels3)"
+                     [place]="place"></my-select>
+        </div>
+        <div class="saveOrCancel">
+          <button class="btn btn-success" (click)="createTask(taskpanels3,$event)">保存</button>
+          <button class="btn btn-default" (click)="cancelAdd(taskpanels3)">取消</button>
+        </div>
+      </div>
+    </div>
+    <div class="create-task" *ngIf="!taskpanels3.addShow">
+      <a href="javascript:;" (click)="addTaskShow($event,taskpanels3,'panel_content3')">
+        <i class="iconfont icon-tianjia"></i>
+        新建任务
+      </a>
+    </div>
+  </div>
+  <div class="task-panel">
+    <div class="panel_header">
+      <div class="title">以后再做</div>
+      <div class="total_num">{{taskpanels4.tasks.length}}</div>
+    </div>
+    <div class="panel_content" id="panel_content4" (wheel)="prevent($event)">
+      <div class="empty" *ngIf="taskpanels4.tasks.length===0">
+        <div class="empty-text">
+          <span>分配给你的任务会显示在这</span>
+        </div>
+      </div>
+      <div class="task" [dragula]='"first"' [dragulaModel]='taskpanels4.tasks' id="later">
+        <one-task *ngFor="let item of taskpanels4.tasks" [task]="item" id="{{item.task_id}}" [type]="taskpanels4.type" (updateListByType)="updateList($event)" (_notify_task)="getOneTaskFromChild($event)"></one-task>
+      </div>
+      <div class="task-write" *ngIf="taskpanels4.addShow">
+        <textarea placeholder="任务详情" (click)="stopBubble($event)" [(ngModel)]="taskpanels4.addContent"></textarea>
+        <div class="sel-project" (click)="changeSelectFocus($event,taskpanels4,'panel_content4')">
+          <my-select [top]="top" [datalist]="projectList" [open]="taskpanels4.addShowSelect" (selItem)="selOneItem($event,taskpanels4)"
+                     [place]="place"></my-select>
+        </div>
+        <div class="saveOrCancel">
+          <button class="btn btn-success" (click)="createTask(taskpanels4,$event)">保存</button>
+          <button class="btn btn-default" (click)="cancelAdd(taskpanels4)">取消</button>
+        </div>
+      </div>
+    </div>
+    <div class="create-task" *ngIf="!taskpanels4.addShow">
+      <a href="javascript:;" (click)="addTaskShow($event,taskpanels4,'panel_content4')">
+        <i class="iconfont icon-tianjia"></i>
+        新建任务
+      </a>
+    </div>
+  </div>
+</div>
+<top-tip [show]="show_tip" [msg]="tip" [success]="success"></top-tip>
+<task-detail [show]="show_task_detail" [task]="task" (close)="closeTaskModal($event)" (updateByType)="updateList($event)"></task-detail>
+

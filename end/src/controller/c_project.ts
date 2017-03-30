@@ -1,6 +1,11 @@
 import ProjectModel from '../model/m_project';
 import * as Koa from 'koa';
 import TeamUserModel from '../model/m_team_user';
+import TeamLogModel from '../model/m_team_log';
+import Team from './c_team';
+import ProjectUserModel from '../model/m_project_user';
+import UserModel from '../model/m_user';
+import TeamModel from '../model/m_team';
 const uuidV1 = require('uuid/v1')
 export default class Project {
 
@@ -31,7 +36,7 @@ export default class Project {
         }
         else {
             try {
-                let create = await ProjectModel.create({
+                let create: any = await ProjectModel.create({
                     user_id: user_id,
                     team_id: team_id,
                     projectName: projectName,
@@ -39,8 +44,21 @@ export default class Project {
                     project_id: uuidV1()
                 })
 
-                //然后进入日志
+                //把该创建者加入项目-用户表
+                await ProjectUserModel.create({
+                    user_id: user_id,
+                    project_id: create.project_id
+                })
 
+                //然后写入日志
+                await TeamLogModel.create({
+                    team_id: team_id,
+                    user_id: user_id,
+                    project_id: create.project_id,
+                    message: `创建了一个项目 (${projectName})`,
+                    type: '创建项目',
+                    ip: await Team.getClientIp(ctx.req)
+                })
                 ctx.body = {
                     success: true,
                     msg: '创建成功',
@@ -55,5 +73,48 @@ export default class Project {
             }
         }
 
+    }
+    //获取一个用户所有的项目信息
+    static getUserAllProjectInfo = async (ctx: Koa.Context, next: Function) => {
+        let user_id = ctx.query.user_id
+
+        try {
+            let user: any = await UserModel.findOne({
+                include: [
+                    {
+                        model: ProjectModel,
+                        include: [{
+                            model: TeamModel
+                        }]
+                    }
+                ],
+                where: {
+                    user_id: user_id
+                }
+            })
+            ctx.body = {
+                success: true,
+                msg: '查询成功',
+                datas: user.t_projects
+            }
+
+        } catch (e) {
+            throw new Error(e)
+        }
+    }
+
+    //获取一个项目信息
+    static getProjectInfo=async(ctx: Koa.Context, next: Function)=>{
+        let project_id = ctx.query.project_id
+        let project = await ProjectModel.findOne({
+            where:{
+                project_id:project_id
+            }
+        })
+        ctx.body = {
+            success:true,
+            msg:'查询成功',
+            datas:project
+        }
     }
 }

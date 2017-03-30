@@ -6,8 +6,6 @@ import { Routes, RouterModule } from '@angular/router';
 import {DashBoardComponent} from "./dashboard.component";
 import {MyTaskComponent} from "../mytask/mytask.component";
 import {TaskComponent} from "../mytask/task.component";
-import {SignUpComponent} from "../home/signup.component";
-import {SignInComponent} from "../home/signin.component";
 
 const routes: Routes = [
   {path:'',component:DashBoardComponent,
@@ -22,16 +20,14 @@ const routes: Routes = [
           },
           {path:'task',component:TaskComponent},
           {
-            path:'schedule',loadChildren:'app/module/schedule.module#ScheduleModule'
-          },
-          {
             path:'message',loadChildren:'app/module/message.module#MessageModule'
           },
 
         ]
       },
       {path:'userInfo',loadChildren:'app/module/userinfo.module#UserInfoModule'},
-      {path:'team/:id',loadChildren:'app/module/team.module#TeamModule'}
+      {path:'team/:id',loadChildren:'app/module/team.module#TeamModule'},
+      {path:"project/:id",loadChildren:"app/module/project.module#ProjectModule"}
     ]
   }
 ];

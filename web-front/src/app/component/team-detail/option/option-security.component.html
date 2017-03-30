@@ -1,2 +1,37 @@
+<style>
+  .option-member{
+    height: 580px;
+    overflow-y: auto;
+  }
+</style>
+<div class="option-member">
+  <table class="table table--fancy">
+    <thead>
+    <tr>
+      <th>操作人</th>
+      <th>行为</th>
+      <th>IP地址</th>
+      <th>时间</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of logList">
+      <td>
+        <span (click)="showUserInfoMoal(item,$event)">
+             <userInfo-img [user_id]="item.user_id" [show]="item.show" [direct]="direct"></userInfo-img>
+        </span>
+        {{item.user.username}}</td>
+      <td>{{item.message}}
+        <span (click)="showUserInfoMoal(item,$event)" *ngIf="item.type==='添加项目成员'">
+             <userInfo-img [user_id]="item.handle_user_id" [show]="item.handle_user_show" [direct]="direct"></userInfo-img>
+        </span>
+      </td>
+      <td>{{item.ip}}</td>
+      <td>{{item.created_at}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<top-tip [show]="show_tip" [msg]="tip" [success]="success"></top-tip>
 
-安全查看
+

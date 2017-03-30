@@ -10,8 +10,9 @@ import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 export class MySelectComponent implements OnInit {
 
   @Input() place:string = ''
-  @Input() datalist:string[]
+  @Input() datalist:any[]
   @Input() open:boolean
+  @Input() top:boolean = false
   @Output() selItem = new EventEmitter<any>()
 
   selName:string = ''
