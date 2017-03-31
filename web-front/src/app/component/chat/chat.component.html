@@ -1,0 +1,371 @@
+<style>
+  .chat-index {
+    height: 100%;
+  }
+
+  .chat-index .wrap {
+    height: inherit;
+  }
+
+  .chat-index .wrap .left-nav {
+    background-color: #6c6b69;
+    display: -webkit-box;
+    display: flex;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    position: relative;
+    width: 189px;
+    -webkit-transition: width .2s ease-in-out;
+    transition: width .2s ease-in-out;
+    height: 100%;
+  }
+
+  .left-nav .side {
+
+  }
+
+  .left-nav .side .desc {
+    font-size: 10px;
+    margin: 70px 15px;
+    color: #ffffff;
+
+  }
+
+  .side .chat-type {
+    margin-top: 60px;
+  }
+
+  .side .chat-type .type {
+    font-size: 16px;
+    cursor: pointer;
+    color: #ffffff;
+    height: 50px;
+    line-height: 50px;
+    font-weight: 500;
+    padding-left: 15px;
+  }
+
+  .side .chat-type .type:hover{
+    background-color: #1a2224;
+  }
+  .side .chat-type .type.active {
+    background-color: #fb9ca1;
+  }
+
+  .wrap .selChatTo {
+    background-color: #ffffff;
+    display: -webkit-box;
+    display: flex;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    position: absolute;
+    top: 100px;
+    left: 189px;
+    width: 189px;
+    -webkit-transition: width .2s ease-in-out;
+    transition: width .2s ease-in-out;
+    height: 500px;
+    border: 1px solid #e6e6e6;
+    box-shadow: 2px 2px 4px rgba(51, 51, 51, .2);
+  }
+
+  .selChatTo .sel-wrap {
+    padding: 10px;
+  }
+
+  .userOrTeam {
+    margin-top: 10px;
+    overflow-y: auto;
+    height: 465px;
+  }
+
+  .userOrTeam .one {
+    padding: 5px 9px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+
+  .userOrTeam .one:hover {
+    background-color: #f1ede5;
+  }
+
+  .userOrTeam img {
+    width: 30px;
+  }
+
+  .img, .item-name {
+    display: inline-block;
+    overflow: hidden;
+    font-size: 14px;
+  }
+
+  .item-name {
+    padding-left: 8px;
+    margin-top: 2px;
+  }
+
+  .message-area {
+    position: fixed;
+    top: 5px;
+    right: 0;
+    bottom: 5px;
+    left: 40%;
+    background-color: #ffffff;
+    margin: 0;
+    z-index: 99;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    width: 45%;
+  }
+
+  .chat-room-create {
+    position: absolute;
+    border: 1px solid #E5E5E5;
+    transition: all .4s ease;
+    background-color: white;
+    bottom: 0;
+    width: 100%;
+  }
+
+  .chat-room-create .chat-room-create-wrap {
+    position: relative;
+    min-height: 60px;
+    margin: 14px 20px 13px 15px;
+    background-color: #fff;
+    border: 1px solid #D9D9D9;
+    border-radius: 3px;
+    padding:5px;
+  }
+
+  .send-message-wrap {
+    position: relative;
+    z-index: 1;
+    max-height: 290px;
+    padding: 5px;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    background-color: #FFF;
+    border-bottom: 1px solid transparent;
+    -webkit-transform: translateZ(0);
+    border-radius: 3px;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    transition: border 218ms ease .1s;
+    outline: none;
+  }
+
+  .chat-handle {
+    padding: 0 12px;
+    position: relative;
+  }
+  .chat-handle .emoji i{
+    font-size: 20px !important;
+    color: #A6A6A6;
+    cursor: pointer;
+  }
+  .chat-handle .emoji i:hover{
+    color: #3DA8F5;
+  }
+  .emoji{
+    display: inline-block;
+  }
+  .send-btn{
+    display: inline-block;
+    float: right;
+  }
+  .send{
+    min-width: 71px;
+    height: 30px;
+    color: #FFF;
+    font-size: 14px;
+    cursor: pointer;
+    line-height: 14px;
+    border-radius: 2px;
+    background-color: #3DA8F5;
+    margin: 0 5px 5px 12px;
+    outline: none;
+    border: none;
+  }
+  .message-content{
+
+  }
+  .mes-body{
+    position: relative;
+    max-width: 400px;
+    float: right;
+    margin-right:15px ;
+  }
+  .message-content .message-list .message .item{
+    position: relative;
+    max-width: 400px;
+    margin-left: 12px;
+    background-color: #e5f6fb;
+    display: inline-block;
+    padding: 8px 13px;
+    color: #383838;
+    font-size: 15px;
+    word-break: break-all;
+    border-radius: 10px;
+    margin-top: 15px;
+  }
+  .emoji-view{
+    width: 302px;
+    background: #FFF;
+    border-radius: 2px;
+    box-shadow: 0 7px 21px rgba(0,0,0,.1);
+    position: absolute;
+    top: -187px;
+    z-index: 999;
+
+  }
+  .emoji-group{
+    height: 144px;
+    width: 100%;
+    padding-left: 2px;
+  }
+  .emoji-cell{
+    margin-left: 10px;
+    margin-top: 10px;
+    width: 26px;
+    height: 26px;
+    float: left;
+    cursor: pointer;
+  }
+  .emoji-cell img{
+    height: auto;
+    max-width: 100%;
+    vertical-align: middle;
+    border: 0;
+    -ms-interpolation-mode: bicubic;
+  }
+  .emoji-footer{
+    position: relative;
+    padding: 9px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+  }
+  .emoji-switcher{
+    height: 12px;
+    width: 12px;
+  }
+
+
+  .emoji-switcher-circle{
+    margin: 3px;
+    width: 6px;
+    height: 6px;
+    background: #EEE;
+    border-radius: 50%;
+  }
+  .emoji-switcher-circle:hover{
+    background-color: #A6A6A6;
+  }
+
+</style>
+<div class="chat-index">
+  <div class="wrap">
+    <div class="left-nav">
+      <div class="side">
+        <div class="desc">
+          <i class="iconfont icon-tishi " style="color: #fb9ca1"></i>
+          相同团队的成员自动成为好友，可在私聊中寻找小伙伴说悄悄话哦。
+        </div>
+        <div class="chat-type">
+          <div class="header">
+            <div class="type active">
+              团队群聊
+            </div>
+            <div class="type">
+              私聊
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="selChatTo">
+      <div class="sel-wrap">
+        <div class="userOrTeam">
+          <div class="one" *ngFor="let item of dataList" (click)="selOne(item)">
+            <div class="img">
+              <img [src]="item.imgurl" class="img-circle" alt="img">
+            </div>
+            <div class="item-name">
+              {{item.name.substr(0,10)}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="message-area">
+      <div class="message-content">
+        <div class="message-list">
+          <div class="message">
+            <div class="mes-body">
+              <div class="item">fff</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="chat-room-create">
+        <div class="chat-room-create-wrap">
+          <div class="send-message-wrap" contentEditable="true" hidefocus="false">
+
+          </div>
+        </div>
+        <div class="chat-handle">
+          <div class="emoji" (click)="showEmoji($event)">
+            <i class="iconfont icon-emoji"></i>
+          </div>
+          <div class="emoji-view" *ngIf="show_emoji" (click)="stopBubble($event)">
+            <div class="emoji-body">
+              <div class="emoji-group" *ngIf="emoji_page==='1'">
+                <div class="emoji-cell" *ngFor="let item of emojiList1">
+                  <img [src]="item.url" alt="">
+                </div>
+              </div>
+              <div class="emoji-group" *ngIf="emoji_page==='2'">
+                <div class="emoji-cell" *ngFor="let item of emojiList2">
+                  <img [src]="item.url" alt="">
+                </div>
+              </div>
+              <div class="emoji-group" *ngIf="emoji_page==='3'">
+                <div class="emoji-cell" *ngFor="let item of emojiList3">
+                  <img [src]="item.url" alt="">
+                </div>
+              </div>
+            </div>
+            <div class="emoji-footer">
+               <div class="emoji-switcher" (mouseenter)="switchPage('1')" >
+                  <div class="emoji-switcher-circle" ></div>
+               </div>
+              <div class="emoji-switcher" (mouseenter)="switchPage('2')">
+                  <div class="emoji-switcher-circle"></div>
+               </div>
+              <div class="emoji-switcher" (mouseenter)="switchPage('3')">
+                  <div class="emoji-switcher-circle"></div>
+               </div>
+            </div>
+          </div>
+          <div class="send-btn">
+            <button class="btn btn-default send">发送</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

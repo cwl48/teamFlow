@@ -340,9 +340,9 @@
     </div>
     <div class="left-bar-tab">
       <ul class="item-tab">
-        <li routerLinkActive="active" routerLink="/task"><a href="javascript:;"><i class="icon iconfont icon-renwu"></i><br>我的</a>
+        <li [class.active]="router_in==='message'||router_in==='task'" routerLink="/task"><a href="javascript:;"><i class="icon iconfont icon-renwu"></i><br>我的</a>
         </li>
-        <li><a href="#"><i class="icon iconfont icon-liaotian"></i><span style="display: block">聊天</span></a></li>
+        <li routerLink="/chat" routerLinkActive="active"><a href="javascript:;"><i class="icon iconfont icon-liaotian"></i><span style="display: block">聊天</span></a></li>
         <li (click)="toggleShowMyProject($event)" [class.active]="router_in==='project'"><a href="javascript:;"><i class="icon iconfont icon-xiangmu" ></i><br>项目</a>
 
         </li>

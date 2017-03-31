@@ -19,7 +19,7 @@ export class TeamService {
 
   /*
    *  获取团队成员  有两种情况
-   *  1.获取自己所在的团队(可能有多个团队)的人员（user_id） 2.获取某一团队所有的成员(team_id)
+   *  1.获取自己所在的团队(可能有多个团队)的人员（user_id）
    */
   getTeamMember = (user_id: User) => {
     let url = `${this.getTeamMemberUrl}?user_id=${user_id}`

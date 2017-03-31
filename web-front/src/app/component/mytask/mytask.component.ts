@@ -18,6 +18,6 @@ export class MyTaskComponent implements OnInit {
   setMainHeight = () => {
     let main = document.getElementById('task-wrap');
     let clientHeight = document.body.clientHeight || document.documentElement.clientHeight;    //获取宽度
-    main.style.height = clientHeight - 70 + 'px';
+    main.style.height = clientHeight - 80 + 'px';
   }
 }

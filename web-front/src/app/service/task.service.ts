@@ -50,6 +50,13 @@ export class TaskService {
     return this.http.put(`${this.taskUrl}/status/update/${task.task_id}`,task)
       .map(this.send)
   }
+
+  //获取任务动态
+  getMsgOfTaskByUser=(user_id,offset)=>{
+    return this.http.get(`${this.taskUrl}/msg/byuser?user_id=${user_id}&offset=${offset}`)
+      .map(this.send)
+  }
+
   send = (res: Response) => {
     return res.json()
   }
@@ -66,5 +73,8 @@ export class Task {
   t_project?:Project
   t_user_task?:any
   hand_user_id?:string
+}
 
+export class TaskMessage extends Task{
+   message:string
 }

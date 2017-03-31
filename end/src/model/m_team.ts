@@ -8,6 +8,7 @@ import ProjectModel from './m_project';
 import ProjectUserModel from './m_project_user';
 import TaskModel from './m_task';
 import UserTaskModel from './m_user_task';
+import TaskMsgsModel from './m_task_msg';
 const TeamModel = sequelize.define('team', {
     team_id: {                       //主键团队id
         type: Sequelize.STRING,
@@ -64,10 +65,16 @@ UserModel.belongsToMany(ProjectModel,{through:ProjectUserModel,foreignKey:'user_
 //项目跟任务关联
 TaskModel.belongsTo(ProjectModel,{foreignKey:"project_id"})
 
-//任务跟用户关联
+//任务关联
 UserModel.belongsToMany(TaskModel,{through:UserTaskModel,foreignKey:"user_id",otherKey:"task_id"})
 TaskModel.belongsToMany(UserModel,{through:UserTaskModel,foreignKey:"task_id",otherKey:"user_id"})
 
+//任务跟用户关联
+TaskModel.belongsTo(UserModel,{foreignKey:"user_id"})
 
+//任务动态和任务关联
+TaskMsgsModel.belongsTo(TaskModel,{foreignKey:"task_id"})
+//任务动态和用户关联
+TaskMsgsModel.belongsTo(UserModel,{foreignKey:"user_id"})
 // TeamModel.sync()           //写入
 export default TeamModel;

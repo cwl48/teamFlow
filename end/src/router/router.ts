@@ -8,6 +8,7 @@ import Email from "../controller/c_email"
 import Team from '../controller/c_team';
 import Project from '../controller/c_project';
 import Task from '../controller/c_task';
+import { getEmoji } from '../config/emoji';
 const router = new Router();
 router.get("/api/email",Email.getEamilCode)     //发送验证码
 
@@ -58,4 +59,8 @@ router.get("/api/task/bytype",Task.getTaskByType)                 //根据任务
 router.post("/api/task/update",Task.updateTaskInfo)               //更新任务信息
 
 router.put("/api/task/status/update/:task_id",Task.updateTaskStatus)                     //更新任务的状态
+
+router.get("/api/task/msg/byuser",Task.getMsgOfTaskByUser)           //获取一个用户的全部任务动态
+
+router.get("/api/emoji",getEmoji)                          //获取所有的emoji表情
 export default router;

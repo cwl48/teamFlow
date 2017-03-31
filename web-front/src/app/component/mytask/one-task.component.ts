@@ -37,7 +37,8 @@ export class OneTaskComponent implements OnInit {
     this.stopBubble(e)
      let obj = {
        task_id:this.task.task_id,
-       status:1
+       status:1,
+       user_id:this.task.t_user_task.user_id
      }
      this.taskService.updateTaskStatus(obj)
        .subscribe(data=>{

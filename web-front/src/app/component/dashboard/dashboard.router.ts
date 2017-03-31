@@ -27,7 +27,8 @@ const routes: Routes = [
       },
       {path:'userInfo',loadChildren:'app/module/userinfo.module#UserInfoModule'},
       {path:'team/:id',loadChildren:'app/module/team.module#TeamModule'},
-      {path:"project/:id",loadChildren:"app/module/project.module#ProjectModule"}
+      {path:"project/:id",loadChildren:"app/module/project.module#ProjectModule"},
+      {path:"chat",loadChildren:"app/module/chat.module#ChatModule"}
     ]
   }
 ];

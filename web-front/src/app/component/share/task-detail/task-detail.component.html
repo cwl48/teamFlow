@@ -19,7 +19,7 @@
     background: #fff;
     position: fixed;
     width: 650px;
-    min-height: 450px;
+    min-height: 400px;
     top: 50%;
     left: 50%;
     margin-top: -300px;
@@ -98,7 +98,7 @@
   }
 
   .createOrDone {
-    margin-bottom: 10px;
+    margin-bottom: 0;
     display: inline-block;
     float: right;
     margin-right: 30px;
@@ -268,10 +268,7 @@
     </div>
     <div class="createOrDone">
       <div class="create">
-        <span class="small">李文超 03-28 10:56,创建了任务</span>
-      </div>
-      <div class="done">
-        <span class="small">李文超 03-28 10:56,完成了任务</span>
+        <span class="small">{{task.username}} {{task.created_at}},创建了任务</span>
       </div>
     </div>
   </div>

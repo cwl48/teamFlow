@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, NgZone, OnInit} from '@angular/core';
 import {DragulaService} from "ng2-dragula";
 import {Project, ProjectService} from "../../service/project.service";
 import {Task, TaskService} from "../../service/task.service";
+import {socket} from "../../tool/socket/socket";
 
 @Component({
   selector: 'task',
@@ -9,7 +10,7 @@ import {Task, TaskService} from "../../service/task.service";
   providers: [DragulaService, ProjectService, TaskService]
 })
 export class TaskComponent implements OnInit {
-
+  zone:NgZone
   task: Task
   show_task_detail: boolean
   top: boolean = true
@@ -44,6 +45,7 @@ export class TaskComponent implements OnInit {
   constructor(private dragService: DragulaService,
               private projectService: ProjectService,
               private taskService: TaskService) {
+    this.zone = new NgZone({enableLongStackTrace: false});
     dragService.drop.subscribe((value) => {
       this.onDrop(value.slice(1));
     });
@@ -59,6 +61,7 @@ export class TaskComponent implements OnInit {
     this.getUserAllProjectInfo(this.user_id)
     this.setMainHeight()
     this.getTaskByUser(this.user_id)
+    this.listenSocet()
 
   }
 
@@ -92,11 +95,14 @@ export class TaskComponent implements OnInit {
     let pre_order = this.getOrderOfTask(arg[0].id, arg[1].id, "pre")            //上一个任务的order
     let next_order = this.getOrderOfTask(arg[0].id, arg[1].id, "next")      //下一个任务order
     let type: string                                                         //移入的区域块类型
-    console.log(move_task_id, pre_order, current_order, next_order)
+    // console.log(move_task_id, pre_order, current_order, next_order)
 
 
     let newOrder: number
-    if (pre_order === -1) {
+    if(pre_order===-1&&next_order===-1){
+      newOrder = 65536
+    }
+    else if (pre_order === -1) {
       newOrder = next_order / 2
     }
     else if (next_order === -1) {
@@ -130,7 +136,6 @@ export class TaskComponent implements OnInit {
         newOrder: newOrder,
         type: ''
       }
-      console.log(obj)
       this.updateTaskOrder(obj, type)
     } else {
       let obj = {
@@ -155,22 +160,24 @@ export class TaskComponent implements OnInit {
   getTaskByType(user_id, type) {
     this.taskService.getTaskByType(this.user_id, type)
       .subscribe(data => {
-        console.log(data)
         if (data.success) {
-          switch (type) {
-            case "收件箱":
-              this.taskpanels1.tasks = this.sortOrder(data.datas)
-              break
-            case "今天":
-              this.taskpanels2.tasks = this.sortOrder(data.datas)
-              break
-            case "下一步":
-              this.taskpanels3.tasks = this.sortOrder(data.datas)
-              break
-            case "以后":
-              this.taskpanels4.tasks = this.sortOrder(data.datas)
-              break
-          }
+          //强制更新
+          this.zone.run(()=> {
+            switch (type) {
+              case "收件箱":
+                this.taskpanels1.tasks = this.sortOrder(data.datas)
+                break
+              case "今天":
+                this.taskpanels2.tasks = this.sortOrder(data.datas)
+                break
+              case "下一步":
+                this.taskpanels3.tasks = this.sortOrder(data.datas)
+                break
+              case "以后":
+                this.taskpanels4.tasks = this.sortOrder(data.datas)
+                break
+            }
+          })
         }
       })
   }
@@ -369,18 +376,19 @@ export class TaskComponent implements OnInit {
     this.taskService.getTaskByUser(user_id)
       .subscribe(data => {
         if (data.success) {
-          let res = data.datas
-          // 根据order排序
-          let tasks1 = this.sortOrder(res.tasks1)
-          let tasks2 = this.sortOrder(res.tasks2)
-          let tasks3 = this.sortOrder(res.tasks3)
-          let tasks4 = this.sortOrder(res.tasks4)
+
+            let res = data.datas
+            // 根据order排序
+            let tasks1 = this.sortOrder(res.tasks1)
+            let tasks2 = this.sortOrder(res.tasks2)
+            let tasks3 = this.sortOrder(res.tasks3)
+            let tasks4 = this.sortOrder(res.tasks4)
 
 
-          this.taskpanels1.tasks = tasks1
-          this.taskpanels2.tasks = tasks2
-          this.taskpanels3.tasks = tasks3
-          this.taskpanels4.tasks = tasks4
+            this.taskpanels1.tasks = tasks1
+            this.taskpanels2.tasks = tasks2
+            this.taskpanels3.tasks = tasks3
+            this.taskpanels4.tasks = tasks4
 
         }
       })
@@ -420,5 +428,12 @@ export class TaskComponent implements OnInit {
 
   updateList=(e)=>{
     this.getTaskByType(this.user_id,e)
+  }
+
+  //监听socket消息
+  listenSocet=()=>{
+    socket.on("update_task_user",(task)=>{
+      this.getTaskByType(task.user_id,task.type)
+    })
   }
 }

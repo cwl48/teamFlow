@@ -4,6 +4,7 @@
 import OnlineUser from "../controller/c_online";
 import Email from "../controller/c_email"
 import User from "../controller/c_user"
+import * as socket from 'socket.io';
 export default class MySocket {
 
     //处理socket
@@ -66,6 +67,11 @@ export default class MySocket {
             }
         })
 
+        //更新任务所属人员
+        socket.on("update_task_user",async (task:any)=>{
+             let socket_id = await OnlineUser.getUserSocketId(task.user_id)
+             socket.to(socket_id).emit("update_task_user",task)
+        })
 
 
         /*

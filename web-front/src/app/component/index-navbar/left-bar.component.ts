@@ -81,7 +81,12 @@ export class LeftBarComponent implements OnInit,OnDestroy {
           this.router_in = 'team'
         } else if(url==="project") {
           this.router_in = "project"
-        }else{
+        }else if(url==="message"){
+          this.router_in = "message"
+        }else if(url==="task"){
+          this.router_in = "task"
+        }
+        else{
           this.router_in = ""
         }
       })

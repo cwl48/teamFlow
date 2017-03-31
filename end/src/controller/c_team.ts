@@ -59,7 +59,7 @@ export default class Team {
             _.remove(member_ids, (id) => {
                 return id === user_id
             })
-            console.log(member_ids)
+    
             member_ids.forEach(async (id) => {
                 //记录消息
                 await MessageModel.create({
@@ -156,8 +156,7 @@ export default class Team {
                     }
                 })
                 _team = JSON.parse(JSON.stringify(_team))
-                console.log(_team.users)
-                console.log(arr)
+
                 _team.users.forEach((u: any) => {
                     if (_.indexOf(arr, u.user_id) === -1) {
                         arr.push(u.user_id)
@@ -165,13 +164,10 @@ export default class Team {
                     }
                 })
             }
-            //去除当前人id
-            console.log(users)
 
             _.remove(users, (user) => {
                 return user.user_id === user_id
             })
-            console.log(users)
             ctx.body = {
                 success: true,
                 mag: "查询成功",
@@ -363,7 +359,6 @@ export default class Team {
         let team_id = ctx.query.teamId
         let user_id = ctx.query.userId
 
-        console.log(ctx.request.body)
         try {
 
 
@@ -415,7 +410,7 @@ export default class Team {
                     auth: 100
                 }
             })
-            console.log(userAuth)
+        
             if (userAuth === null) {
                 ctx.body = {
                     success: false,

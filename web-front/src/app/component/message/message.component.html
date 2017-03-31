@@ -1,26 +1,29 @@
 <style>
-  .message-content
-  {
+  .message-content {
     margin: 14px;
     padding: 21px;
     border: solid 1px #f8f6f2;
     background: #fff;
     display: flex;
-    max-height: 570px;
-    overflow-y:scroll;
+    max-height: 600px;
+    overflow-y: auto;
     position: relative;
   }
-  .left-layout{
+
+  .left-layout {
     flex-grow: 5;
   }
-  .right-layout{
+
+  .right-layout {
     flex-grow: 1;
   }
-  ul{
+
+  ul {
     padding: 0;
     list-style: none;
   }
-  .left-layout ul li{
+
+  .left-layout ul li {
     padding-top: 10px;
     padding-bottom: 10px;
     border-bottom: solid 1px #f8f6f2;
@@ -28,33 +31,41 @@
     display: block;
     cursor: pointer;
   }
-  .left-layout ul li:first-child{
-    border-top:solid 1px #f8f6f2;
+
+  .left-layout ul li:first-child {
+    border-top: solid 1px #f8f6f2;
   }
-  .left-layout ul li:hover{
+
+  .left-layout ul li:hover {
     background-color: #eeece8;
   }
-  .left-layout ul li .person{
-       float: left;
-       margin-left: 30px;
-       margin-top: 5px;
+
+  .left-layout ul li .person {
+    float: left;
+    margin-left: 30px;
+    margin-top: 5px;
   }
-  .left-layout ul li .person img{
-        width: 40px;
+
+  .left-layout ul li .person img {
+    width: 40px;
   }
-  .left-layout ul li .person span{
+
+  .left-layout ul li .person span {
 
   }
-  .left-layout ul li .message-detail{
+
+  .left-layout ul li .message-detail {
     display: inline-block;
-    margin-left:200px;
+    margin-left: 200px;
     line-height: 30px;
   }
-  .left-layout ul li .time{
-     float: right;
+
+  .left-layout ul li .time {
+    float: right;
     margin-right: 100px;
   }
-  .mes-title{
+
+  .mes-title {
     color: #333;
     font-size: 16px;
     margin-top: 8px;
@@ -62,16 +73,19 @@
     line-height: 150%;
     word-break: break-all;
   }
-  .mes-title:hover{
+
+  .mes-title:hover {
     color: #da4f4a;
   }
-  .right-layout{
+
+  .right-layout {
     margin: 20px auto;
     width: 140px;
     display: flex;
     justify-content: center;
   }
-  .refresh{
+
+  .refresh {
     color: #777;
     border: solid 1px #d6d4d0;
     background-color: #f8f6f2;
@@ -82,167 +96,84 @@
     border-radius: 4px;
     margin: 0 auto;
     height: 32px;
-    border: none;
     outline: 0;
   }
-  .refresh:hover{
+
+  .refresh:hover {
     color: #484744;
     background-color: #f1ede5;
   }
-  .refresh:active{
+
+  .refresh:active {
     border: none;
   }
+
+  .message-content {
+    color: #777;
+
+  }
+
+  .message-content i {
+    margin-right: 10px;
+  }
+
+  .mes-content i.top{
+    position: absolute;
+    top:3px;
+    width: 20px;
+  }
+  .mes-footer {
+    color: #b9b9b7;
+    padding-top: 5px;
+    font-size: 11px;
+  }
+
+  .loading {
+    position: absolute;
+    bottom:10px;
+    left:50%;
+  }
+  .tip_icon{
+    display: inline-block;
+    width: 20px;
+    height: 30px;
+    line-height: 30px;
+    position: relative;
+  }
 </style>
-<div class="message-content">
+<div class="message-content" (scroll)="scrollLoading($event)">
   <div class="left-layout">
     <ul>
-      <li>
+      <li *ngFor="let item of msgList">
         <div class="person">
-          <img src="../../../assets/images/header.jpg" alt="header">
-          <span>cwl</span>
+          <userInfo-img [user_id]="item.user_id"></userInfo-img>
+          <span>{{item.user.username}}</span>
         </div>
         <div class="message-detail">
-          <div class="mes-title">完成了任务</div>
+          <div class="mes-title">{{item.message}}</div>
           <div class="mes-content">
-            <i class="glyphicon glyphicon-check"></i>个UI欧</div>
-          <div class="mes-footer">teamFlow</div>
+            <div class="tip_icon">
+              <i class="glyphicon glyphicon-check" *ngIf="item.message==='完成了任务'"></i>
+              <i class="iconfont icon-chuangjian top" *ngIf="item.message==='创建了任务'"></i>
+              <i class="iconfont icon-shanchu top" *ngIf="item.message==='撤销完成任务，任务继续'"></i>
+              <i class="iconfont icon-fenpei-copy" *ngIf="item.message.indexOf('分配给你了任务')>-1"></i>
+            </div>
+            {{item.t_task.task_content}}
+          </div>
+          <div class="mes-footer">{{item.t_task.t_project.projectName}}</div>
         </div>
-        <div class="time">2017-2-13 12:43</div>
+        <div class="time">{{item.created_at}}</div>
       </li>
-      <li>
-        <div class="person">
-          <img src="../../../assets/images/header.jpg" alt="header">
-          <span>cwl</span>
-        </div>
-        <div class="message-detail">
-          <div class="mes-title">完成了任务</div>
-          <div class="mes-content">
-            <i class="glyphicon glyphicon-check"></i>个UI欧</div>
-          <div class="mes-footer">teamFlow</div>
-        </div>
-        <div class="time">2017-2-13 12:43</div>
-      </li>
-      <li>
-        <div class="person">
-          <img src="../../../assets/images/header.jpg" alt="header">
-          <span>cwl</span>
-        </div>
-        <div class="message-detail">
-          <div class="mes-title">完成了任务</div>
-          <div class="mes-content">
-            <i class="glyphicon glyphicon-check"></i>个UI欧</div>
-          <div class="mes-footer">teamFlow</div>
-        </div>
-        <div class="time">2017-2-13 12:43</div>
-      </li>
-      <li>
-        <div class="person">
-          <img src="../../../assets/images/header.jpg" alt="header">
-          <span>cwl</span>
-        </div>
-        <div class="message-detail">
-          <div class="mes-title">完成了任务</div>
-          <div class="mes-content">
-            <i class="glyphicon glyphicon-check"></i>个UI欧</div>
-          <div class="mes-footer">teamFlow</div>
-        </div>
-        <div class="time">2017-2-13 12:43</div>
-      </li>
-      <li>
-        <div class="person">
-          <img src="../../../assets/images/header.jpg" alt="header">
-          <span>cwl</span>
-        </div>
-        <div class="message-detail">
-          <div class="mes-title">完成了任务</div>
-          <div class="mes-content">
-            <i class="glyphicon glyphicon-check"></i>个UI欧</div>
-          <div class="mes-footer">teamFlow</div>
-        </div>
-        <div class="time">2017-2-13 12:43</div>
-      </li> <li>
-      <div class="person">
-        <img src="../../../assets/images/header.jpg" alt="header">
-        <span>cwl</span>
-      </div>
-      <div class="message-detail">
-        <div class="mes-title">完成了任务</div>
-        <div class="mes-content">
-          <i class="glyphicon glyphicon-check"></i>个UI欧</div>
-        <div class="mes-footer">teamFlow</div>
-      </div>
-      <div class="time">2017-2-13 12:43</div>
-    </li>
-      <li>
-        <div class="person">
-          <img src="../../../assets/images/header.jpg" alt="header">
-          <span>cwl</span>
-        </div>
-        <div class="message-detail">
-          <div class="mes-title">完成了任务</div>
-          <div class="mes-content">
-            <i class="glyphicon glyphicon-check"></i>个UI欧</div>
-          <div class="mes-footer">teamFlow</div>
-        </div>
-        <div class="time">2017-2-13 12:43</div>
-      </li>
-      <li>
-        <div class="person">
-          <img src="../../../assets/images/header.jpg" alt="header">
-          <span>cwl</span>
-        </div>
-        <div class="message-detail">
-          <div class="mes-title">完成了任务</div>
-          <div class="mes-content">
-            <i class="glyphicon glyphicon-check"></i>个UI欧</div>
-          <div class="mes-footer">teamFlow</div>
-        </div>
-        <div class="time">2017-2-13 12:43</div>
-      </li>
-      <li>
-        <div class="person">
-          <img src="../../../assets/images/header.jpg" alt="header">
-          <span>cwl</span>
-        </div>
-        <div class="message-detail">
-          <div class="mes-title">完成了任务</div>
-          <div class="mes-content">
-            <i class="glyphicon glyphicon-check"></i>个UI欧</div>
-          <div class="mes-footer">teamFlow</div>
-        </div>
-        <div class="time">2017-2-13 12:43</div>
-      </li>
-      <li>
-        <div class="person">
-          <img src="../../../assets/images/header.jpg" alt="header">
-          <span>cwl</span>
-        </div>
-        <div class="message-detail">
-          <div class="mes-title">完成了任务</div>
-          <div class="mes-content">
-            <i class="glyphicon glyphicon-check"></i>个UI欧</div>
-          <div class="mes-footer">teamFlow</div>
-        </div>
-        <div class="time">2017-2-13 12:43</div>
-      </li>
-      <li>
-        <div class="person">
-          <img src="../../../assets/images/header.jpg" alt="header">
-          <span>cwl</span>
-        </div>
-        <div class="message-detail">
-          <div class="mes-title">完成了任务</div>
-          <div class="mes-content">
-            <i class="glyphicon glyphicon-check"></i>个UI欧</div>
-          <div class="mes-footer">teamFlow</div>
-        </div>
-        <div class="time">2017-2-13 12:43</div>
-      </li>
-
-
     </ul>
   </div>
   <div class="right-layout">
-    <button class="refresh"><i class="glyphicon glyphicon-refresh"></i> &nbsp;&nbsp;刷新动态</button>
+    <button class="refresh" (click)="refresh()"><i class="glyphicon glyphicon-refresh"></i> &nbsp;&nbsp;刷新动态</button>
   </div>
+</div>
+<div class="loading spinner" *ngIf="loading">
+  <div class="rect1"></div>
+  <div class="rect2"></div>
+  <div class="rect3"></div>
+  <div class="rect4"></div>
+  <div class="rect5"></div>
 </div>

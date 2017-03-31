@@ -6,6 +6,7 @@ import {Task, TaskService} from "../../../service/task.service";
 import {ProjectService} from "../../../service/project.service";
 import {User} from "../../../service/user.service";
 import {TeamService} from "../../../service/team.service";
+import {socket} from "../../../tool/socket/socket";
 
 @Component({
   moduleId: module.id,
@@ -91,6 +92,7 @@ export class TaskDetailComponent implements OnInit {
   }
   //分配人员
   selOneUser = (item) => {
+    let old_user_id = this.task.t_user_task.user_id
     let obj = {
       handle_user_id: item.user_id,
       task_id: this.task.task_id,
@@ -104,6 +106,15 @@ export class TaskDetailComponent implements OnInit {
           this.user_info_show = false
           //通知父组件更新列表 根据type重新获取task
           this.updateByType.emit(this.task.type)
+          //如果任务分配做用户更换了
+          // 通知那个用户更新列表
+          if(old_user_id!==obj.handle_user_id){
+            let task ={
+              user_id:obj.handle_user_id,
+              type:this.task.type
+            }
+            socket.emit("update_task_user",task)
+          }
         }
         else{
           this.showTip(data.msg)
