@@ -171,8 +171,8 @@
   <div>
     <div class="content-top">
       <div class="checkbox" (click)="stopBubble($event)">
-        <input class="magic-checkbox" type="checkbox" id='{{y+task.task_id}}' name="layout">
-        <label for='{{y+task.task_id}}' (click)="doneOneTask($event)"></label>
+        <input class="magic-checkbox" type="checkbox" id='y${{task.task_id}}' name="layout">
+        <label for='y${{task.task_id}}' (click)="doneOneTask($event)"></label>
       </div>
       <div class="task-main">
         <span [class.delete]="delete_flag">{{task.task_content}}</span>

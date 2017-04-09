@@ -47,6 +47,7 @@ export class LeftBarComponent implements OnInit,OnDestroy {
   showMyProject: boolean = false
   projectList: Project[] = []
   state: string
+  hasInfo:boolean
 
   constructor(private tool: Tool,
               private teamService: TeamService,
@@ -127,7 +128,7 @@ export class LeftBarComponent implements OnInit,OnDestroy {
     this.title = '新建项目'
     this.type = 'project'
   }
-  closeShowModal = () => {
+  closeShowModal = (e) => {
     this.show_modal = false
   }
 
@@ -155,8 +156,11 @@ export class LeftBarComponent implements OnInit,OnDestroy {
     //监听改变该组件上的通知
     socket.on("notify_msg", (msg) => {
       if (msg === "has notify") {
-        console.log("接收到了")
+        this.hasInfo = true
       }
+    })
+    socket.on("server_notify_message",msg=>{
+      this.hasInfo = true
     })
   }
 
@@ -199,10 +203,21 @@ export class LeftBarComponent implements OnInit,OnDestroy {
   }
 
   //获取一个用户的所有项目信息
-  getUserAllProjectInfo = (user_id?:string) => {
+  getUserAllProjectInfo = (user_id) => {
     let id = user_id||this.user_id
     this.projectService.getUserAllProjectInfo(id)
       .subscribe(data => {
+        console.log(data)
+        if (data.success) {
+          this.projectList = data.datas
+        }
+      })
+  }
+  getUserAllProjectInfo1 = ()=>{
+    let id = this.user_id
+    this.projectService.getUserAllProjectInfo(id)
+      .subscribe(data => {
+        console.log(data)
         if (data.success) {
           this.projectList = data.datas
         }

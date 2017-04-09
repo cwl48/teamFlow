@@ -9,6 +9,7 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    top:0
   }
 
   .my-modal {
@@ -297,7 +298,27 @@
             </div>
           </div>
         </div>
-      </div>
+       <!--通知弹窗-->
+        <div id="notify" *ngIf="type==='visit'">
+          <div class="content">
+            <div class="project-row">
+              <div style="font-size: 16px;padding-bottom:10px ">项目所属团队:</div>
+              <span (click)="changeSelectFocus($event)">
+                <my-select [datalist]="teamList" [place]="teamPlace" [open]="select_focus"
+                           (selItem)="selectTeam($event)"></my-select>
+              </span>
+            </div>
+            <div class="project-row">
+              <div style="font-size: 16px;padding-bottom:10px;padding-top: 10px">项目信息:</div>
+              <input type="text" class="form-control" placeholder="项目名字" [(ngModel)]="projectName">
+              <textarea class="form-control" placeholder="项目信息(可选)" style="margin-top:15px" [(ngModel)]="projectInfo"></textarea>
+            </div>
+            <div class="create">
+              <button class="btn btn-success" (click)="createProject()">创建</button>
+              <button class="btn btn-default" (click)="_notifyShow()">取消</button>
+            </div>
+          </div>
+        </div>
       <div class="modal_footer">
 
       </div>

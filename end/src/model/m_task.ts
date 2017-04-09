@@ -1,5 +1,5 @@
 import sequelize from '../config/db';
-import * as Sequelize from 'Sequelize';
+import * as Sequelize from 'sequelize';
 
 const TaskModel = sequelize.define("t_tasks", {
     task_id: {                             //主键消息id
@@ -25,10 +25,11 @@ const TaskModel = sequelize.define("t_tasks", {
     },
     type: {                               //从属于什么阶段 (对用户来说)
         type: Sequelize.STRING,
-        allowNull: false
+        defaultValue:""
     },
     type_project: {                      //从属于什么阶段(对项目来说)
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        defaultValue:''
     },
     order: {                            //任务在用户的任务列表里的排序
         type: Sequelize.FLOAT,

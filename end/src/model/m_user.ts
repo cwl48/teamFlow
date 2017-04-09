@@ -1,5 +1,5 @@
 import sequelize from '../config/db';
-import * as Sequelize from 'Sequelize';
+import * as Sequelize from 'sequelize';
 import EmailModel from "./../model/m_email"
 const UserModel = sequelize.define('user', {
 

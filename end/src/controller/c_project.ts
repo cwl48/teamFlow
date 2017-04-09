@@ -6,6 +6,7 @@ import Team from './c_team';
 import ProjectUserModel from '../model/m_project_user';
 import UserModel from '../model/m_user';
 import TeamModel from '../model/m_team';
+import TaskModel from '../model/m_task';
 const uuidV1 = require('uuid/v1')
 export default class Project {
 
@@ -26,7 +27,7 @@ export default class Project {
                 }
             }
         })
-        console.log(JSON.parse(JSON.stringify(userAuth)))
+
 
         if (userAuth === null) {
             ctx.body = {
@@ -78,43 +79,53 @@ export default class Project {
     static getUserAllProjectInfo = async (ctx: Koa.Context, next: Function) => {
         let user_id = ctx.query.user_id
 
+
         try {
-            let user: any = await UserModel.findOne({
-                include: [
-                    {
-                        model: ProjectModel,
-                        include: [{
-                            model: TeamModel
-                        }]
-                    }
-                ],
+            //先查找该用户所在的团队
+            let teams:any = await TeamUserModel.findAll({
                 where: {
                     user_id: user_id
                 }
             })
+            let pros:any[] = []
+            //查找团队里的所有项目
+            for (let team of teams) {
+                let projects: any = await ProjectModel.findAll({
+                    include: [
+                        {
+                                model: TeamModel
+                        }
+                    ],
+                    where: {
+                        team_id:team.team_id
+                    }
+                })
+                for(let i of projects){
+                    pros.push(i)
+                }
+            }
             ctx.body = {
                 success: true,
                 msg: '查询成功',
-                datas: user.t_projects
+                datas: pros
             }
-
         } catch (e) {
             throw new Error(e)
         }
     }
 
     //获取一个项目信息
-    static getProjectInfo=async(ctx: Koa.Context, next: Function)=>{
+    static getProjectInfo = async (ctx: Koa.Context, next: Function) => {
         let project_id = ctx.query.project_id
         let project = await ProjectModel.findOne({
-            where:{
-                project_id:project_id
+            where: {
+                project_id: project_id
             }
         })
         ctx.body = {
-            success:true,
-            msg:'查询成功',
-            datas:project
+            success: true,
+            msg: '查询成功',
+            datas: project
         }
     }
 }

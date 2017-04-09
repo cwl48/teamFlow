@@ -19,6 +19,8 @@ export class UserService {
   modifyPassUrl = `${host}/api/user/modifyPass`
   userUrl = `${host}/api/user`
 
+  visitUrl  =`${host}/api/visite`
+
   constructor(private http:Http) {
   }
 
@@ -73,6 +75,11 @@ export class UserService {
     return this.http.get(url)
       .map(this.send)
 
+  }
+  //邀请用户进入团队
+  visiteMember=(obj)=>{
+   return this.http.post(this.visitUrl,obj)
+      .map(this.send)
   }
   send = (res: Response) => {
     return res.json()

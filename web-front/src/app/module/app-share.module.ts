@@ -12,6 +12,8 @@ import {MySelectComponent} from "../component/share/my-select/my-select.componen
 import {ValidationService} from "../tool/validation/validation";
 import {UserInfoImgComponent} from "../component/share/userInfo-img/userInfo-img.component";
 import {TaskDetailComponent} from "../component/share/task-detail/task-detail.component";
+import {HtmlDirective} from "../pipe/safehtml.directive";
+import {OneTaskComponent} from "../component/mytask/one-task.component";
 
 @NgModule({
     imports: [FormsModule,CommonModule],
@@ -24,7 +26,9 @@ import {TaskDetailComponent} from "../component/share/task-detail/task-detail.co
       MyModalComponent,
       MySelectComponent,
       UserInfoImgComponent,
-      TaskDetailComponent
+      TaskDetailComponent,
+      HtmlDirective,
+      OneTaskComponent
     ],
     declarations: [
       FlowerBgComponent,
@@ -32,7 +36,9 @@ import {TaskDetailComponent} from "../component/share/task-detail/task-detail.co
       MyModalComponent,
       MySelectComponent,
       UserInfoImgComponent,
-      TaskDetailComponent
+      TaskDetailComponent,
+      HtmlDirective,
+      OneTaskComponent
     ],
     providers: [ValidationService],
 })

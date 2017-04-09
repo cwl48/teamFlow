@@ -1,5 +1,5 @@
 import sequelize from '../config/db';
-import * as Sequelize from 'Sequelize';
+import * as Sequelize from 'sequelize';
 import Team from '../controller/c_team';
 
 const TeamLogModel = sequelize.define("team_log", {

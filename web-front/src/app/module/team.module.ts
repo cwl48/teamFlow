@@ -9,15 +9,13 @@ import {TeamService} from "../service/team.service";
 import {TeamMemberComponent} from "../component/team-detail/team-member.component";
 import {TeamOptionComponent} from "../component/team-detail/option/team-option.component";
 import {TeamProjectComponent} from "../component/team-detail/team-project.component";
-import {TeamTaskComponent} from "../component/team-detail/team-task.component";
 
 @NgModule({
     imports: [AppShareModule,TeamRoutingModule],
     declarations: [
       TeamIndexComponent,
       TeamMemberComponent,
-      TeamProjectComponent,
-      TeamTaskComponent
+      TeamProjectComponent
     ],
     providers: [TeamService],
 })

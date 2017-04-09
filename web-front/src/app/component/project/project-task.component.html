@@ -1,1 +1,300 @@
-项目任务
+<style>
+  .task-panel {
+    position: relative;
+    min-height: 60px;
+    width: 300px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    vertical-align: top;
+    display: inline-block;
+    zoom: 1;
+    min-width: 180px;
+    margin: 7px 0 0 20px;
+    padding-bottom: 6px;
+    border-radius: 5px;
+    background-color: #eeece8;
+  }
+
+  .panel_header {
+    padding-top: 10px;
+    padding-bottom: 5px;
+  }
+
+  .panel_header .title {
+    font-size: 16px;
+    margin: 0;
+    color: #6f6e6b;
+    line-height: 30px;
+    padding: 7px 9px;
+    display: inline;
+  }
+
+  .panel_header .total_num {
+    color: #bcb7af;
+    font-size: 12px;
+    width: 47px;
+    text-align: center;
+    font-weight: 400;
+    float: right;
+    height: 30px;
+    line-height: 30px;
+  }
+
+  .panel_content {
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .task {
+    width: 280px;
+    min-height: 70px;
+    margin: 0 auto;
+  }
+
+  .content-footer .project-name i,
+  .content-footer .project-name span {
+    font-size: 12px;
+    color: #bcb7af;
+    margin-left: 32px;
+  }
+
+  .content-footer .project-name span {
+    margin-left: 2px;
+  }
+
+  .member-img img {
+    width: inherit;
+  }
+
+  .panel_content {
+    position: relative;
+  }
+
+  .empty {
+    position: absolute;
+    left: 50%;
+    margin-left: -84px;
+  }
+
+  .empty-text {
+    color: #b9b9b7;
+    line-height: 61px;
+    border: 0;
+    background: 0 0;
+    margin: 0 auto;
+  }
+
+  .create-task {
+    position: relative;
+    z-index: 2;
+    line-height: 28px;
+    padding-top: 8px
+  }
+
+  .create-task a {
+    display: block;
+    color: #bcb7af;
+    text-align: left;
+    text-decoration: none;
+    padding: 8px 10px;
+  }
+
+  .my-task {
+    overflow-x: auto;
+    overflow-y: hidden;
+    width: 100%;
+    white-space: nowrap;
+    height: 100%;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  .task-write {
+    width: 280px;
+    margin: 10px auto 0;
+  }
+
+  textarea {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding:10px;
+  }
+
+  textarea:focus {
+    border-color: #fcd340;
+    outline: 0;
+    color: #000;
+    -webkit-box-shadow: 0 0 1px #fcd340;
+    box-shadow: 0 0 1px #fcd340;
+  }
+  .saveOrCancel{
+    padding: 5px 0;
+  }
+  .btn{
+    padding: 6px 43px;
+
+  }
+  .btn.btn-success{
+    color: #fff;
+    background-color: #54d09f;
+    border-color: #54d09f;
+    margin-right: 30px;
+    outline: none;
+  }
+  .btn.btn-default{
+    border-color: transparent;
+    background-color: transparent;
+    color: #acaba7;
+    outline: 0;
+  }
+</style>
+<div class="my-task" (wheel)="listenWeel($event)" id="allTask">
+  <div class="task-panel" >
+    <div class="panel_header">
+      <div class="title">收件箱</div>
+      <div class="total_num">{{taskpanels1.tasks.length}}</div>
+    </div>
+    <div class="panel_content" id="panel_content1" (wheel)="stopBubble($event)">
+      <div class="task" [dragula]='"first"' [dragulaModel]='taskpanels1.tasks' id="mail">
+        <one-task *ngFor="let item of taskpanels1.tasks" [task]="item" id="{{item.task_id}}" [type]="taskpanels1.type" (updateListByType)="updateList($event)" (_notify_task)="getOneTaskFromChild($event)"></one-task>
+      </div>
+      <div class="task-write" *ngIf="taskpanels1.addShow">
+        <textarea placeholder="任务详情" (click)="stopBubble($event)" [(ngModel)]="taskpanels1.addContent"></textarea>
+        <div class="sel-project" (click)="changeSelectFocus($event,taskpanels1,'panel_content1')">
+          <my-select [top]="top" [datalist]="userList" [open]="taskpanels1.addShowSelect" (selItem)="selOneItem($event,taskpanels1)"
+                     [place]="place"></my-select>
+        </div>
+        <div class="saveOrCancel">
+          <button class="btn btn-success" (click)="createTask(taskpanels1,$event)">保存</button>
+          <button class="btn btn-default" (click)="cancelAdd(taskpanels1)">取消</button>
+        </div>
+      </div>
+    </div>
+    <div class="create-task" *ngIf="!taskpanels1.addShow">
+      <a href="javascript:;" (click)="addTaskShow($event,taskpanels1,'panel_content1')">
+        <i class="iconfont icon-tianjia"></i>
+        新建任务
+      </a>
+    </div>
+  </div><div class="task-panel">
+  <div class="panel_header">
+    <div class="title">开发中</div>
+    <div class="total_num">{{taskpanels2.tasks.length}}</div>
+  </div>
+  <div class="panel_content" id="panel_content2" (wheel)="stopBubble($event)">
+    <div class="task" [dragula]='"first"' [dragulaModel]='taskpanels2.tasks' id="today">
+      <one-task *ngFor="let item of taskpanels2.tasks" [task]="item" id="{{item.task_id}}" [type]="taskpanels2.type" (updateListByType)="updateList($event)" (_notify_task)="getOneTaskFromChild($event)"></one-task>
+    </div>
+    <div class="task-write" *ngIf="taskpanels2.addShow">
+      <textarea placeholder="任务详情" (click)="stopBubble($event)" [(ngModel)]="taskpanels2.addContent"></textarea>
+      <div class="sel-project" (click)="changeSelectFocus($event,taskpanels2,'panel_content2')">
+        <my-select [top]="top" [datalist]="userList" [open]="taskpanels2.addShowSelect" (selItem)="selOneItem($event,taskpanels2)"
+                   [place]="place"></my-select>
+      </div>
+      <div class="saveOrCancel">
+        <button class="btn btn-success" (click)="createTask(taskpanels2,$event)">保存</button>
+        <button class="btn btn-default" (click)="cancelAdd(taskpanels2)">取消</button>
+      </div>
+    </div>
+  </div>
+  <div class="create-task" *ngIf="!taskpanels2.addShow">
+    <a href="javascript:;" (click)="addTaskShow($event,taskpanels2,'panel_content2')">
+      <i class="iconfont icon-tianjia"></i>
+      新建任务
+    </a>
+  </div>
+</div>
+  <div class="task-panel">
+    <div class="panel_header">
+      <div class="title">待测试</div>
+      <div class="total_num">{{taskpanels3.tasks.length}}</div>
+    </div>
+    <div class="panel_content" id="panel_content3" (wheel)="stopBubble($event)">
+      <div class="task" [dragula]='"first"' [dragulaModel]='taskpanels3.tasks' id="next">
+        <one-task *ngFor="let item of taskpanels3.tasks" [task]="item" id="{{item.task_id}}" [type]="taskpanels3.type" (updateListByType)="updateList($event)" (_notify_task)="getOneTaskFromChild($event)"></one-task>
+      </div>
+      <div class="task-write" *ngIf="taskpanels3.addShow">
+        <textarea placeholder="任务详情" (click)="stopBubble($event)" [(ngModel)]="taskpanels3.addContent"></textarea>
+        <div class="sel-project" (click)="changeSelectFocus($event,taskpanels3,'panel_content3')">
+          <my-select [top]="top" [datalist]="userList" [open]="taskpanels3.addShowSelect" (selItem)="selOneItem($event,taskpanels3)"
+                     [place]="place"></my-select>
+        </div>
+        <div class="saveOrCancel">
+          <button class="btn btn-success" (click)="createTask(taskpanels3,$event)">保存</button>
+          <button class="btn btn-default" (click)="cancelAdd(taskpanels3)">取消</button>
+        </div>
+      </div>
+    </div>
+    <div class="create-task" *ngIf="!taskpanels3.addShow">
+      <a href="javascript:;" (click)="addTaskShow($event,taskpanels3,'panel_content3')">
+        <i class="iconfont icon-tianjia"></i>
+        新建任务
+      </a>
+    </div>
+  </div>
+  <div class="task-panel">
+    <div class="panel_header">
+      <div class="title">待发布</div>
+      <div class="total_num">{{taskpanels4.tasks.length}}</div>
+    </div>
+    <div class="panel_content" id="panel_content4" (wheel)="stopBubble($event)">
+      <div class="task" [dragula]='"first"' [dragulaModel]='taskpanels4.tasks' id="later">
+        <one-task *ngFor="let item of taskpanels4.tasks" [task]="item" id="{{item.task_id}}" [type]="taskpanels4.type" (updateListByType)="updateList($event)" (_notify_task)="getOneTaskFromChild($event)"></one-task>
+      </div>
+      <div class="task-write" *ngIf="taskpanels4.addShow">
+        <textarea placeholder="任务详情" (click)="stopBubble($event)" [(ngModel)]="taskpanels4.addContent"></textarea>
+        <div class="sel-project" (click)="changeSelectFocus($event,taskpanels4,'panel_content4')">
+          <my-select [top]="top" [datalist]="userList" [open]="taskpanels4.addShowSelect" (selItem)="selOneItem($event,taskpanels4)"
+                     [place]="place"></my-select>
+        </div>
+        <div class="saveOrCancel">
+          <button class="btn btn-success" (click)="createTask(taskpanels4,$event)">保存</button>
+          <button class="btn btn-default" (click)="cancelAdd(taskpanels4)">取消</button>
+        </div>
+      </div>
+    </div>
+    <div class="create-task" *ngIf="!taskpanels4.addShow">
+      <a href="javascript:;" (click)="addTaskShow($event,taskpanels4,'panel_content4')">
+        <i class="iconfont icon-tianjia"></i>
+        新建任务
+      </a>
+    </div>
+  </div>
+  <div class="task-panel">
+    <div class="panel_header">
+      <div class="title">已发布</div>
+      <div class="total_num">{{taskpanels5.tasks.length}}</div>
+    </div>
+    <div class="panel_content" id="panel_content5" (wheel)="stopBubble($event)">
+      <div class="task" [dragula]='"first"' [dragulaModel]='taskpanels5.tasks' id="final">
+        <one-task *ngFor="let item of taskpanels5.tasks" [task]="item" id="{{item.task_id}}" [type]="taskpanels5.type" (updateListByType)="updateList($event)" (_notify_task)="getOneTaskFromChild($event)"></one-task>
+      </div>
+      <div class="task-write" *ngIf="taskpanels5.addShow">
+        <textarea placeholder="任务详情" (click)="stopBubble($event)" [(ngModel)]="taskpanels5.addContent"></textarea>
+        <div class="sel-project" (click)="changeSelectFocus($event,taskpanels5,'panel_content5')">
+          <my-select [top]="top" [datalist]="userList" [open]="taskpanels5.addShowSelect" (selItem)="selOneItem($event,taskpanels5)"
+                     [place]="place"></my-select>
+        </div>
+        <div class="saveOrCancel">
+          <button class="btn btn-success" (click)="createTask(taskpanels5,$event)">保存</button>
+          <button class="btn btn-default" (click)="cancelAdd(taskpanels5)">取消</button>
+        </div>
+      </div>
+    </div>
+    <div class="create-task" *ngIf="!taskpanels5.addShow">
+      <a href="javascript:;" (click)="addTaskShow($event,taskpanels5,'panel_content5')">
+        <i class="iconfont icon-tianjia"></i>
+        新建任务
+      </a>
+    </div>
+  </div>
+</div>
+<top-tip [show]="show_tip" [msg]="tip" [success]="success"></top-tip>
+<task-detail [show]="show_task_detail" [task]="task" (close)="closeTaskModal($event)" (updateByType)="updateList($event)"></task-detail>
+
+

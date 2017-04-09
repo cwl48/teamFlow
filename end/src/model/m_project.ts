@@ -1,5 +1,5 @@
 import sequelize from '../config/db';
-import * as Sequelize from 'Sequelize';
+import * as Sequelize from 'sequelize';
 
 const ProjectModel = sequelize.define('t_project', {
     project_id: {                       //主键项目id

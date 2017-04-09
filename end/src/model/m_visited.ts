@@ -1,5 +1,5 @@
 import sequelize from '../config/db';
-import * as Sequelize from 'Sequelize';
+import * as Sequelize from 'sequelize';
 
 const VisitedModel = sequelize.define('visit', {
     id: {                       //邀请表id

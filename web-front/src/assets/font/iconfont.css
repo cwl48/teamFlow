@@ -1,10 +1,10 @@
 
 @font-face {font-family: "iconfont";
-  src: url('iconfont.eot?t=1490951316822'); /* IE9*/
-  src: url('iconfont.eot?t=1490951316822#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('iconfont.woff?t=1490951316822') format('woff'), /* chrome, firefox */
-  url('iconfont.ttf?t=1490951316822') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-  url('iconfont.svg?t=1490951316822#iconfont') format('svg'); /* iOS 4.1- */
+  src: url('iconfont.eot?t=1491131396413'); /* IE9*/
+  src: url('iconfont.eot?t=1491131396413#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('iconfont.woff?t=1491131396413') format('woff'), /* chrome, firefox */
+  url('iconfont.ttf?t=1491131396413') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('iconfont.svg?t=1491131396413#iconfont') format('svg'); /* iOS 4.1- */
 }
 
 .iconfont {
@@ -64,6 +64,8 @@
 .icon-iconrc:before { content: "\e691"; }
 
 .icon-touxiang:before { content: "\e6e1"; }
+
+.icon-shousuo:before { content: "\e608"; }
 
 .icon-search:before { content: "\e601"; }
 

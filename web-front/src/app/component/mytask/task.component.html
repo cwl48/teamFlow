@@ -16,7 +16,23 @@
     border-radius: 5px;
     background-color: #eeece8;
   }
+  .btn{
+    padding: 6px 43px;
 
+  }
+  .btn.btn-success{
+    color: #fff;
+    background-color: #54d09f;
+    border-color: #54d09f;
+    margin-right: 30px;
+    outline: none;
+  }
+  .btn.btn-default{
+    border-color: transparent;
+    background-color: transparent;
+    color: #acaba7;
+    outline: 0;
+  }
   .panel_header {
     padding-top: 10px;
     padding-bottom: 5px;
@@ -135,23 +151,7 @@
   .saveOrCancel{
     padding: 5px 0;
   }
-  .btn{
-    padding: 6px 43px;
 
-  }
-  .btn.btn-success{
-    color: #fff;
-    background-color: #54d09f;
-    border-color: #54d09f;
-    margin-right: 30px;
-    outline: none;
-  }
-  .btn.btn-default{
-    border-color: transparent;
-    background-color: transparent;
-    color: #acaba7;
-    outline: 0;
-  }
 </style>
 <div class="my-task" (wheel)="listenWeel($event)" id="allTask">
   <div class="task-panel" >
@@ -159,7 +159,7 @@
       <div class="title">收件箱</div>
       <div class="total_num">{{taskpanels1.tasks.length}}</div>
     </div>
-    <div class="panel_content" id="panel_content1" (wheel)="prevent($event)">
+    <div class="panel_content" id="panel_content1" (wheel)="stopBubble($event)">
       <div class="empty" *ngIf="taskpanels1.tasks.length===0">
         <div class="empty-text">
           <span>分配给你的任务会显示在这</span>
@@ -191,7 +191,7 @@
       <div class="title">今天要做</div>
       <div class="total_num">{{taskpanels2.tasks.length}}</div>
     </div>
-    <div class="panel_content" id="panel_content2" (wheel)="prevent($event)">
+    <div class="panel_content" id="panel_content2" (wheel)="stopBubble($event)">
       <div class="empty" *ngIf="taskpanels2.tasks.length===0">
         <div class="empty-text">
           <span>今天要做的任务放到这里</span>
@@ -224,7 +224,7 @@
       <div class="title">下一步要做</div>
       <div class="total_num">{{taskpanels3.tasks.length}}</div>
     </div>
-    <div class="panel_content" id="panel_content3" (wheel)="prevent($event)">
+    <div class="panel_content" id="panel_content3" (wheel)="stopBubble($event)">
       <div class="empty" *ngIf="taskpanels3.tasks.length===0">
         <div class="empty-text">
           <span>接下来会做的任务放到这里</span>
@@ -257,7 +257,7 @@
       <div class="title">以后再做</div>
       <div class="total_num">{{taskpanels4.tasks.length}}</div>
     </div>
-    <div class="panel_content" id="panel_content4" (wheel)="prevent($event)">
+    <div class="panel_content" id="panel_content4" (wheel)="stopBubble($event)">
       <div class="empty" *ngIf="taskpanels4.tasks.length===0">
         <div class="empty-text">
           <span>分配给你的任务会显示在这</span>

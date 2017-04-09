@@ -5,6 +5,11 @@ import OnlineUser from "../controller/c_online";
 import Email from "../controller/c_email"
 import User from "../controller/c_user"
 import * as socket from 'socket.io';
+import TeamModel from '../model/m_team';
+import Team from '../controller/c_team';
+import UserModel from '../model/m_user';
+import GroupChatsModel from '../model/m_group_chat';
+import Chat from '../controller/c_chat';
 export default class MySocket {
 
     //处理socket
@@ -18,6 +23,13 @@ export default class MySocket {
             }
             try {
                 await OnlineUser.updateOrCreate(obj)
+                //进入团队聊天room 获取自己所有的team 并加入
+                let teams:any[] = await Team.getAllTeam(obj.user_id)
+                teams.forEach(team=>{
+                    socket.join(team.team_id)
+                })
+                
+                // console.log("---------------------",socket.rooms)
             } catch (e) {
                 throw new Error(e)
             }
@@ -43,7 +55,6 @@ export default class MySocket {
                     break;
                 case "invite_into_team":
                     // 两种情况 1.根据member_ids 2.根据email
-                    console.log(data)
                     for (let id of data.member_ids) {
                         if (await OnlineUser.userIsOnline(id)) {
                             let socket_id = await OnlineUser.getUserSocketId(id)
@@ -84,9 +95,53 @@ export default class MySocket {
                 //在线
                 if (await OnlineUser.userIsOnline(user_id)) {
                     let socket_id = await OnlineUser.getUserSocketId(user_id)
-                    io.sockets.sockets[socket_id].emit("server_notify_message", "has one notify")   //通知客户端有一条信息
+            socket.to(socket_id).emit("server_notify_message", "has one notify")   //通知客户端有一条信息
                 }
             })
+        })
+
+        //团队房间内接发消息
+        socket.on("send_in_room",async(obj:any)=>{
+            socket.emit("send_success","success")
+            
+            //消息存入数据库
+            await Chat.sendChatToTeam(obj)
+            let user:any = await UserModel.findOne({
+                where:{
+                    user_id:obj.user_id
+                },attributes:["imgurl","username","user_id"]
+            })
+            let send = {
+                 imgurl:user.imgurl,
+                 username:user.username,
+                 user_id:user.user_id
+            }
+            Object.assign(send,obj)
+            socket.to(obj.team_id).emit("send_in_room",send)
+        })
+        //用户间接发消息
+        socket.on("send_in_person",async(obj:any)=>{
+            console.log(obj)
+            socket.emit("send_success","success")   //通知前端消息发送成功
+            await Chat.sendChatToPerson(obj)
+
+            let user:any = await UserModel.findOne({
+                where:{
+                    user_id:obj.user_id
+                },attributes:["imgurl","username","user_id"]
+            })
+            let send = {
+                 imgurl:user.imgurl,
+                 username:user.username,
+                 user_id:user.user_id
+            }
+            Object.assign(send,obj)
+            //获取target_user_id所对应的socket_id
+            //先判断对方是否在线
+            if(await OnlineUser.userIsOnline(obj.target_user_id)){
+                let socket_id = await OnlineUser.getUserSocketId(obj.target_user_id)
+                socket.to(socket_id).emit("send_in_person",send)
+            }
         })
     }
 }

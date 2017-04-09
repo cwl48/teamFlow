@@ -1,5 +1,5 @@
 import sequelize from '../config/db';
-import * as Sequelize from 'Sequelize';
+import * as Sequelize from 'sequelize';
 
 const MessageModel = sequelize.define("message", {
     message_id: {                       //主键消息id

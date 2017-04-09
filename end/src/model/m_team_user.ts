@@ -1,5 +1,5 @@
 import sequelize from '../config/db';
-import * as Sequelize from 'Sequelize';
+import * as Sequelize from 'sequelize';
 import UserModel from "./m_user";
 import TeamModel from './m_team';
 const TeamUserModel = sequelize.define('team_user', {

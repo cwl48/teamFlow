@@ -1,5 +1,5 @@
 import sequelize from '../config/db';
-import * as Sequelize from 'Sequelize';
+import * as Sequelize from 'sequelize';
 
 const TaskMsgsModel = sequelize.define("t_task_msgs", {
       id: {                       //主键

@@ -1,5 +1,5 @@
 import sequelize from '../config/db';
-import * as Sequelize from 'Sequelize';
+import * as Sequelize from 'sequelize';
 
 const GroupChatsModel = sequelize.define("t_group_chats", {
     chat_id: {                             //主键消息id

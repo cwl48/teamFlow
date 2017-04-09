@@ -1,5 +1,5 @@
 import sequelize from '../config/db';
-import * as Sequelize from 'Sequelize';
+import * as Sequelize from 'sequelize';
 
 const PersonChatsModel = sequelize.define("t_person_chats", {
     chat_id: {                             //主键消息id
@@ -21,5 +21,5 @@ const PersonChatsModel = sequelize.define("t_person_chats", {
     }
 });
 
-PersonChatsModel.sync()           //写入
+// PersonChatsModel.sync()           //写入
 export default PersonChatsModel;

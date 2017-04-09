@@ -1,5 +1,5 @@
 import sequelize from '../config/db';
-import * as Sequelize from 'Sequelize';
+import * as Sequelize from 'sequelize';
 
 const EmailModel = sequelize.define('email', {
     email_id: {                       //主键邮箱id

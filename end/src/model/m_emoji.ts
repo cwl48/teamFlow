@@ -1,5 +1,5 @@
 import sequelize from '../config/db';
-import * as Sequelize from 'Sequelize';
+import * as Sequelize from 'sequelize';
 
 const EmojiModel = sequelize.define("t_emojis", {
     id: {                       //主键
@@ -14,5 +14,5 @@ const EmojiModel = sequelize.define("t_emojis", {
     }
 });
 
-EmojiModel.sync()           //写入
+// EmojiModel.sync()           //写入
 export default EmojiModel;

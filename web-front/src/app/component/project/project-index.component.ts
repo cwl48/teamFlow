@@ -20,6 +20,8 @@ export class ProjectIndexComponent implements OnInit {
 
   ngOnInit() {
     this.getProjectInfo()
+    this.setMainHeight()
+
   }
 
   getProjectInfo = () => {
@@ -34,5 +36,12 @@ export class ProjectIndexComponent implements OnInit {
           })
       }
     })
+  }
+
+  //动态设置右侧Main的高度
+  setMainHeight = () => {
+    let main = document.getElementById('task-wrap');
+    let clientHeight = document.body.clientHeight || document.documentElement.clientHeight;    //获取宽度
+    main.style.height = clientHeight - 80 + 'px';
   }
 }

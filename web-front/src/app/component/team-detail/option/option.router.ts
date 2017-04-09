@@ -5,7 +5,6 @@ import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {TeamOptionComponent} from "./team-option.component";
 import {TeamBasicOptionComponent} from "./option-basic.component";
-import {TeamOptionProjectComponent} from "./option-project.component";
 import {TeamMemberOptionComponent} from "./option-member.component";
 import {TeamOptionSecurityComponent} from "./option-security.component";
 
@@ -23,10 +22,6 @@ const routes: Routes = [
       {
         path:'basic',
         component:TeamBasicOptionComponent
-      },
-      {
-        path:'project-option',
-        component:TeamOptionProjectComponent
       },
       {
         path:'member-option',

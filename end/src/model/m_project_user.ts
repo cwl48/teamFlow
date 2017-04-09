@@ -1,5 +1,5 @@
 import sequelize from '../config/db';
-import * as Sequelize from 'Sequelize';
+import * as Sequelize from 'sequelize';
 
 const ProjectUserModel = sequelize.define("project_users", {
     id: {                       //主键

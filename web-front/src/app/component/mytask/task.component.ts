@@ -77,6 +77,7 @@ export class TaskComponent implements OnInit {
     this.taskpanels1.addShowSelect = false
     this.taskpanels2.addShowSelect = false
     this.taskpanels3.addShowSelect = false
+    this.taskpanels4.addShowSelect = false
     this.taskpanels1.project_id = ""
     this.taskpanels2.project_id = ""
     this.taskpanels3.project_id = ""
@@ -307,10 +308,6 @@ export class TaskComponent implements OnInit {
     this.scrollToBottom(cla)
     this.stopBubble(e)
   }
-  //阻止滚动事件冒泡
-  prevent = (e) => {
-    this.stopBubble(e)
-  }
   //显示创建任务框
   addTaskShow = (e, type, cla) => {
     this.stopBubble(e)
@@ -417,7 +414,6 @@ export class TaskComponent implements OnInit {
   }
   //从子组件获取task
   getOneTaskFromChild = (e) => {
-    console.log(e)
     this.task = e
     this.show_task_detail = true
   }

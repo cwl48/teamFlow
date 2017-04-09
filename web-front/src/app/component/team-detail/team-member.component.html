@@ -1,1 +1,175 @@
-成员
+<style>
+  a {
+    text-decoration: none;
+  }
+
+  .team-wrap {
+    margin: 14px;
+    border: 1px solid #f8f6f2;
+    position: relative;
+  }
+
+  .inner {
+    padding: 21px 21px 0 21px;
+    margin-right: 227px;
+    overflow: hidden;
+    background-color: #ffffff;
+  }
+
+  .inner .top {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border-bottom: solid 1px #f8f6f2;
+    padding: 0 15px 14px 2px;
+    font-weight: 400;
+    color: #777;
+    font-size: 17px;
+    line-height: 100%;
+  }
+
+  .project {
+    display: flex;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    flex-direction: row;
+    -ms-flex-direction: row;
+    -webkit-flex-direction: row;
+    height: 70px;
+    align-items: center;
+  }
+
+  .project-name {
+    color: #484744;
+    flex: 1;
+  }
+
+  .state {
+    flex: 1;
+    display: flex;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    flex-direction: row;
+    -ms-flex-direction: row;
+    -webkit-flex-direction: row;
+  }
+
+  .state .no-done {
+    margin-top: 14px;
+    height: 42px;
+    line-height: 42px;
+    color: #fff;
+    text-align: center;
+    background: rgba(255, 177, 27, .7);
+    flex: 1;
+    border-radius: 5px 0 0 5px;
+  }
+
+  .state .done {
+    margin-top: 14px;
+    height: 42px;
+    line-height: 42px;
+    color: #fff;
+    text-align: center;
+    flex: 1;
+    background: rgba(94, 172, 130, .8);
+    border-radius: 0 5px 5px 0;
+  }
+
+  .createProject {
+    position: absolute;
+    top: 0;
+    right: 25px;
+
+  }
+
+  .createProject .wrap button {
+    display: block;
+    margin-top: 20px;
+  }
+
+  .modal-wrap {
+    background-color: rgba(0, 0, 0, .5);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 99;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    top: 0;
+  }
+
+  .yao-modal {
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, .99);
+    -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, .3);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, .3);
+    width: 600px;
+    height: 200px;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    margin: auto;
+  }
+  .top-title{
+    padding: 18px 30px;
+    font-size: 18px;
+    text-align: left;
+
+  }
+  .someEmail {
+    width: 90%;
+    margin: 20px auto 0;
+  }
+</style>
+<div class="team-wrap">
+  <div class="inner">
+    <div class="top">
+      成员
+    </div>
+    <div class="projectList">
+      <div class="project clearfix" *ngFor="let item of membersList">
+        <div class="project-name">
+          <span>{{item.username}}</span>
+        </div>
+        <div class="state">
+          <span class="no-done">{{item.noDonetasksNum}}</span>
+          <span class="done">{{item.donetasksNum}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="createProject">
+    <div class="wrap">
+      <button class="my-btn" (click)="addMember($event)">邀请成员</button>
+      <button class="my-btn" (click)="jump()">成员信息</button>
+    </div>
+  </div>
+</div>
+<top-tip [show]="show_tip" [msg]="tip" [success]="success"></top-tip>
+
+<div class="modal-wrap" *ngIf="show_modal" (click)="stopBubble($event)">
+  <div class="yao-modal">
+    <div class="content">
+      <div class="top-title">
+        邀请团队成员
+      </div>
+      <div class="someEmail">
+        <input type="text" class="form-control" placeholder="请输入完整的邮箱" [(ngModel)]="email">
+      </div>
+      <div class="button">
+        <div class="btn btn-primary" style="float: right;margin-right: 30px;margin-top: 10px;" (click)="visiteMember()">
+          邀请
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

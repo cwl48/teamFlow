@@ -5,7 +5,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {TeamIndexComponent} from "./team-index.component";
 import {TeamProjectComponent} from "./team-project.component";
-import {TeamTaskComponent} from "./team-task.component";
 import {TeamMemberComponent} from "./team-member.component";
 import {TeamOptionComponent} from "./option/team-option.component";
 
@@ -23,10 +22,6 @@ const routes: Routes = [
       {
         path:'project',
         component:TeamProjectComponent
-      },
-      {
-        path:'task',
-        component:TeamTaskComponent
       },
       {
         path:'member',

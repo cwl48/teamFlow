@@ -9,13 +9,13 @@ import {ProjectCountComponent} from "../component/project/project-count.componen
 import {ProjectTaskComponent} from "../component/project/project-task.component";
 import {ProjectRoutingModule} from "../component/project/project.router";
 
-
 @NgModule({
     imports: [AppShareModule,ProjectRoutingModule],
     declarations: [
       ProjectIndexComponent,
       ProjectCountComponent,
-      ProjectTaskComponent
+      ProjectTaskComponent,
+
     ],
     providers: [ProjectService],
 })

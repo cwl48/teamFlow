@@ -1,7 +1,10 @@
 /**
  * Created by 李 on 2017/3/18.
  */
-import {Component, OnInit, Input, OnChanges, trigger, state, transition, style, animate} from '@angular/core';
+import {
+  Component, OnInit, Input, OnChanges, trigger, state, transition, style, animate,
+  SimpleChanges
+} from '@angular/core';
 
 @Component({
   selector: 'top-tip',
@@ -24,13 +27,14 @@ export class TopTipComponent implements OnInit,OnChanges {
   @Input() show: boolean
   @Input() msg:string
   @Input() success:boolean
+  state:string
   constructor() {
   }
 
   ngOnInit() {
 
   }
-  ngOnChanges(){
+  ngOnChanges(changes: SimpleChanges){
     if(this.show){
       setTimeout(()=>{
         this.show = false

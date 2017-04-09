@@ -19,8 +19,7 @@ import {OneTaskComponent} from "../component/mytask/one-task.component";
       DashBoardComponent,
       LeftBarComponent,
       MyTaskComponent,
-      TaskComponent,
-      OneTaskComponent
+      TaskComponent
     ],
     providers: [],
 })

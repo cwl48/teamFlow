@@ -59,7 +59,7 @@ export default class Team {
             _.remove(member_ids, (id) => {
                 return id === user_id
             })
-    
+
             member_ids.forEach(async (id) => {
                 //记录消息
                 await MessageModel.create({
@@ -177,6 +177,7 @@ export default class Team {
             throw new Error(e)
         }
     }
+
     //查找用户所在的团队
     static getTeamByUser = async (ctx: Koa.Context, next: Function) => {
         let user_id = ctx.query.user_id
@@ -410,7 +411,7 @@ export default class Team {
                     auth: 100
                 }
             })
-        
+
             if (userAuth === null) {
                 ctx.body = {
                     success: false,
@@ -477,5 +478,15 @@ export default class Team {
         } catch (e) {
             throw new Error(e)
         }
+    }
+    //获取自己所在的所有team
+    static getAllTeam = async (user_id: string) => {
+        
+        let teams = await TeamUserModel.findAll({
+            where: {
+                user_id: user_id
+            }
+        })
+        return teams
     }
 }

@@ -1,5 +1,5 @@
 import sequelize from '../config/db';
-import * as Sequelize from 'Sequelize';
+import * as Sequelize from 'sequelize';
 
 const UserTaskModel = sequelize.define("t_user_task", {
     id: {                       //主键

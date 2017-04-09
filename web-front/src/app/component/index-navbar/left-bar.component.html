@@ -1,5 +1,10 @@
 <style>
-
+  .badge{
+    background-color: red;
+    position: absolute;
+    right: 0;
+    top:10px;
+  }
   .modal-wrap{
     position: fixed;
     z-index: 8;
@@ -370,7 +375,7 @@
           </div>
 
         </li>
-        <li><a href="#"><i class="icon iconfont icon-tongzhi"></i><br>通知</a></li>
+        <li style="position: relative"><a href="#"><i class="icon iconfont icon-tongzhi"></i><br>通知<div class="badge" *ngIf="hasInfo">NEW</div></a></li>
       </ul>
     </div>
     <div class="left-bar-footer">
@@ -410,16 +415,13 @@
         <input id="search" type="text" placeholder="快速查找项目" [(ngModel)]="searchName">
       </div>
       <div class="right">
-        <span class="all-project" (click)="getUserAllProjectInfo()">全部项目</span>
+        <span class="all-project" (click)="getUserAllProjectInfo1()">全部项目</span>
       </div>
     </div>
     <div class="project-list">
       <div class="project-wrap" *ngFor="let item of projectList" (click)="selOneProject(item,$event)">
         <div class="project">
           <div class="project-name">{{item.projectName}}<span class="right font-fb9fad" style="font-size: 11px">{{item.team.teamName}}</span></div>
-          <div class="no-complete-task" style="font-size: 13px">
-            团队正在进行任务数 <span>1</span>
-          </div>
         </div>
       </div>
     </div>

@@ -1,1 +1,125 @@
-项目
+<style>
+  a {
+    text-decoration: none;
+  }
+
+  .team-wrap {
+    margin: 14px;
+    border: 1px solid #f8f6f2;
+    position: relative;
+  }
+
+  .inner {
+    padding: 21px 21px 0 21px;
+    margin-right: 227px;
+    overflow: hidden;
+    background-color: #ffffff;
+  }
+
+  .inner .top {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border-bottom: solid 1px #f8f6f2;
+    padding: 0 15px 14px 2px;
+    font-weight: 400;
+    color: #777;
+    font-size: 17px;
+    line-height: 100%;
+  }
+
+  .project {
+    display: flex;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    flex-direction: row;
+    -ms-flex-direction: row;
+    -webkit-flex-direction: row;
+    height: 70px;
+    align-items: center;
+    margin-left: 40px;
+  }
+
+  .project-name {
+    color: #484744;
+    flex: 1;
+  }
+
+  .state {
+    flex: 1;
+    display: flex;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    flex-direction: row;
+    -ms-flex-direction: row;
+    -webkit-flex-direction: row;
+  }
+
+  .state .no-done {
+    margin-top: 14px;
+    height: 42px;
+    line-height: 42px;
+    color: #fff;
+    text-align: center;
+    background: rgba(255, 177, 27, .7);
+    flex: 1;
+    border-radius: 5px 0 0 5px;
+  }
+
+  .state .done {
+    margin-top: 14px;
+    height: 42px;
+    line-height: 42px;
+    color: #fff;
+    text-align: center;
+    flex: 1;
+    background: rgba(94, 172, 130, .8);
+    border-radius: 0 5px 5px 0;
+  }
+  .createProject{
+    position: absolute;
+    top:0;
+    right:25px;
+
+  }
+  .createProject .wrap button{
+    display: block;
+    margin-top: 20px;
+  }
+  .project-name span{
+    cursor: pointer;
+  }
+  .project-name span:hover{
+    color: #da4f4a;
+  }
+</style>
+<div class="team-wrap">
+  <div class="inner">
+    <div class="top">
+      项目
+    </div>
+    <div class="projectList">
+      <div class="project clearfix" *ngFor="let item of projectList">
+        <div class="project-name">
+          <span (click)="jump(item)">{{item.projectName}}</span>
+        </div>
+        <div class="state">
+          <span class="no-done">{{item.noDoneNums}}</span>
+          <span class="done">{{item.doneNums}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="createProject">
+    <div class="wrap">
+      <button class="my-btn" (click)="createProject($event)">新建项目</button>
+      <button class="my-btn">项目信息</button>
+    </div>
+  </div>
+</div>
+<my-modal [show]="show_modal" (notifyShow)="closeShowModal()"
+          [width]="width" [height]="height" [title]="title" [type]="type"
+          [teamList]="teamList"
+></my-modal>
+

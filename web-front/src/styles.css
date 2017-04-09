@@ -203,3 +203,41 @@ table.table--fancy th{
        -webkit-transform: scaleY(1.0);
      }
 }
+
+.mes-body .item img,
+.other-body .item img
+{
+  width: 20px;
+}
+
+/*清除浮动*/
+.clearfix:after {
+  content: " ";
+  display: block;
+  clear: both;
+  height: 0;
+}
+
+.clearfix {
+  zoom: 1;
+}
+
+
+.my-btn {
+  color: #777;
+  border: solid 1px #d6d4d0;
+  background-color: #f8f6f2;
+  text-shadow: 0 0 0 transparent;
+  -webkit-box-shadow: 0 0 0 transparent;
+  box-shadow: 0 0 0 transparent;
+  padding: 6px 28px;
+  border-radius: 4px;
+  margin: 0 auto;
+  height: 32px;
+  outline: 0;
+  font-weight: 400;
+}
+
+.my-btn:hover {
+  background-color: #dddfdd;
+}

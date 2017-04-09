@@ -7,55 +7,6 @@
     height: inherit;
   }
 
-  .chat-index .wrap .left-nav {
-    background-color: #6c6b69;
-    display: -webkit-box;
-    display: flex;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    position: relative;
-    width: 189px;
-    -webkit-transition: width .2s ease-in-out;
-    transition: width .2s ease-in-out;
-    height: 100%;
-  }
-
-  .left-nav .side {
-
-  }
-
-  .left-nav .side .desc {
-    font-size: 10px;
-    margin: 70px 15px;
-    color: #ffffff;
-
-  }
-
-  .side .chat-type {
-    margin-top: 60px;
-  }
-
-  .side .chat-type .type {
-    font-size: 16px;
-    cursor: pointer;
-    color: #ffffff;
-    height: 50px;
-    line-height: 50px;
-    font-weight: 500;
-    padding-left: 15px;
-  }
-
-  .side .chat-type .type:hover{
-    background-color: #1a2224;
-  }
-  .side .chat-type .type.active {
-    background-color: #fb9ca1;
-  }
-
   .wrap .selChatTo {
     background-color: #ffffff;
     display: -webkit-box;
@@ -68,13 +19,37 @@
     flex-direction: column;
     position: absolute;
     top: 100px;
-    left: 189px;
     width: 189px;
     -webkit-transition: width .2s ease-in-out;
     transition: width .2s ease-in-out;
     height: 500px;
     border: 1px solid #e6e6e6;
     box-shadow: 2px 2px 4px rgba(51, 51, 51, .2);
+  }
+
+  .selChatTo .selTeamOrPerson {
+    display: inline-block;
+    background-color: #f1ede5;
+  }
+
+  .selChatTo .selTeamOrPerson .type {
+    display: inline-block;
+    font-size: 16px;
+    padding: 10px;
+    width: 50%;
+    text-align: center;
+    float: left;
+    cursor: pointer;
+    border-radius: 3px;
+    position: relative;
+  }
+
+  .selChatTo .selTeamOrPerson .type:hover {
+    background-color: #fcf8f0;
+  }
+
+  .selChatTo .selTeamOrPerson .type.active {
+    background-color: #FFFFFF;
   }
 
   .selChatTo .sel-wrap {
@@ -91,9 +66,14 @@
     padding: 5px 9px;
     cursor: pointer;
     border-radius: 5px;
+    position: relative;
   }
 
   .userOrTeam .one:hover {
+    background-color: #fcf8f0;
+  }
+
+  .one.active {
     background-color: #f1ede5;
   }
 
@@ -103,13 +83,13 @@
 
   .img, .item-name {
     display: inline-block;
-    overflow: hidden;
     font-size: 14px;
   }
 
   .item-name {
     padding-left: 8px;
     margin-top: 2px;
+    overflow: hidden;
   }
 
   .message-area {
@@ -117,13 +97,24 @@
     top: 5px;
     right: 0;
     bottom: 5px;
-    left: 40%;
+    left: 50%;
     background-color: #ffffff;
     margin: 0;
     z-index: 99;
     -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
     width: 45%;
+    margin-left: -22.5%;
+
+  }
+
+  .message-area .room-name {
+    text-align: center;
+    margin: 0 10px;
+    font-size: 20px;
+    color: #3DA8F5;
+    padding: 10px;
+    border-bottom: 1px solid #ebe7de;
   }
 
   .chat-room-create {
@@ -142,7 +133,7 @@
     background-color: #fff;
     border: 1px solid #D9D9D9;
     border-radius: 3px;
-    padding:5px;
+    padding: 5px;
   }
 
   .send-message-wrap {
@@ -166,22 +157,27 @@
     padding: 0 12px;
     position: relative;
   }
-  .chat-handle .emoji i{
+
+  .chat-handle .emoji i {
     font-size: 20px !important;
     color: #A6A6A6;
     cursor: pointer;
   }
-  .chat-handle .emoji i:hover{
+
+  .chat-handle .emoji i:hover {
     color: #3DA8F5;
   }
-  .emoji{
+
+  .emoji {
     display: inline-block;
   }
-  .send-btn{
+
+  .send-btn {
     display: inline-block;
     float: right;
   }
-  .send{
+
+  .send {
     min-width: 71px;
     height: 30px;
     color: #FFF;
@@ -194,44 +190,76 @@
     outline: none;
     border: none;
   }
-  .message-content{
 
-  }
-  .mes-body{
-    position: relative;
+  .mes-body {
     max-width: 400px;
-    float: right;
-    margin-right:15px ;
-  }
-  .message-content .message-list .message .item{
     position: relative;
+    float: right;
+    margin-right: 15px;
+    display: inline-block;
+  }
+
+  .other-body {
+    max-width: 400px;
+    float: left;
+    display: inline-block;
+    margin-left: 10px;
+    margin-top: -15px;
+  }
+
+  .mes-body .item > img,
+  .other-body .item > img {
+    width: 20px;
+  }
+
+  .message-content .message-list {
+    min-height: 550px;
+    max-height: 550px;
+    overflow-y: auto;
+    overflow-x:hidden ;
+  }
+
+  .message-content .message-list .message {
+    display: block;
+    position: relative;
+    margin-top: 20px;
+    padding: 5px;
+    clear: both;
+  }
+
+
+
+  .message-content .message-list .message .item {
     max-width: 400px;
     margin-left: 12px;
     background-color: #e5f6fb;
-    display: inline-block;
     padding: 8px 13px;
     color: #383838;
     font-size: 15px;
-    word-break: break-all;
     border-radius: 10px;
     margin-top: 15px;
+    display: inline-block;
+    word-break: break-word;
   }
-  .emoji-view{
+
+  .emoji-view {
     width: 302px;
     background: #FFF;
     border-radius: 2px;
-    box-shadow: 0 7px 21px rgba(0,0,0,.1);
+    box-shadow: 0 7px 21px rgba(0, 0, 0, .1);
     position: absolute;
     top: -187px;
     z-index: 999;
 
   }
-  .emoji-group{
+
+  .emoji-group {
     height: 144px;
     width: 100%;
     padding-left: 2px;
   }
-  .emoji-cell{
+
+  .emoji-cell {
     margin-left: 10px;
     margin-top: 10px;
     width: 26px;
@@ -239,14 +267,16 @@
     float: left;
     cursor: pointer;
   }
-  .emoji-cell img{
+
+  .emoji-cell img {
     height: auto;
     max-width: 100%;
     vertical-align: middle;
     border: 0;
     -ms-interpolation-mode: bicubic;
   }
-  .emoji-footer{
+
+  .emoji-footer {
     position: relative;
     padding: 9px;
     height: 30px;
@@ -259,71 +289,162 @@
     -ms-flex-pack: center;
     justify-content: center;
   }
-  .emoji-switcher{
+
+  .emoji-switcher {
     height: 12px;
     width: 12px;
   }
 
-
-  .emoji-switcher-circle{
+  .emoji-switcher-circle {
     margin: 3px;
     width: 6px;
     height: 6px;
     background: #EEE;
     border-radius: 50%;
   }
-  .emoji-switcher-circle:hover{
+
+  .emoji-switcher-circle:hover {
     background-color: #A6A6A6;
   }
 
+  .send_tip {
+    color: #fb9ca1;
+    display: inline-block;
+    margin-left: 200px;
+  }
+
+  .user_info {
+    display: inline-block;
+    margin-left: 10px;
+    float: left;
+
+  }
+
+  .user_info img {
+    width: 40px;
+  }
+  .user_info .img{
+    position: relative;
+  }
+  .send_time {
+    color: #A6A6A6;
+    font-weight: 400;
+    margin-top: 8px;
+    margin-left: 15px;
+  }
+
+  .desc {
+    font-size: 11px;
+    width: 200px;
+    padding: 20px;
+    color: #fb9ca1;
+  }
+  .badge{
+    background-color: red;
+    position: absolute;
+    right: 0;
+    top:10px;
+  }
 </style>
 <div class="chat-index">
   <div class="wrap">
-    <div class="left-nav">
-      <div class="side">
-        <div class="desc">
-          <i class="iconfont icon-tishi " style="color: #fb9ca1"></i>
-          相同团队的成员自动成为好友，可在私聊中寻找小伙伴说悄悄话哦。
-        </div>
-        <div class="chat-type">
-          <div class="header">
-            <div class="type active">
-              团队群聊
-            </div>
-            <div class="type">
-              私聊
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="desc">
+      <i class="iconfont icon-tishi " style="color: #fb9ca1"></i>
+      相同团队的成员自动成为好友，可在私聊中寻找小伙伴说悄悄话哦。
     </div>
     <div class="selChatTo">
+      <div class="selTeamOrPerson clearFix">
+        <div class="type" [class.active]="groupChat" (click)="selRoomType('team')">
+          <div class="badge" *ngIf="newChatInTeam">新消息</div>
+          团队群聊
+        </div>
+        <div class="type" [class.active]="!groupChat" (click)="selRoomType('user')">
+          <div class="badge" *ngIf="newChatInUser">新消息</div>
+          私聊
+        </div>
+      </div>
       <div class="sel-wrap">
-        <div class="userOrTeam">
-          <div class="one" *ngFor="let item of dataList" (click)="selOne(item)">
+        <div class="userOrTeam" *ngIf="groupChat">
+          <div class="one" *ngFor="let item of dataList" (click)="selOne(item)" [class.active]="item.focus" >
             <div class="img">
               <img [src]="item.imgurl" class="img-circle" alt="img">
             </div>
             <div class="item-name">
               {{item.name.substr(0,10)}}
             </div>
+          <span class="badge" *ngIf="item.tip_num>0">{{item.tip_num}}</span>
+          </div>
+        </div>
+        <div class="userOrTeam" *ngIf="!groupChat">
+          <div class="one" *ngFor="let item of dataList1" (click)="selOne(item)" [class.active]="item.focus" >
+            <div class="img">
+              <img [src]="item.imgurl" class="img-circle" alt="img">
+            </div>
+            <div class="item-name">
+              {{item.name.substr(0,10)}}
+            </div>
+            <span class="badge" *ngIf="item.tip_num>0">{{item.tip_num}}</span>
           </div>
         </div>
       </div>
     </div>
     <div class="message-area">
+      <div class="room-name">
+        <span>{{room_name}}</span>
+      </div>
       <div class="message-content">
-        <div class="message-list">
-          <div class="message">
-            <div class="mes-body">
-              <div class="item">fff</div>
+        <div class="message-list" (scroll)="listenTopScroll($event)" id="messageList">
+          <div class="loading spinner" *ngIf="loading">
+            <div class="rect1"></div>
+            <div class="rect2"></div>
+            <div class="rect3"></div>
+            <div class="rect4"></div>
+            <div class="rect5"></div>
+          </div>
+          <div *ngIf="groupChat">
+            <div *ngIf="messageList.length===0" style="color: #b8b4ac;text-align: center;margin-top: 10px" >
+              没有消息
+            </div>
+            <div class=" clearfix message " *ngFor="let item of messageList">
+              <div class="user_info" *ngIf="item.user_id!==user_id">
+                <div class="img" (click)="changeUserInfoModal(item,messageList,$event)">
+                    <userInfo-img [user_id]="item.user_id" [direct]="direct" [show]="item.show_info" ></userInfo-img>
+                </div>
+                <div class="username">{{item.username.substr(0,4)}}</div>
+              </div>
+              <div [class.mes-body]="item.user_id===user_id" [class.other-body]="item.user_id!==user_id">
+                <div class="item" [safeHtml]="item.chat_content"></div>
+                <div class="send_time">
+                  <span>{{item.created_at}}</span>
+                </div>
+              </div>
             </div>
           </div>
+          <div *ngIf="!groupChat">
+            <div *ngIf="messageList1.length===0" style="color: #b8b4ac;text-align: center;margin-top: 10px">
+              没有消息
+            </div>
+            <div class=" clearfix message " *ngFor="let item of messageList1" >
+              <div class="user_info" *ngIf="item.user_id!==user_id">
+                <div class="img" (click)="changeUserInfoModal(item,messageList1,$event)">
+                  <userInfo-img [user_id]="item.user_id" [direct]="direct" [show]="item.show_info" ></userInfo-img>
+                </div>
+                <div class="username">{{item.username.substr(0,4)}}</div>
+              </div>
+              <div [class.mes-body]="item.user_id===user_id" [class.other-body]="item.user_id!==user_id">
+                <div class="item" [safeHtml]="item.chat_content"></div>
+                <div class="send_time">
+                  <span>{{item.created_at}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
       <div class="chat-room-create">
         <div class="chat-room-create-wrap">
-          <div class="send-message-wrap" contentEditable="true" hidefocus="false">
+          <div class="send-message-wrap" contentEditable="true" id="editor">
 
           </div>
         </div>
@@ -334,38 +455,42 @@
           <div class="emoji-view" *ngIf="show_emoji" (click)="stopBubble($event)">
             <div class="emoji-body">
               <div class="emoji-group" *ngIf="emoji_page==='1'">
-                <div class="emoji-cell" *ngFor="let item of emojiList1">
+                <div class="emoji-cell" *ngFor="let item of emojiList1" (click)="selOneEmoji(item)">
                   <img [src]="item.url" alt="">
                 </div>
               </div>
               <div class="emoji-group" *ngIf="emoji_page==='2'">
-                <div class="emoji-cell" *ngFor="let item of emojiList2">
+                <div class="emoji-cell" *ngFor="let item of emojiList2" (click)="selOneEmoji(item)">
                   <img [src]="item.url" alt="">
                 </div>
               </div>
               <div class="emoji-group" *ngIf="emoji_page==='3'">
-                <div class="emoji-cell" *ngFor="let item of emojiList3">
+                <div class="emoji-cell" *ngFor="let item of emojiList3" (click)="selOneEmoji(item)">
                   <img [src]="item.url" alt="">
                 </div>
               </div>
             </div>
             <div class="emoji-footer">
-               <div class="emoji-switcher" (mouseenter)="switchPage('1')" >
-                  <div class="emoji-switcher-circle" ></div>
-               </div>
+              <div class="emoji-switcher" (mouseenter)="switchPage('1')">
+                <div class="emoji-switcher-circle"></div>
+              </div>
               <div class="emoji-switcher" (mouseenter)="switchPage('2')">
-                  <div class="emoji-switcher-circle"></div>
-               </div>
+                <div class="emoji-switcher-circle"></div>
+              </div>
               <div class="emoji-switcher" (mouseenter)="switchPage('3')">
-                  <div class="emoji-switcher-circle"></div>
-               </div>
+                <div class="emoji-switcher-circle"></div>
+              </div>
             </div>
           </div>
+          <div class="send_tip" *ngIf="isSend">
+            发送中...
+          </div>
           <div class="send-btn">
-            <button class="btn btn-default send">发送</button>
+            <button class="btn btn-default send" (click)="sendMessage()">发送</button>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+<top-tip [show]="show_tip" [msg]="tip" [success]="success"></top-tip>

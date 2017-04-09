@@ -1,5 +1,5 @@
 import sequelize from '../config/db';
-import * as Sequelize from 'Sequelize';
+import * as Sequelize from 'sequelize';
 
 const OnlineUserModel = sequelize.define('online_user', {
     user_id: {                         //在线人的id

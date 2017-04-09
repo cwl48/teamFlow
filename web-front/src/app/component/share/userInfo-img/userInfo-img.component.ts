@@ -1,7 +1,7 @@
 /**
  * Created by 李 on 2017/3/22.
  */
-import {Component, OnInit, Input, Output, EventEmitter, OnChanges} from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges} from '@angular/core';
 import {UserService} from "../../../service/user.service";
 
 @Component({
@@ -32,7 +32,7 @@ export class UserInfoImgComponent implements OnInit,OnChanges{
   ngOnInit() {
     this.getOneUserInfo(this.user_id)
   }
-  ngOnChanges(){
+  ngOnChanges(changes: SimpleChanges){
     this.getOneUserInfo(this.user_id)
   }
   getOneUserInfo=(user_id)=>{
@@ -46,8 +46,6 @@ export class UserInfoImgComponent implements OnInit,OnChanges{
           this.job = res.job||"未填写"
           this.section = res.section||"未填写"
           this.phone =res.phone||"未填写"
-        }else{
-
         }
       })
   }
