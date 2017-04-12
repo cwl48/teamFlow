@@ -21,8 +21,11 @@ ng serve
 teamflow-end为后端server目录
 
 启动方式：
+
 npm install
+
 tsc -w
+
 进入dist目录
 node app.js
 
