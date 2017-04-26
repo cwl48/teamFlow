@@ -2,7 +2,7 @@
 My graduation project(团队工作流协作系统)
 
 #demo
-线上地址查看：[http://www.lnode.cn](http://www.lnode.cn)
+线上地址查看：[http://bs.lnode.cn](http://bs.lnode.cn)
 
 #安装方法
 本课设运用typescript开发，所以要全局安装typescript
